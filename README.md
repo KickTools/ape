@@ -1,53 +1,52 @@
-# Next.js & HeroUI Template
+# Ape Gang Verification
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+Welcome to **Ape Gang Verification**, a streamlined way to verify your **Twitch** and **Kick** accounts. This app ensures authenticity and grants access to exclusive features, communities, giveaways, and rewards.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+## 🚀 Features
+- **Account Verification**: Verify your **Kick** and **Twitch** accounts securely.
+- **Exclusive Access**: Gain access to members-only giveaways and community events.
+- **Official Verification Process**: Secure authentication system to prevent fraud.
+- **Seamless User Experience**: Intuitive UI with simple steps to get verified.
 
-## Technologies Used
+## 🎮 How It Works
+1. Click **Verify Now** to start the verification process.
+2. Log in using your **Kick** or **Twitch** account.
+3. Once verified, enjoy access to exclusive content and events!
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+## 👑 Created by AyyBabz
+This project was developed by **AyyBabz**, the founder of **KickTools, LLC**—the #1 third-party resource for **Kick** streamers. We are committed to providing tools that enhance the streaming experience for both creators and viewers.
 
-## How to Use
+![AyyBabz](https://your-image-url.com/pfp-ayybabz.jpg)
 
-### Use the template with create-next-app
+## 🤝 Not Endorsed by Trainwreck... Yet!
+This project is **not officially endorsed** by **Trainwreck**... **yet!** But we can change that! Help us get his attention by reaching out on **X (Twitter)** and letting him know about **Ape Gang Verification**.
 
-To create a new project based on this template using `create-next-app`, run the following command:
+[📢 Tweet @Trainwreckstv](https://x.com/trainwreckstv/)
 
-```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
-```
+## 🔧 Installation & Setup
+If you want to run the project locally:
+```sh
+# Clone the repository
+git clone https://github.com/KickTools/ape.git
 
-### Install dependencies
+# Navigate into the project
+d cd ape
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
-
-```bash
+# Install dependencies
 npm install
-```
 
-### Run the development server
-
-```bash
+# Start the development server
 npm run dev
 ```
 
-### Setup pnpm (optional)
+## 📜 License
+This project is licensed under **MIT License**. See the [LICENSE](LICENSE) file for details.
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+## 🌎 Connect with Us
+- **Website**: [KickTools](https://kicktools.com)
+- **Twitter**: [@KickTools](https://x.com/KickTools)
+- **Discord**: [Join Our Community](https://discord.gg/your-link)
 
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
+---
+Made with ❤️ by the **Ape Gang Community**
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
-
-## License
-
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).

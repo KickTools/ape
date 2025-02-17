@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
-import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Card, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image"; // Assuming you have an Image component
 import { useAuth } from "@/context/AuthContext";
 import { fetchFormData, submitFormData } from "@/utils/api";

@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Ape Gang Community",
+  description: "Connect with other Ape Gang members and track your progress in the community.",
   navItems: [
     {
       label: "Home",
@@ -27,6 +27,11 @@ export const siteConfig = {
       href: "/leaderboard",
       showWhenAuthenticated: true, 
     },
+    {
+      label: "Search",
+      href: "/search",
+      showWhenAuthenticated: true, 
+    },
   ],
   navMenuItems: [
     {
@@ -47,6 +52,11 @@ export const siteConfig = {
     {
       label: "Settings",
       href: "/settings",
+      showWhenAuthenticated: true, 
+    },
+    {
+      label: "Search",
+      href: "/search",
       showWhenAuthenticated: true, 
     },
     {
