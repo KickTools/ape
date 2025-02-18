@@ -1,60 +1,104 @@
 // app/settings/page.tsx
 "use client";
 
-// Dependencies
 import React, { useEffect, useState } from "react";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
 import { Card, CardBody } from "@heroui/card";
-import { Image } from "@heroui/image"; // Assuming you have an Image component
+import { Image } from "@heroui/image";
 import { useAuth } from "@/context/AuthContext";
 import { fetchFormData, submitFormData } from "@/utils/api";
 import { useFormData, FormDataProvider } from "@/context/FormDataContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ViewerSettings } from "@/types/viewerFormData";
 
 const SettingsForm: React.FC = () => {
-    const { isAuthenticated, kickUser, twitchUser } = useAuth();
+    const { kickUser, twitchUser } = useAuth();
     const { formData, setFormData } = useFormData();
     const [action, setAction] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const kickUsername = kickUser?.username || "NA";
     const twitchUsername = twitchUser?.display_name || "NA";
     const kickPFP = kickUser?.profile_pic || "https://i.pravatar.cc/150";
 
+    // Initialize with empty values
+    useEffect(() => {
+        setFormData({
+            bitcoinAddress: '',
+            contactAddress: ''
+        });
+    }, [setFormData]);
+
     useEffect(() => {
         if (twitchUser?.id) {
+            setIsLoading(true);
+            
             fetchFormData(twitchUser.id)
-                .then(data => setFormData(data))
-                .catch(error => console.error("Error fetching form data:", error));
+                .then((data: ViewerSettings) => {
+                    setFormData({
+                        bitcoinAddress: data.bitcoinAddress || '',
+                        contactAddress: data.contactAddress || ''
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching form data:", error);
+                    setFormData({
+                        bitcoinAddress: '',
+                        contactAddress: ''
+                    });
+                })
+                .finally(() => setIsLoading(false));
         }
-    }, [twitchUser?.id]);
+    }, [twitchUser?.id, setFormData]);
 
-    console.log("Kick user", kickUser);
-    console.log("Twitch user", twitchUser);
-
-    if (!isAuthenticated) {
-        // Redirect to login if not authenticated
-        if (typeof window !== "undefined") {
-            window.location.href = "/login";
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formValues = new FormData(e.currentTarget);
+        
+        try {
+            const response = await submitFormData(
+                twitchUser?.id || '',
+                formValues.get('bitcoinAddress') as string,
+                formValues.get('contactMethod') as string
+            );
+            setAction(`Submitted successfully`);
+            
+            // Update form data with new values
+            setFormData({
+                bitcoinAddress: formValues.get('bitcoinAddress') as string,
+                contactAddress: formValues.get('contactMethod') as string
+            });
+        } catch (error) {
+            setAction(error instanceof Error ? error.message : 'An unknown error occurred');
         }
-        return null;
+    };
+
+    const handleReset = () => {
+        setAction("Form reset");
+        setFormData({
+            bitcoinAddress: '',
+            contactAddress: ''
+        });
+    };
+
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
 
     return (
         <section className="flex flex-col flex-grow items-center gap-4 py-12 px-6 text-center">
-            {/* Profile Picture */}
             <img
                 src={kickPFP}
                 alt="Profile Picture"
                 className="w-48 h-48 rounded-full mb-4 border-4 border-primary p-2"
             />
-            {/* Usernames */}
             <div className="text-center text-lg uppercase font-medium mb-4 space-y-1">
                 <h2>Kick: <span className="text-kick">{kickUsername}</span></h2>
                 <h2>Twitch: <span className="text-twitch">{twitchUsername}</span></h2>
             </div>
 
-            {/* Settings Form */}
             <Card isBlurred className="w-96 p-2 bg-background/60 dark:bg-foreground-foreground/30 border-none relative" shadow="sm">
                 <Image
                     removeWrapper
@@ -64,25 +108,12 @@ const SettingsForm: React.FC = () => {
                     style={{ filter: 'blur(30px) opacity(.25)' }}
                 />
                 <CardBody className="p-8 space-y-6 relative z-10">
-                <h1 className="text-lg font-bold tracking-tight text-left uppercase text-primary-600">Contact Info</h1>
+                    <h1 className="text-lg font-bold tracking-tight text-left uppercase text-primary-600">Contact Info</h1>
                     <Form
                         className="w-full max-w-md flex flex-col gap-8"
                         validationBehavior="native"
-                        onReset={() => setAction("reset")}
-                        onSubmit={async (e) => {
-                            e.preventDefault();
-                            const data = Object.fromEntries(new FormData(e.currentTarget) as unknown as Iterable<[string, string]>);
-                            try {
-                                const response = await submitFormData(twitchUser?.id as string, data.bitcoinAddress, data.contactMethod);
-                                setAction(`Submitted: ${JSON.stringify(response)}`);
-                            } catch (error) {
-                                if (error instanceof Error) {
-                                    setAction(`Error: ${error.message}`);
-                                } else {
-                                    setAction('An unknown error occurred');
-                                }
-                            }
-                        }}
+                        onReset={handleReset}
+                        onSubmit={handleSubmit}
                     >
                         <Input
                             isRequired
@@ -94,7 +125,10 @@ const SettingsForm: React.FC = () => {
                             variant="underlined"
                             color="primary"
                             value={formData.contactAddress}
-                            onChange={(e) => setFormData({ ...formData, contactAddress: e.target.value })}
+                            onChange={(e) => setFormData(prev => ({
+                                ...prev,
+                                contactAddress: e.target.value
+                            }))}
                         />
 
                         <Input
@@ -107,7 +141,10 @@ const SettingsForm: React.FC = () => {
                             variant="underlined"
                             color="primary"
                             value={formData.bitcoinAddress}
-                            onChange={(e) => setFormData({ ...formData, bitcoinAddress: e.target.value })}
+                            onChange={(e) => setFormData(prev => ({
+                                ...prev,
+                                bitcoinAddress: e.target.value
+                            }))}
                         />
 
                         <div className="flex gap-2">
@@ -131,9 +168,11 @@ const SettingsForm: React.FC = () => {
 };
 
 const SettingsPage: React.FC = () => (
-    <FormDataProvider>
-        <SettingsForm />
-    </FormDataProvider>
+    <ProtectedRoute>
+        <FormDataProvider>
+            <SettingsForm />
+        </FormDataProvider>
+    </ProtectedRoute>
 );
 
 export default SettingsPage;

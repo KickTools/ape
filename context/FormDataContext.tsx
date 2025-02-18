@@ -1,32 +1,28 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { ViewerSettings } from '@/types/viewerFormData';
 
-interface FormData {
-  bitcoinAddress: string;
-  contactAddress: string;
+interface ViewerSettingsContextValue {
+  formData: ViewerSettings;
+  setFormData: React.Dispatch<React.SetStateAction<ViewerSettings>>;
 }
 
-interface FormDataContextValue {
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-}
-
-const FormDataContext = createContext<FormDataContextValue | undefined>(undefined);
+const ViewerSettingsContext = createContext<ViewerSettingsContextValue | undefined>(undefined);
 
 export const FormDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ViewerSettings>({
     bitcoinAddress: '',
     contactAddress: ''
   });
 
   return (
-    <FormDataContext.Provider value={{ formData, setFormData }}>
+    <ViewerSettingsContext.Provider value={{ formData, setFormData }}>
       {children}
-    </FormDataContext.Provider>
+    </ViewerSettingsContext.Provider>
   );
 };
 
 export const useFormData = () => {
-  const context = useContext(FormDataContext);
+  const context = useContext(ViewerSettingsContext);
   if (context === undefined) {
     throw new Error('useFormData must be used within a FormDataProvider');
   }

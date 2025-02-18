@@ -76,7 +76,6 @@ class KickWebSocket {
       const messageData = JSON.parse(event.data);
 
       if (messageData.event === "pusher:pong") {
-        console.log("Pong received from server");
         return;
       }
 
@@ -97,7 +96,6 @@ class KickWebSocket {
 
   private handleKMessageEvent(messageData: ChatMessage): void {
     const { content, sender } = messageData;
-    console.log(content);
 
     if (content.includes(this.verificationCode)) {
       console.log("Verification code found in message!");

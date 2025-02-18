@@ -22,11 +22,8 @@ const KickVerifyCode: React.FC = () => {
   useEffect(() => {
     if (isInitialized.current || !senderId) return; // Skip if already initialized or chatroomId is null
     isInitialized.current = true;
-
-    console.log('KickVerifyCode mounted with chatroomId:', senderId);
-    
+   
     const code = generateVerificationCode();
-    console.log('Generated verification code:', code);
     setVerificationCode(code);
     setIsLoading(false);
 

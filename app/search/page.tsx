@@ -27,7 +27,6 @@ export default function SearchPage() {
 
             try {
                 const searchResults = await searchViewers(searchQuery);
-                console.log(searchResults);
                 setResults(searchResults);
             } catch (err) {
                 setError('Failed to perform search. Please try again.');

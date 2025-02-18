@@ -2,34 +2,44 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { fetchTwitchUserData, fetchLoginUserData } from "@/utils/api";
-
-// components
+import { fetchLoginUserData } from "@/utils/api";
 import { Spinner } from "@heroui/spinner";
 
 const LoginCallback = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { login } = useAuth();
   const loginAttemptedRef = useRef(false);
 
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
   useEffect(() => {
-    const sessionId = searchParams?.get('sessionId');
-    
     const handleLogin = async () => {
       if (loginAttemptedRef.current) return;
       loginAttemptedRef.current = true;
 
       try {
-        const sessionData = await fetchTwitchUserData();
+        const response = await fetch(`${apiBaseUrl}/auth/user`, {
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to get user data');
+        }
+
+        const { success, user } = await response.json();
+
+        if (!success || !user) {
+          throw new Error('Invalid user data received');
+        }
         
-        const viewerData = await fetchLoginUserData(sessionData.user.id);
+        // Get additional viewer data
+        const viewerData = await fetchLoginUserData(user.id);
     
         if (viewerData.viewerData?.kick?.user_id) {
           await login(
-            sessionData, 
+            { user },
             viewerData.viewerData.kick.profile.kick
           );
           router.replace('/dashboard');
@@ -42,14 +52,14 @@ const LoginCallback = () => {
       }
     };
 
-    if (sessionId && !loginAttemptedRef.current) {
+    if (!loginAttemptedRef.current) {
       handleLogin();
     }
 
     return () => {
       loginAttemptedRef.current = false;
     };
-  }, [searchParams?.get('sessionId')]); // More specific dependency
+  }, [router, login]);
 
   return (
     <div className="flex-grow my-auto space-y-6 text-center">

@@ -1,10 +1,9 @@
 // app/layout.tsx
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Providers } from "./providers";
+import { Navbar } from "@/components/navbar";
 import { AuthProvider } from '@/context/AuthContext';
 import { siteConfig } from "@/config/site";
-import MainLayout from "@/layouts/MainLayout";
 
 export const metadata: Metadata = {
   title: {
@@ -26,11 +25,14 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="dark flex flex-col min-h-screen">
+    <html lang="en" suppressHydrationWarning>
+      <body className="dark flex flex-col min-h-screen" suppressHydrationWarning>
         <AuthProvider>
-          {/* Remove <Providers> if it wraps <React.StrictMode> */}
-          <MainLayout>{children}</MainLayout>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex flex-grow">{children}</main>
+            <footer className="py-4 text-center">© 2025 KickTools, LLC</footer>
+          </div>
         </AuthProvider>
       </body>
     </html>

@@ -3,15 +3,15 @@
 
 import { createContext, useState, ReactNode, useContext } from "react";
 import { KickUserData } from "@/types/kick";
-import { TwitchData } from "@/types/twitch";
+import { TwitchUserData } from "@/types/twitch";
 
 type KickAuthContextProps = {
   page: string;
   setPage: (page: string) => void;
   senderId: string;
   setSenderId: (id: string) => void;
-  twitchData: TwitchData | null;
-  setTwitchData: (data: TwitchData | null) => void;
+  twitchData: TwitchUserData | null;
+  setTwitchData: (data: TwitchUserData | null) => void;
   kickData: KickUserData | null;
   setKickData: (data: KickUserData | null) => void;
 };
@@ -29,7 +29,7 @@ export function useKickAuth() {
 export const KickAuthProvider = ({ children }: { children: ReactNode }) => {
   const [page, setPage] = useState("landing");
   const [senderId, setSenderId] = useState("");
-  const [twitchData, setTwitchData] = useState<TwitchData | null>(null);
+  const [twitchData, setTwitchData] = useState<TwitchUserData | null>(null);
   const [kickData, setKickData] = useState<KickUserData | null>(null);
 
   return (

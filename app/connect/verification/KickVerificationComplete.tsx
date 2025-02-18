@@ -27,35 +27,25 @@ const KickVerificationComplete = () => {
       }
 
       try {
-        console.log("Starting data save process");
-        console.log("Kick Data:", kickData);
-        console.log("Twitch Data:", twitchData);
 
         // Save to backend
-        await saveUserData(twitchData, kickData);
-        console.log("Successfully saved user data to backend");
+        const response = await saveUserData({ user: twitchData }, kickData);
+
+        if (!response.success || !response.isAuthenticated) {
+          throw new Error("Authentication not confirmed by backend");
+        }
 
         // Update local auth state
-        login(twitchData, kickData);
-        console.log("Local auth state updated");
+        login({ user: twitchData }, kickData);
 
-        // Verify local storage
-        const twitchSession = localStorage.getItem('twitch_session');
-        const kickSession = localStorage.getItem('kick_session');
-        console.log("Local storage state:", {
-          hasTwitchSession: !!twitchSession,
-          hasKickSession: !!kickSession
-        });
-
-        // Wait a brief moment to ensure state updates
+        // Wait to ensure state updates
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        // Redirect only if everything is saved
-        if (twitchSession && kickSession) {
-          console.log("Redirecting to dashboard");
+        // Redirect only if authentication is confirmed
+        if (response.isAuthenticated) {
           router.push('/dashboard');
         } else {
-          throw new Error("Sessions not properly saved");
+          throw new Error("User authentication state is not properly updated");
         }
       } catch (error) {
         console.error("Verification process failed:", error);
@@ -64,6 +54,7 @@ const KickVerificationComplete = () => {
         setIsProcessing(false);
       }
     };
+
 
     handleDataSave();
   }, [kickData, twitchData, login, router]);
@@ -92,11 +83,11 @@ const KickVerificationComplete = () => {
         Your Kick and Twitch accounts have been successfully connected.
       </p>
       {isProcessing && (
-        <Spinner 
-          color="warning" 
-          size="lg" 
-          label="Finalizing your connection..." 
-          labelColor="warning" 
+        <Spinner
+          color="warning"
+          size="lg"
+          label="Finalizing your connection..."
+          labelColor="warning"
         />
       )}
     </div>

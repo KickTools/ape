@@ -1,13 +1,16 @@
+// app/connect/auth/TwitchOAuth.tsx
 "use client";
 
 import { Button } from "@heroui/button";
 import { useKickAuth } from "@/context/KickAuthContext";
 
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 const TwitchOAuth = () => {
   const { setPage } = useKickAuth();
 
   const handleTwitchOAuth = () => {
-    window.location.href = 'http://localhost:9988/auth/twitch';
+    window.location.href = `${apiBaseUrl}/auth/twitch/verify`;
   };
 
   return (
