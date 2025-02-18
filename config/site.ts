@@ -15,7 +15,7 @@ export const siteConfig = {
     {
       label: "About",
       href: "/about",
-      showWhenAuthenticated: true, 
+      showWhenAuthenticated: false, 
     },
     {
       label: "Settings",
@@ -69,5 +69,12 @@ export const siteConfig = {
     twitter: "https://x.com/Trainwreckstv",
     discord: "https://discord.gg/trainwreckstv",
     login: "/login",
+  },
+  footer: {
+    description: { footer: "KickTools, LLC. All Rights Reserved" },
+    links: {
+      privacy: "/privacy",
+      terms: "/terms",
+    },
   },
 };

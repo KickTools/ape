@@ -1,6 +1,8 @@
+// app/about/page.tsx
 import { Card, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image";
 import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
 
 export default function AboutPage() {
   return (
@@ -17,7 +19,7 @@ export default function AboutPage() {
       {/* Creator Info */}
       <Card
         isBlurred
-        className="border-none bg-background/60 dark:bg-default-100/50 max-w-2xl"
+        className="border-none bg-background/60 dark:bg-default-100/50 max-w-3xl"
         shadow="sm"
       >
         <CardBody>
@@ -35,26 +37,25 @@ export default function AboutPage() {
             <div className="flex flex-col col-span-6 md:col-span-8">
               <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-0">
-                  <h3 className="font-semibold text-foreground/90">Created by AyyBabz</h3>
-                  <p className="text-small text-foreground/80">
-                    Founder of <strong>KickTools, LLC</strong>
+                  <h3 className="font-semibold text-foreground/90 text-lg">Created by AyyBabz</h3>
+                  <p className="text-medium text-foreground/80">
+                    Founder of <Link href="https://kicktools.app" className="text-secondary font-semibold">KickTools, LLC</Link>
                   </p>
-                  <h1 className="text-large font-medium mt-2">
-                    The #1 third-party resource for <strong>Kick</strong> streamers
+                  <h1 className="text-xl font-medium mt-2">
+                    The #1 third-party resource for <Link href="https://kick.com" className="text-kick font-semibold">Kick</Link> streamers
                   </h1>
                 </div>
               </div>
 
               <div className="flex flex-col mt-3 gap-1">
-                <p className="text-small text-foreground/80">
-                  This project was developed by <strong>AyyBabz</strong>, the founder of <strong>KickTools, LLC</strong>—the #1 third-party resource for <strong>Kick</strong> streamers. We are committed to providing tools that enhance the streaming experience for creators and viewers alike.
+                <p className="text-medium text-foreground/80">
+                  This project was developed by <strong>AyyBabz</strong>, the founder of <Link href="https://kicktools.app" className="text-secondary font-semibold">KickTools, LLC</Link>—the #1 third-party resource for <Link href="https://kick.com" className="text-kick font-semibold">Kick</Link> streamers. We are committed to providing tools that enhance the streaming experience for creators and viewers alike.
                 </p>
               </div>
             </div>
           </div>
         </CardBody>
       </Card>
-
 
       {/* Trainwreck Outreach */}
       <p className="text-lg text-gray-700 dark:text-gray-300">

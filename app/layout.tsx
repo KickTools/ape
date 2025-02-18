@@ -1,9 +1,9 @@
-// app/layout.tsx
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/navbar";
 import { AuthProvider } from '@/context/AuthContext';
 import { siteConfig } from "@/config/site";
+import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: {
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="min-h-screen flex flex-col">
             <Navbar />
             <main className="flex flex-grow">{children}</main>
-            <footer className="py-4 text-center">© 2025 KickTools, LLC</footer>
+            <Footer />
           </div>
         </AuthProvider>
       </body>
