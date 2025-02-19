@@ -1,7 +1,6 @@
 // utils/api.ts
 import { KickUserData, KickApiResponse } from '@/types/kick';
 import { TwitchUserData, TwitchAuthResponse } from '@/types/twitch';
-import { ApiResponse, ViewerSettings, ViewerSettingsAPI } from '@/types/viewerFormData';
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -106,34 +105,6 @@ interface ViewerData {
 export async function fetchLoginUserData(twitchUserId: string): Promise<ViewerData> {
   const viewerData = await fetchData(`${apiBaseUrl}/data/retrieve/viewers/twitch/${twitchUserId}`);
   return { viewerData };
-}
-
-export async function fetchFormData(twitchUserId: string): Promise<ViewerSettings> {
-  const response = await fetchData(`${apiBaseUrl}/data/submit/form-data/${twitchUserId}`);
-  
-  // Transform the response to match our ViewerSettings type
-  return {
-      bitcoinAddress: response.bitcoinAddress || '',
-      contactAddress: response.contactAddress || ''
-  };
-}
-
-export async function submitFormData(
-  viewerId: string,
-  bitcoinAddress: string,
-  contactAddress: string
-): Promise<ViewerSettingsAPI> {
-  return fetchData(`${apiBaseUrl}/data/submit/form-data`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          viewer: viewerId,
-          bitcoinAddress,
-          contactAddress,
-      }),
-  });
 }
 
 export interface SearchResult {

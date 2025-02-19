@@ -1,6 +1,4 @@
-// app/settings/page.tsx
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
@@ -8,46 +6,42 @@ import { Form } from "@heroui/form";
 import { Card, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image";
 import { useAuth } from "@/context/AuthContext";
-import { fetchFormData, submitFormData } from "@/utils/api";
+import { fetchFormData, submitFormData } from "@/utils/formApi";
 import { useFormData, FormDataProvider } from "@/context/FormDataContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { ViewerSettings } from "@/types/viewerFormData";
+import { FormState } from "@/types/viewerFormData";
 
 const SettingsForm: React.FC = () => {
     const { kickUser, twitchUser } = useAuth();
     const { formData, setFormData } = useFormData();
-    const [action, setAction] = useState<string | null>(null);
+    const [formState, setFormState] = useState<FormState | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const kickUsername = kickUser?.username || "NA";
     const twitchUsername = twitchUser?.display_name || "NA";
     const kickPFP = kickUser?.profile_pic || "https://i.pravatar.cc/150";
 
-    // Initialize with empty values
-    useEffect(() => {
-        setFormData({
-            bitcoinAddress: '',
-            contactAddress: ''
-        });
-    }, [setFormData]);
-
     useEffect(() => {
         if (twitchUser?.id) {
             setIsLoading(true);
+            setFormState(null);
             
             fetchFormData(twitchUser.id)
                 .then((data: ViewerSettings) => {
+                    console.log('Fetched form data:', data); // Add this for debugging
                     setFormData({
-                        bitcoinAddress: data.bitcoinAddress || '',
-                        contactAddress: data.contactAddress || ''
+                        bitcoinAddress: data.bitcoinAddress,
+                        contactAddress: data.contactAddress
                     });
                 })
-                .catch(error => {
+                .catch((error: Error) => {
                     console.error("Error fetching form data:", error);
-                    setFormData({
-                        bitcoinAddress: '',
-                        contactAddress: ''
+                    setFormState({
+                        message: error.message || 'Failed to load your settings',
+                        type: 'error'
                     });
+                    // Don't reset form data on error
                 })
                 .finally(() => setIsLoading(false));
         }
@@ -55,28 +49,52 @@ const SettingsForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formValues = new FormData(e.currentTarget);
+        setFormState(null);
+        setIsLoading(true);
         
+        const formValues = new FormData(e.currentTarget);
+        const bitcoinAddress = formValues.get('bitcoinAddress') as string;
+        const contactAddress = formValues.get('contactMethod') as string;
+    
         try {
             const response = await submitFormData(
                 twitchUser?.id || '',
-                formValues.get('bitcoinAddress') as string,
-                formValues.get('contactMethod') as string
+                bitcoinAddress,
+                contactAddress
             );
-            setAction(`Submitted successfully`);
+    
+            // Check if the response contains an error
+            if (response.error) {
+                setFormState({
+                    message: response.error.message,
+                    type: 'error'
+                });
+                return;
+            }
+    
+            // Success case
+            setFormState({
+                message: response.message || 'Settings saved successfully!',
+                type: 'success'
+            });
             
-            // Update form data with new values
+            // Only update form data on success
             setFormData({
-                bitcoinAddress: formValues.get('bitcoinAddress') as string,
-                contactAddress: formValues.get('contactMethod') as string
+                bitcoinAddress,
+                contactAddress
             });
         } catch (error) {
-            setAction(error instanceof Error ? error.message : 'An unknown error occurred');
+            setFormState({
+                message: error instanceof Error ? error.message : 'An error occurred while saving your settings',
+                type: 'error'
+            });
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleReset = () => {
-        setAction("Form reset");
+        setFormState(null);
         setFormData({
             bitcoinAddress: '',
             contactAddress: ''
@@ -109,6 +127,17 @@ const SettingsForm: React.FC = () => {
                 />
                 <CardBody className="p-8 space-y-6 relative z-10">
                     <h1 className="text-lg font-bold tracking-tight text-left uppercase text-primary-600">Contact Info</h1>
+                    
+                    {formState && (
+                        <div className={`p-3 rounded-md ${
+                            formState.type === 'success' 
+                                ? 'bg-success-100 text-success-700' 
+                                : 'bg-danger-100 text-danger-700'
+                        }`}>
+                            {formState.message}
+                        </div>
+                    )}
+            
                     <Form
                         className="w-full max-w-md flex flex-col gap-8"
                         validationBehavior="native"
@@ -123,7 +152,7 @@ const SettingsForm: React.FC = () => {
                             type="text"
                             size="lg"
                             variant="underlined"
-                            color="primary"
+                            color={formState?.type === 'error' ? 'danger' : 'primary'}
                             value={formData.contactAddress}
                             onChange={(e) => setFormData(prev => ({
                                 ...prev,
@@ -139,7 +168,7 @@ const SettingsForm: React.FC = () => {
                             type="text"
                             size="lg"
                             variant="underlined"
-                            color="primary"
+                            color={formState?.type === 'error' ? 'danger' : 'primary'}
                             value={formData.bitcoinAddress}
                             onChange={(e) => setFormData(prev => ({
                                 ...prev,
@@ -148,18 +177,18 @@ const SettingsForm: React.FC = () => {
                         />
 
                         <div className="flex gap-2">
-                            <Button color="primary" type="submit" variant="solid">
+                            <Button 
+                                color={formState?.type === 'error' ? 'danger' : 'primary'} 
+                                type="submit" 
+                                variant="solid"
+                                isLoading={isLoading}
+                            >
                                 Save
                             </Button>
                             <Button color="warning" type="reset" variant="solid">
                                 Reset
                             </Button>
                         </div>
-                        {action && (
-                            <div className="text-small text-default-500">
-                                Action: <code>{action}</code>
-                            </div>
-                        )}
                     </Form>
                 </CardBody>
             </Card>

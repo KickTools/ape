@@ -98,7 +98,7 @@ export const Navbar = memo(() => {
                   size="lg"
                   className={pathname === item.href ? 'text-primary-400 font-bold' : 'font-bold'}
                 >
-                  {item.label}
+                  <span>{item.label}</span>
                 </Link>
               </NavbarItem>
             ))}
@@ -128,14 +128,14 @@ export const Navbar = memo(() => {
                     />
                   </DropdownTrigger>
                   <DropdownMenu aria-label="Profile Actions" variant="flat">
-                    <DropdownItem key="profile" className="h-14 gap-2">
+                    <DropdownItem key="profile" className="h-14 gap-2" textValue="Profile">
                       <p className="font-semibold">Signed in as</p>
                       <p className="font-semibold">{kickUser?.username || "User"}</p>
                     </DropdownItem>
-                    <DropdownItem key="settings" color="warning" onPress={() => router.push("/settings")}>
+                    <DropdownItem key="settings" color="warning" onPress={() => router.push("/settings")} textValue="Settings">
                       Settings
                     </DropdownItem>
-                    <DropdownItem key="logout" color="warning" onPress={handleLogout}>
+                    <DropdownItem key="logout" color="warning" onPress={handleLogout} textValue="Logout">
                       Log Out
                     </DropdownItem>
                   </DropdownMenu>

@@ -52,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsAuthenticated(false);
         setTwitchUser(null);
         setKickUser(null);
+        setMounted(false);
         localStorage.removeItem('kick_session');
       } finally {
         setLoading(false);
@@ -89,6 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setKickUser(null);
       setIsAuthenticated(false);
       localStorage.removeItem('kick_session');
+      localStorage.removeItem('kick_user');
     }
   }, []);
 
