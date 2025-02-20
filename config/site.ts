@@ -3,7 +3,7 @@ export const siteConfig = {
   description: "Connect with other Ape Gang members and track your progress in the community.",
   navItems: [
     {
-      label: "Home",
+      label: "My Profile",
       href: "/dashboard",
       showWhenAuthenticated: true, 
     },
@@ -30,12 +30,13 @@ export const siteConfig = {
     {
       label: "Search",
       href: "/search",
-      showWhenAuthenticated: true, 
+      showWhenAuthenticated: true,
+      showAdminOnly: true, 
     },
   ],
   navMenuItems: [
     {
-      label: "Home",
+      label: "My Profile",
       href: "/dashboard",
       showWhenAuthenticated: true,
     },

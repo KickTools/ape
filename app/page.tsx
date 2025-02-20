@@ -58,13 +58,13 @@ export default function Home() {
           <span className="text-3xl text-kick-500 font-bold tracking-wide">
             {dailyStats.dailyActiveUsers}+
           </span>
-          <p className="text-base text-kick-200">Daily Active Users</p>
+          <p className="text-base text-kick-200">Daily New Users</p>
         </div>
         <div className="text-center">
           <span className="text-3xl text-secondary-400 font-bold tracking-wide">
             {globalStats.verifiedViewers}+
           </span>
-          <p className="text-base text-secondary-800">Verified Viewers</p>
+          <p className="text-base text-secondary-800">Verified Users</p>
         </div>
         <div className="text-center">
           <span className="text-3xl text-primary-400 font-bold tracking-wide">
@@ -113,18 +113,22 @@ export default function Home() {
           className={`font-bold bg-kick text-background ${isAuthenticated ? "opacity-50 cursor-not-allowed" : ""
             }`}
         >
-          {isAuthenticated ? "Verified" : "Verify Now"}
+          {isAuthenticated ? "✔ Is Verified" : "Verify Now"}
         </Button>
-        <Button
-          as="a"
-          size="lg"
-          radius="full"
-          color="primary"
-          href={isAuthenticated ? "/dashboard" : "/login"}
-          className="font-bold"
-        >
-          {isAuthenticated ? "Continue" : "Log In"}
-        </Button>
+        {!isAuthenticated && (
+          <Button
+            as="a"
+            size="lg"
+            radius="full"
+            color="primary"
+            isDisabled={isAuthenticated}
+            href={isAuthenticated ? "/dashboard" : "/login"}
+            className="font-bold"
+          >
+            {isAuthenticated ? "Continue" : "Log In"}
+          </Button>
+        )}
+
       </div>
 
       {/* Analytics */}
