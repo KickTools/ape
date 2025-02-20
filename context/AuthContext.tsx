@@ -48,11 +48,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           }
         }
       } catch (error) {
-        console.error('Auth check failed:', error);
         setIsAuthenticated(false);
         setTwitchUser(null);
         setKickUser(null);
-        setMounted(false);
         localStorage.removeItem('kick_session');
       } finally {
         setLoading(false);

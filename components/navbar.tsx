@@ -31,7 +31,7 @@ import { TrainwrecksTVLogo } from "@/components/logo";
 export const Navbar = memo(() => {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, kickUser, loading, logout } = useAuth(); // Added logout here
+  const { isAuthenticated, kickUser, loading, logout } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -46,7 +46,12 @@ export const Navbar = memo(() => {
   // Show minimal navbar during SSR or initial load
   if (!mounted || loading) {
     return (
-      <HeroUINavbar maxWidth="xl" position="sticky" height="5rem" isBlurred={true}>
+      <HeroUINavbar maxWidth="xl" position="sticky" height="5rem" isBlurred={true} classNames={{
+        base: [
+          "bg-[#0e0e0e]/30", "shadow-lg"],
+        wrapper: [
+          "bg-transparent",]
+      }}>
         <NavbarContent justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
             <Link className="flex justify-start items-center gap-2" href="/">
@@ -64,14 +69,11 @@ export const Navbar = memo(() => {
       maxWidth="xl"
       position="sticky"
       height="5rem"
-      isBlurred={true}
       classNames={{
-        item: [
-          "flex",
-          "relative",
-          "h-full",
-          "items-center",
-        ]
+        base: [
+          "bg-[#0e0e0e]/30", "shadow-lg"],
+        wrapper: [
+          "bg-transparent",]
       }}
     >
       {/* Rest of your code stays exactly the same until the DropdownMenu */}

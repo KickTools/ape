@@ -36,6 +36,7 @@ const LoginCallback = () => {
         
         // Get additional viewer data
         const viewerData = await fetchLoginUserData(user.id);
+        console.log(viewerData);
     
         if (viewerData.viewerData?.kick?.user_id) {
           await login(
