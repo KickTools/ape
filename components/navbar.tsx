@@ -31,7 +31,7 @@ import { TrainwrecksTVLogo } from "@/components/logo";
 export const Navbar = memo(() => {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, kickUser, loading, logout } = useAuth();
+  const { isAuthenticated, kickProfile, loading, logout } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -124,15 +124,15 @@ export const Navbar = memo(() => {
                       as="button"
                       className="transition-transform"
                       color="primary"
-                      name={kickUser?.username || "User"}
+                      name={kickProfile?.username || "User"}
                       size="md"
-                      src={kickUser?.profile_pic || "https://i.pravatar.cc/150"}
+                      src={kickProfile?.profile_pic || "https://i.pravatar.cc/150"}
                     />
                   </DropdownTrigger>
                   <DropdownMenu aria-label="Profile Actions" variant="flat">
                     <DropdownItem key="profile" className="h-14 gap-2" textValue="Profile">
                       <p className="font-semibold">Signed in as</p>
-                      <p className="font-semibold">{kickUser?.username || "User"}</p>
+                      <p className="font-semibold">{kickProfile?.username || "User"}</p>
                     </DropdownItem>
                     <DropdownItem key="settings" color="warning" onPress={() => router.push("/settings")} textValue="Settings">
                       Settings

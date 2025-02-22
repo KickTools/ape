@@ -16,7 +16,7 @@ const KickVerify = () => {
 
   const handleConnectKick = async () => {
     try {
-      const userData: KickUserData = await fetchKickUserData(kickUsername);
+      const userData: KickUserData = await fetchKickUserData();
 
       if (userData) {
         setSenderId(userData.user_id);

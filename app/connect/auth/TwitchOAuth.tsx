@@ -2,12 +2,11 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import { useKickAuth } from "@/context/KickAuthContext";
+import { TwitchLogoIcon } from "@/components/icons";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const TwitchOAuth = () => {
-  const { setPage } = useKickAuth();
 
   const handleTwitchOAuth = () => {
     window.location.href = `${apiBaseUrl}/auth/twitch/verify`;
@@ -25,6 +24,7 @@ const TwitchOAuth = () => {
         radius="full"
         className="bg-twitch font-bold"
         onPress={handleTwitchOAuth}
+        startContent={<TwitchLogoIcon />}
       >
         Connect Twitch
       </Button>

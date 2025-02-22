@@ -43,13 +43,27 @@ async function fetchData(url: string, options?: RequestInit) {
   return response.json();
 }
 
-export async function fetchKickUserData(username: string): Promise<KickUserData> {
-  const data: KickApiResponse = await fetchData(`${apiBaseUrl}/kick/channel/${username}`);
+export async function fetchKickUserData(): Promise<KickUserData> {
+  try {
+    const response = await fetch(`${apiBaseUrl}/auth/kick/user`, {
+      credentials: 'include',
+    });
 
-  if (!data.success || !data.user) {
-    throw new Error('User data not found');
+    if (!response.ok) {
+      throw new Error('Failed to fetch Kick user data');
+    }
+
+    const data = await response.json();
+    
+    if (!data.success || !data.user) {
+      throw new Error('Kick user data not found');
+    }
+
+    return data.user;
+  } catch (error) {
+    console.error('Error fetching Kick user data:', error);
+    throw error;
   }
-  return data.user;
 }
 
 export async function fetchTwitchUserData(): Promise<TwitchUserData> {
@@ -68,8 +82,23 @@ export async function fetchTwitchUserData(): Promise<TwitchUserData> {
       throw new Error('Twitch user data not found');
     }
 
-    // Return just the user data, not wrapped in an object
-    return data.user;
+    // Transform the Twitch API response to match TwitchUserData interface
+    const transformedUserData: TwitchUserData = {
+      user_id: data.user.id,
+      login: data.user.login,
+      display_name: data.user.display_name,
+      type: data.user.type,
+      broadcaster_type: data.user.broadcaster_type,
+      description: data.user.description,
+      profile_image_url: data.user.profile_image_url,
+      offline_image_url: data.user.offline_image_url,
+      view_count: data.user.view_count,
+      followers_count: 0, // Default value since it's not provided by the API
+      email: data.user.email,
+      created_at: data.user.created_at
+    };
+
+    return transformedUserData;
   } catch (error) {
     console.error('Error fetching Twitch user data:', error);
     throw error;
@@ -98,7 +127,12 @@ interface ViewerData {
         kick: KickUserData;
       };
     };
-    // Add other viewer data properties as needed
+    twitch?: {  // Move twitch to same level as kick
+      user_id: string;
+      profile: {
+        twitch: TwitchUserData;
+      };
+    };
   };
 }
 
@@ -134,5 +168,51 @@ export async function searchViewers(query: string): Promise<SearchResult[]> {
   } catch (error) {
     console.error('Search error:', error);
     throw error;
+  }
+}
+
+interface BasePlatformResponse {
+  isValid: boolean;
+  message?: string;
+}
+
+interface TwitchVerificationResponse extends BasePlatformResponse {
+  platform: 'twitch';
+  user?: TwitchUserData;
+}
+
+interface KickVerificationResponse extends BasePlatformResponse {
+  platform: 'kick';
+  user?: KickUserData;
+}
+
+type VerificationResponse = TwitchVerificationResponse | KickVerificationResponse;
+
+export async function verifyAuthToken(platform: 'twitch' | 'kick'): Promise<VerificationResponse> {
+  try {
+    let endpoint;
+    switch (platform) {
+      case 'twitch':
+        endpoint = '/auth/verify-token';
+        break;
+      case 'kick':
+        endpoint = '/auth/verify-kick-token';
+        break;
+      default:
+        throw new Error(`Unsupported platform: ${platform}`);
+    }
+
+    const response = await fetchData(`${apiBaseUrl}${endpoint}`);
+    
+    return {
+      ...response,
+      platform,
+    };
+  } catch (error) {
+    return {
+      isValid: false,
+      platform,
+      message: error instanceof Error ? error.message : 'Token verification failed'
+    };
   }
 }

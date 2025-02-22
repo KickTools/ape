@@ -4,6 +4,7 @@
 import { useKickAuth } from "@/context/KickAuthContext";
 import LandingConnect from "./landing/page";
 import TwitchOAuth from "@/app/connect/auth/TwitchOAuth";
+import KickOAuth from "@/app/connect/auth/KickOAuth";
 import KickVerify from "@/app/connect/auth/KickVerify";
 import KickVerifyCode from "@/app/connect/verification/KickVerifyCode";
 import KickVerificationComplete from "@/app/connect/verification/KickVerificationComplete";
@@ -16,6 +17,8 @@ const ConnectPageContent = () => {
     switch (page) {
       case "twitchOAuth":
         return <TwitchOAuth />;
+      case "kickOAuth":
+        return <KickOAuth />;
       case "kickVerify":
         return <KickVerify />;
       case "kickVerifyCode":
@@ -35,10 +38,10 @@ const ConnectPageContent = () => {
   return (
     <Card
       isBlurred
-      className="border-none bg-background/60 dark:bg-foreground-50/10 max-w-md"
+      className="border-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-background/10 via-background/20 to-background/40 max-w-md"
       shadow="sm"
     >
-      <CardBody className="text-center p-6 space-y-6">{renderPage()}</CardBody>
+      <CardBody className="text-center p-8 space-y-8">{renderPage()}</CardBody>
     </Card>
   );
 };

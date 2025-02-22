@@ -85,6 +85,24 @@ export const VerifiedIcon: React.FC<IconSvgProps> = ({
   );
 }
 
+export const TwitchLogoIcon: React.FC<IconSvgProps> = ({
+  size = 16,
+  width,
+  height,
+  ...props
+}) => {
+  return (
+    <svg
+      height={size || height}
+      width={size || width}
+      viewBox="32 32 192 216"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path fill="none" d="M0 0h256v256H0z" /><path fill="currentColor" d="M208 32H48a16 16 0 0 0-16 16v144a16 16 0 0 0 16 16h16v32a7.9 7.9 0 0 0 4.6 7.2 6.8 6.8 0 0 0 3.4.8 7.5 7.5 0 0 0 5.1-1.9l45.8-38.1h42.2a15.8 15.8 0 0 0 10.2-3.7l42.9-35.8a15.7 15.7 0 0 0 5.8-12.2V48a16 16 0 0 0-16-16m-80 104a8 8 0 0 1-16 0V88a8 8 0 0 1 16 0Zm48 0a8 8 0 0 1-16 0V88a8 8 0 0 1 16 0Z" /></svg>
+  );
+};
+
 export const KickLogoIcon: React.FC<IconSvgProps> = ({
   size = 14,
   width,
@@ -105,17 +123,17 @@ export const KickLogoIcon: React.FC<IconSvgProps> = ({
 
 export const EmailIcon: React.FC<IconSvgProps> = (props) => {
   return (
-      <svg
-          viewBox="0 0 32 32"
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          width="24"
-          {...props}
-      >
-          <g fill="currentColor">
-              <path d="M28 13a1 1 0 0 0-1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8a1 1 0 0 0-2 0v8a3 3 0 0 0 .88 2.12A3 3 0 0 0 6 25h20a3 3 0 0 0 2.12-.88A3 3 0 0 0 29 22v-8a1 1 0 0 0-1-1" />
-              <path d="M15.4 18.8a1 1 0 0 0 1.2 0l11.81-8.86a1 1 0 0 0 .3-1.23 3 3 0 0 0-.59-.83A3 3 0 0 0 26 7H6a3 3 0 0 0-2.12.88 3 3 0 0 0-.59.83 1 1 0 0 0 .3 1.23ZM6 9h20a.9.9 0 0 1 .28 0L16 16.75 5.72 9A.9.9 0 0 1 6 9" />
-          </g>
-      </svg>
+    <svg
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+      height="24"
+      width="24"
+      {...props}
+    >
+      <g fill="currentColor">
+        <path d="M28 13a1 1 0 0 0-1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8a1 1 0 0 0-2 0v8a3 3 0 0 0 .88 2.12A3 3 0 0 0 6 25h20a3 3 0 0 0 2.12-.88A3 3 0 0 0 29 22v-8a1 1 0 0 0-1-1" />
+        <path d="M15.4 18.8a1 1 0 0 0 1.2 0l11.81-8.86a1 1 0 0 0 .3-1.23 3 3 0 0 0-.59-.83A3 3 0 0 0 26 7H6a3 3 0 0 0-2.12.88 3 3 0 0 0-.59.83 1 1 0 0 0 .3 1.23ZM6 9h20a.9.9 0 0 1 .28 0L16 16.75 5.72 9A.9.9 0 0 1 6 9" />
+      </g>
+    </svg>
   );
 };

@@ -14,6 +14,7 @@ type KickAuthContextProps = {
   setTwitchData: (data: TwitchUserData | null) => void;
   kickData: KickUserData | null;
   setKickData: (data: KickUserData | null) => void;
+  clearAuth: () => void; // Add the clearAuth method
 };
 
 const KickAuthContext = createContext<KickAuthContextProps | undefined>(undefined);
@@ -32,6 +33,13 @@ export const KickAuthProvider = ({ children }: { children: ReactNode }) => {
   const [twitchData, setTwitchData] = useState<TwitchUserData | null>(null);
   const [kickData, setKickData] = useState<KickUserData | null>(null);
 
+  const clearAuth = () => {
+    setPage("landing");
+    setSenderId("");
+    setTwitchData(null);
+    setKickData(null);
+  };
+
   return (
     <KickAuthContext.Provider 
       value={{
@@ -42,7 +50,8 @@ export const KickAuthProvider = ({ children }: { children: ReactNode }) => {
         twitchData,
         setTwitchData,
         kickData,
-        setKickData
+        setKickData,
+        clearAuth, // Include clearAuth in the context value
       }}
     >
       {children}

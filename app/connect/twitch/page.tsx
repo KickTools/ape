@@ -1,3 +1,4 @@
+// app/connect/twitch/page.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -8,14 +9,16 @@ import { Spinner } from "@heroui/spinner";
 
 const Callback = () => {
   const router = useRouter();
-  const { twitchData, setPage, setTwitchData } = useKickAuth();
-  const twitchUserName = twitchData?.display_name || "N/A";
+  const { setPage, setTwitchData } = useKickAuth();
+  const twitchUserName = sessionStorage.getItem("twitchUserName") || "N/A";
 
   useEffect(() => {
     fetchTwitchUserData()
       .then(userData => {
+        sessionStorage.setItem("twitchData", JSON.stringify(userData));
+        sessionStorage.setItem("twitchUserName", userData.display_name);
         setTwitchData(userData);
-        setPage("kickVerify");
+        setPage("kickOAuth");
         router.push("/connect");
       })
       .catch(error => {

@@ -13,21 +13,21 @@ import { ViewerSettings } from "@/types/viewerFormData";
 import { FormState } from "@/types/viewerFormData";
 
 const SettingsForm: React.FC = () => {
-    const { kickUser, twitchUser } = useAuth();
+    const { kickProfile, twitchProfile } = useAuth();
     const { formData, setFormData } = useFormData();
     const [formState, setFormState] = useState<FormState | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const kickUsername = kickUser?.username || "NA";
-    const twitchUsername = twitchUser?.display_name || "NA";
-    const kickPFP = kickUser?.profile_pic || "https://i.pravatar.cc/150";
+    const kickUsername = kickProfile?.username || "NA";
+    const twitchUsername = twitchProfile?.display_name || "NA";
+    const kickPFP = kickProfile?.profile_pic || "https://i.pravatar.cc/150";
 
     useEffect(() => {
-        if (twitchUser?.id) {
+        if (twitchProfile?.user_id) {
             setIsLoading(true);
             setFormState(null);
             
-            fetchFormData(twitchUser.id)
+            fetchFormData(twitchProfile.user_id)
                 .then((data: ViewerSettings) => {
                     console.log('Fetched form data:', data); // Add this for debugging
                     setFormData({
@@ -45,7 +45,7 @@ const SettingsForm: React.FC = () => {
                 })
                 .finally(() => setIsLoading(false));
         }
-    }, [twitchUser?.id, setFormData]);
+    }, [twitchProfile?.user_id, setFormData]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -58,7 +58,7 @@ const SettingsForm: React.FC = () => {
     
         try {
             const response = await submitFormData(
-                twitchUser?.id || '',
+                twitchProfile?.user_id || '',
                 bitcoinAddress,
                 contactAddress
             );
