@@ -2,12 +2,13 @@
 'use client';
 
 import React from 'react';
-import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Input } from "@heroui/input";
 import { Spinner } from "@heroui/spinner";
-import { Image } from "@heroui/image";
+import { TwitterIcon } from '@/components/icons';
 import { searchViewers, SearchResult } from '@/utils/api';
 import { debounce } from '@/utils/debounce';
+
+
 
 export default function SearchPage() {
     const [query, setQuery] = React.useState('');
@@ -28,6 +29,7 @@ export default function SearchPage() {
             try {
                 const searchResults = await searchViewers(searchQuery);
                 setResults(searchResults);
+                console.log(searchResults);
             } catch (err) {
                 setError('Failed to perform search. Please try again.');
                 setResults([]);
@@ -42,40 +44,34 @@ export default function SearchPage() {
         performSearch(query);
     }, [query, performSearch]);
 
-    return (
-        <section className="flex flex-col items-center justify-start py-12 px-6 space-y-8 min-w-96 w-2/3 max-w-2xl mx-auto">
-            <Card isBlurred isFooterBlurred className="w-full p-2 bg-background/60 dark:bg-foreground-foreground/30 border-none relative" shadow="sm">
-                <Image
-                    removeWrapper
-                    alt="Form Background"
-                    className="z-0 w-full h-full object-cover absolute top-0 left-0"
-                    src="assets/images/bg-form-train.jpg"
-                    style={{ filter: 'blur(30px) opacity(.5)' }}
-                />
-                <CardBody className="p-8 space-y-6 relative z-10">
-                    {/* Title */}
-                    <h1 className="text-2xl font-bold tracking-tight">Search Viewers</h1>
+    // Function to calculate star count based on verified platforms
+    const getStarCount = (viewer: SearchResult) => {
+        let count = 0;
+        if (viewer.twitch?.verified) count++;
+        if (viewer.kick?.verified) count++;
+        return count;
+    };
 
-                    {/* Search Input */}
-                    <div className="w-full max-w-xl">
+    return (
+        <section className="flex flex-col items-center justify-start py-12 px-6 space-y-2 min-w-96 w-2/3 max-w-2xl mx-auto">
+            <div className="w-full border-none rounded-lg relative shadow-sm">
+                <div className="p-8 space-y-4 relative z-10">
+                    <div className="w-full max-w-xl p-4 bg-background/20 rounded-xl">
                         <Input
-                            label="Search viewers"
                             labelPlacement="outside"
-                            placeholder="Enter viewer name or username..."
+                            placeholder="Enter viewer name or username for either platform ..."
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             className="w-full"
                             size="lg"
-                            variant="faded"
-                            color="success"
+                            variant="flat"
+                            color="secondary"
                         />
-                    </div>                    
-                </CardBody>
-                <CardFooter><p className="px-6 text-kick text-sm">Search by viewer name, Twitch, or Kick username</p></CardFooter>
-            </Card>
+                    </div>
+                </div>
 
+            </div>
 
-            {/* Results Section */}
             <div className="w-full max-w-xl space-y-4">
                 {isLoading && (
                     <div className="flex justify-center p-4">
@@ -84,59 +80,108 @@ export default function SearchPage() {
                 )}
 
                 {error && (
-                    <Card>
-                        <CardBody>
-                            <p className="text-danger">{error}</p>
-                        </CardBody>
-                    </Card>
+                    <div className="p-4 border border-red-400 bg-red-100 text-primary rounded-lg">
+                        {error}
+                    </div>
                 )}
 
                 {!isLoading && results.length > 0 && (
                     <div className="space-y-4">
-                        {results.map((viewer) => (
-                            <Card key={viewer.id} className="w-full hover:bg-default-100 transition-colors cursor-pointer">
-                                <CardBody>
-                                    <div className="flex flex-col space-y-2">
-                                        <div className="flex justify-between items-start">
-                                            <h3 className="text-xl font-semibold">{viewer.name}</h3>
-                                        </div>
-
-                                        <div className="flex flex-wrap gap-12">
-                                            {viewer.twitch && (
-                                                <div className="flex items-center space-x-2">
-                                                    <span className="text-twitch font-medium">Twitch:</span>
-                                                    <span>{viewer.twitch.username}</span>
-                                                    {viewer.twitch.verified && (
-                                                        <span className="text-success text-sm font-medium">✓ Verified</span>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                            {viewer.kick && (
-                                                <div className="flex items-center space-x-2">
-                                                    <span className="text-kick font-medium">Kick:</span>
-                                                    <span>{viewer.kick.username}</span>
-                                                    {viewer.kick.verified && (
-                                                        <span className="text-success text-sm font-medium">✓ Verified</span>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
+                        {results.map((viewer) => {
+                            const starCount = getStarCount(viewer);
+                            return (
+                                <div
+                                    key={viewer.id}
+                                    className="relative flex flex-row gap-8 p-4 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-background/10 via-background/20 to-background/40 rounded-lg hover:bg-background/10 hover:border hover:border-primary/50 transition-colors"
+                                >
+                                    <div className="flex justify-center">
+                                        {viewer.twitch?.profilePic ? (
+                                            <img
+                                                src={viewer.twitch.profilePic}
+                                                alt={`${viewer.name}'s Twitch profile`}
+                                                className="w-36 h-36 rounded-full object-cover"
+                                            />
+                                        ) : viewer.kick ? (
+                                            <div className="w-36 h-36 rounded-full bg-primary flex items-center justify-center">
+                                                <span className="text-xl font-bold">{viewer.kick.username[0]}</span>
+                                            </div>
+                                        ) : (
+                                            <div className="w-36 h-36 rounded-full bg-primary flex items-center justify-center">
+                                                <span className="text-gray-500 text-sm">No image</span>
+                                            </div>
+                                        )}
                                     </div>
-                                </CardBody>
-                            </Card>
-                        ))}
+
+                                    <div className="flex-grow">
+                                        <div className="flex gap-2 pb-2 items-center justify-between">
+                                            <div className="flex gap-4 items-center">
+                                                <h3 className="text-2xl font-bold text-foreground">{viewer.name}</h3>
+
+                                                {viewer.kick?.twitter && (
+                                                    <a href={`https://x.com/${viewer.kick.twitter}`} target="_blank" rel="noopener noreferrer">
+                                                        <TwitterIcon className="w-6 h-6 text-primary hover:text-primary-600" />
+                                                    </a>
+                                                )}
+                                            </div>
+                                            <div className="flex space-x-1">
+                                                {Array.from({ length: starCount }, (_, i) => (
+                                                    <span key={i} className="text-kick text-2xl">★</span>
+                                                ))}
+                                                {Array.from({ length: 2 - starCount }, (_, i) => (
+                                                    <span key={i} className="text-gray-300 text-lg">☆</span>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {viewer.twitch && (
+                                            <div className="flex items-center space-x-2">
+                                                <span className="text-foreground-100 font-black">Twitch</span>
+                                                <a
+                                                    href={viewer.twitch.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-foreground hover:underline"
+                                                >
+                                                    {viewer.twitch.username}
+                                                </a>
+                                            </div>
+                                        )}
+                                        {viewer.kick && (
+                                            <div className="flex items-center space-x-2">
+                                                <span className="text-foreground-100 font-black">Kick</span>
+                                                <a
+                                                    href={`https://kick.com/${viewer.kick.username}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-foreground hover:underline"
+                                                >
+                                                    {viewer.kick.username}
+                                                </a>
+                                            </div>
+                                        )}
+                                        {viewer.bitcoinAddress && (
+                                            <div className="flex items-center space-x-2">
+                                                <span className="text-foreground-100 font-black">Bitcoin:</span>
+                                                <a href={`https://blockchair.com/bitcoin/address/${viewer.bitcoinAddress}`} target="_blank" rel="noopener noreferrer" className="text-sm text-foreground hover:underline">
+                                                    {viewer.bitcoinAddress}
+                                                </a>
+                                            </div>
+                                        )}
+                                        {viewer.contactAddress && (
+                                            <div className="flex items-center space-x-2"><p className="text-foreground-100 font-black">Contact</p><p className=""> {viewer.contactAddress}</p></div>
+                                        )}
+
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
 
                 {!isLoading && query.length >= 2 && results.length === 0 && (
-                    <Card>
-                        <CardBody>
-                            <p className="text-center text-gray-600 dark:text-gray-400">
-                                No viewers found matching "{query}"
-                            </p>
-                        </CardBody>
-                    </Card>
+                    <div className="p-4 text-center text-foreground tracking-wider">
+                        No viewers found matching <span className="text-kick">"{query}"</span>
+                    </div>
                 )}
             </div>
         </section>
