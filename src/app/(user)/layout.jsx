@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer';
 import JumpToTop from '@/components/elements/jumpToTop.jsx';
 import '../styles/index.css';
 import '../styles/animatebg.css';
+import '../styles/forms.css';
 
 export default function UserLayout({ children }) {
     return (

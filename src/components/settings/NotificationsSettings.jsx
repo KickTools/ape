@@ -1,21 +1,28 @@
-// src/components/settings/NotificationsSettings.jsx
+// Example usage in NotificationsSettings.jsx
+import Checkbox from '../elements/Checkbox';
+
 export default function NotificationsSettings({ user }) {
-    return (
-      <div>
-        <h3 className="text-2xl font-semibold mb-4">Notifications Settings</h3>
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-foreground-700">Email Notifications</label>
-            <input type="checkbox" className="mr-2" /> Enable
+  return (
+    <div className="settings-container">
+      <h3 className="settings-title">Notifications Settings</h3>
+      <form className="settings-form">
+        <div className="settings-section">
+          <div className="form-row">
+            <label className="form-label">Email Notifications</label>
+            <Checkbox color="apeRed">Enable</Checkbox>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-foreground-700">Push Notifications</label>
-            <input type="checkbox" className="mr-2" /> Enable
+          <div className="form-row">
+            <label className="form-label">Push Notifications</label>
+            <Checkbox color="apeBlue">Enable</Checkbox>
           </div>
-          <div>
-            <button type="submit" className="w-full py-2 px-4 rounded-md bg-apeRed text-white hover:bg-red-600 transition-colors">Save Notifications</button>
-          </div>
-        </form>
-      </div>
-    );
-  }
+        </div>
+        <hr className="section-divider" />
+        <div>
+          <button type="submit" className="save-button">
+            Save Notifications
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

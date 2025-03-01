@@ -1,0 +1,99 @@
+/* forms.css */
+@import "../globals.css";
+
+@layer components {
+  .settings-container {
+    @apply space-y-4;
+  }
+
+  .settings-title {
+    @apply text-lg font-bold mb-8 uppercase;
+  }
+
+  .settings-form {
+    @apply space-y-4;
+  }
+
+  .settings-section {
+    @apply space-y-4;
+  }
+
+  .section-title {
+    @apply text-sm text-apeRed font-black mb-6 uppercase;
+  }
+
+  .form-row {
+    @apply flex flex-row gap-2;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-foreground-700 my-auto w-40;
+  }
+
+  .form-input,
+  .form-select {
+    @apply block w-full rounded-md border-transparent hover:border-foreground/70 bg-background-300/5 border-2 px-3 py-2;
+  }
+
+  .form-input-disabled {
+    @apply block w-full rounded-md bg-foreground-700/5 text-foreground-800 ring-0 ring-transparent border-transparent border-2 px-3 py-2 cursor-not-allowed ;
+  }
+
+  .form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1rem 1rem;
+  }
+
+  .form-select::-ms-expand {
+    display: none;
+  }
+
+  .form-select option {
+    background-color: rgb(15 15 15);
+    color: #f2f2f2;
+  }
+
+  .form-input:focus:not([disabled]),
+  .form-select:focus:not([disabled]) {
+    @apply outline-none ring-2 ring-foreground/70;
+  }
+
+  .connection-item {
+    @apply space-y-2;
+  }
+
+  .connection-label {
+    @apply block text-sm font-semibold text-foreground-700;
+  }
+
+  .connection-button {
+    @apply flex w-full font-bold py-2 px-4 rounded-md leading-6 transition-colors cursor-pointer;
+  }
+
+  .connection-x {
+    @apply bg-background text-foreground hover:bg-foreground hover:text-background;
+  }
+
+  .connection-discord {
+    @apply bg-discord text-foreground hover:bg-discord/80;
+  }
+
+  .connection-twitch {
+    @apply bg-twitch text-foreground hover:bg-twitch-400;
+  }
+
+  .connection-kick {
+    @apply bg-kick text-background hover:bg-kick-400;
+  }
+
+  .section-divider {
+    @apply border-background-300/40 border-1 border-dashed my-12;
+  }
+
+  .save-button {
+    @apply w-full py-2 px-4 rounded-md bg-apeRed text-white hover:bg-apeRed-400 transition-colors cursor-pointer;
+  }
+}

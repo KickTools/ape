@@ -1,19 +1,38 @@
 // src/components/settings/ConnectionsSettings.jsx
+import Icons from "@/assets/icons";
+
 export default function ConnectionsSettings({ user }) {
-    return (
-      <div>
-        <h3 className="text-2xl font-semibold mb-4">Connections Settings</h3>
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-0.5 text-foreground-700">X Connection</label>
-            <button className="w-full py-2 px-4 rounded-md bg-background text-foreground hover:bg-foreground hover:text-background transition-colors">Connect X</button>
+  return (
+    <div className="settings-container">
+      <h3 className="settings-title">Connections Settings</h3>
+      <form className="settings-form">
+        <div className="settings-section grid grid-cols-2 gap-12">
+          <div className="connection-item">
+            <label className="connection-label">X Connection</label>
+            <button className="connection-button connection-x flex items-center justify-center gap-2">
+              <Icons.BrandX size="xl" /> Connect X
+            </button>
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-0.5 text-foreground-700">Discord Connection</label>
-            <button className="w-full py-2 px-4 rounded-md bg-discord text-white hover:bg-green-600 transition-colors">Connect Discord</button>
+          <div className="connection-item">
+            <label className="connection-label">Discord Connection</label>
+            <button className="connection-button connection-discord flex items-center justify-center gap-2">
+              <Icons.BrandDiscord size="xl" /> Connect Discord
+            </button>
           </div>
-        </form>
-      </div>
-    );
-  }
-  
+          <div className="connection-item">
+            <label className="connection-label">Twitch Connection</label>
+            <button className="connection-button connection-twitch flex items-center justify-center gap-2">
+              <Icons.BrandTwitch size="xl" /> Connect Twitch
+            </button>
+          </div>
+          <div className="connection-item">
+            <label className="connection-label">Kick Connection</label>
+            <button className="connection-button connection-kick flex items-center justify-center gap-2">
+              <Icons.BrandKick size="xl" /> Connect Kick
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
