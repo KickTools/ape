@@ -323,3 +323,9 @@
     @apply text-center text-foreground-800 md:text-right;
   }
 }
+
+@layer components {
+  .apePeriod::after {
+    @apply text-apeRed-500 font-black ml-1 content-['.'];
+  }
+}

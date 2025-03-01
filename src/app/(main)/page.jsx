@@ -59,7 +59,7 @@ export default function Home() {
             {!!user && (
               <button
                 onClick={() => continueToWelcome()}
-                className="bg-apeGreen text-foreground font-bold py-3 px-6 rounded-full transition hover:shadow-apeGreen/20 hover:shadow-lg hover:scale-105 cursor-pointer"
+                className="bg-apeRed text-foreground font-bold py-3 px-6 rounded-full transition hover:shadow-apeRed/20 hover:shadow-lg hover:scale-105 cursor-pointer"
               >
                 Continue
               </button>

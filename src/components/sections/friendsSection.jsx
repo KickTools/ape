@@ -23,7 +23,7 @@ const Friends = () => {
       }}
     >
       <div className="max-w-5xl mx-auto px-6 text-center">
-        <h2 className="text-6xl font-black text-center mb-8 uppercase" style={{transform: 'skewX(-15deg)'}}>The Boys <span className='text-apeRed'>.</span></h2>
+        <h2 className="apePeriod text-6xl font-black text-center mb-8 uppercase" style={{transform: 'skewX(-15deg)'}}>The Boys</h2>
         <div className="flex flex-wrap justify-center gap-8">
           {sortedFriends.map((friend, index) => (
             <div key={index} className="friend-item group flex flex-col items-center gap-2">

@@ -4,7 +4,8 @@
 import Icons from "@/assets/icons";
 import Link from 'next/link';
 import { useAuth } from "@/contexts/AuthContext";
-import WelcomeCardSection from "@/components/sections/welcomeCardSection"; // Import the WelcomeCardSection
+import WelcomeCardSection from "@/components/sections/welcomeCardSection";
+import ExploreSection from "@/components/sections/exploreSection";
 
 export default function WelcomePage() {
   const { user, signedIn, primaryPlatform } = useAuth();
@@ -47,24 +48,30 @@ export default function WelcomePage() {
     },
   ];
 
-  const bottomLinks = [
+  const exploreLinks = [
     {
-      title: "Terms of Service",
-      href: "/terms", // Placeholder link
+      title: "Leaderboard",
+      description: "See where you rank among other Ape Gang members.",
+      href: "/leaderboard",
+      icon: "Trophy",
     },
     {
-      title: "Privacy Policy",
-      href: "/privacy", // Placeholder link
+      title: "Moments",
+      description: "View and share your favorite moments from the Ape Gang community.",
+      href: "/user/moments",
+      icon: "Photo",
     },
     {
       title: "Contact Us",
-      href: "/contact", // Placeholder link
+      description: "Reach out to the Ape Gang team for support and inquiries.",
+      href: "/contact",
+      icon: "Send",
     },
   ];
 
   return (
     <div className="flex flex-col">
-      <section className="py-32">
+      <section className="py-16 md:py-32">
         <div className="max-w-5xl mx-auto px-6 mb-8">
           {signedIn && user ? (
             <div className="flex flex-col items-center">
@@ -82,15 +89,8 @@ export default function WelcomePage() {
         <WelcomeCardSection cardData={cardData} />
       </section>
 
-      <section className="py-32 bg-background-400/80 text-center">
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-4xl md:text-6xl font-black mb-4 uppercase">
-            Explore <span className="text-apeRed">.</span>
-          </h2>
-          <p className="text-lg text-foreground-700">
-            Discover exclusive content, participate in community events, and connect with other members. We're excited to have you here!
-          </p>
-        </div>
+      <section className="py-16 md:py-32 mb-16 md:mb-32 bg-background-400/80 text-center">
+        <ExploreSection exploreLinks={exploreLinks} />
       </section>
     </div>
   );
