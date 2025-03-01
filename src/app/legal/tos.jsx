@@ -1,10 +1,10 @@
-// src/app/legal/tos.mjs
+// src/app/legal/tos.jsx
 export default function TermsOfService() {
     return (
         <section className="flex flex-col items-center justify-center px-4 max-w-4xl mx-auto">
             <h1 className="page-title">Terms of Service</h1>
             <p className="page-timestamp">
-                Last Updated: 2025-02-18 21:51:10 UTC
+                Last Updated: 2025-03-01 00:00:00 UTC
             </p>
 
             <div className="w-full space-y-8">
@@ -32,14 +32,14 @@ export default function TermsOfService() {
                 <section className="section-tos">
                     <h2>Account Requirements</h2>
                     <p>
-                        Each <span className="accent text-twitch-400">Twitch</span> account can only be linked to one <span className="accent text-kick">Kick</span> account. Users can register only one cryptocurrency wallet address and one Twitter/X account, and all linked accounts must belong to the same individual.
+                        Each <span className="accent text-twitch-400">Twitch</span> account can only be linked to one <span className="accent text-kick">Kick</span> account. Users can register only one Bitcoin address and one Ethereum address, as well as one Twitter/X account. All linked accounts must belong to the same individual.
                     </p>
                 </section>
 
                 <section className="section-tos">
                     <h2>Account Verification</h2>
                     <p>
-                        Users must complete verification through both platforms, including OAuth-based authentication for <span className="accent text-twitch-400">Twitch</span>, a verification code system for <span className="accent text-kick">Kick</span> via <span className="accent text-secondary-600">KickTools</span> chat, cryptocurrency wallet verification, and optional Twitter/X account verification.
+                        Users must complete verification through both platforms, including OAuth-based authentication for <span className="accent text-twitch-400">Twitch</span>, a verification code system for <span className="accent text-kick">Kick</span> via <span className="accent text-secondary-600">KickTools</span> chat, cryptocurrency wallet verification, and optional Twitter/X account verification. A level system is used for verification, with entry level or 2 of 5-star verification required to access the account. Users can reach level 5 by linking their Discord and Twitter accounts and interacting via Kick's chat.
                     </p>
                 </section>
 

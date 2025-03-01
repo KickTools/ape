@@ -9,20 +9,20 @@ export default function MomentsPage() {
     {
       title: "Train's MAX wins for 20 million",
       description: "Trainwreckstv hits massive max win on Hoarders 2!",
-      thumbnail: "/images/moments/train-jackpot.jpg",
-      href: "https://kick.com/trainwreckstv"
+      thumbnail: "/images/moments/train_max-win-hoarders.jpg",
+      href: "https://x.com/TrenkekTv/status/1879788382987182311"
     },
     {
       title: "Community Meme of the Month",
       description: "Ape Gang members creating the funniest memes.",
-      thumbnail: "/images/moments/community-meme.jpg",
-      href: "#"
+      thumbnail: "/images/moments/train_united.jpg",
+      href: "https://x.com/LilChampignonCS/status/1894870623408603472"
     },
     {
-      title: "Legendary Rant Compilation",
-      description: "Train's most memorable rants in one video.",
-      thumbnail: "/images/moments/train-rant.jpg",
-      href: "#"
+      title: "The Speech That Started It All",
+      description: "The legendary Train speech.",
+      thumbnail: "/images/moments/train_the-speech.jpg",
+      href: "https://www.youtube.com/watch?v=uungwbbGipY"
     }
   ]);
 
@@ -43,6 +43,7 @@ export default function MomentsPage() {
           <a
             key={index}
             href={href}
+            target="_blank"
             className="group flex flex-col items-center text-center hover:bg-apeRed-500/10 hover:no-underline rounded-xl cursor-pointer transition-all"
           >
             <div className="w-full h-56 overflow-hidden rounded-xl">
