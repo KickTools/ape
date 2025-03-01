@@ -15,7 +15,7 @@ export default function NotificationsSettings({ user }) {
   const [hasChanges, setHasChanges] = useState(false);
   const toast = useToast();
 
-  const userID = user?.id;
+  const userID = user?.mainUserId || user?.id;
   const platform = user?.platform;
 
   useEffect(() => {

@@ -21,7 +21,7 @@ export default function GiveawaySettings({ user }) {
   const [hasChanges, setHasChanges] = useState(false);
   const toast = useToast();
 
-  const userID = user?.id;
+  const userID = user?.mainUserId || user?.id;
   const platform = user?.platform;
 
   // Fetch existing form data when component mounts

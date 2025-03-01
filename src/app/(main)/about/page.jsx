@@ -36,7 +36,7 @@ export default function AboutPage() {
       </section>
 
       {/* Disclaimer Section */}
-      <section className="py-16 md:py-32 px-8 text-center bg-background text-foreground">
+      <section className="py-16 md:py-32 px-8 text-center bg-background/80 text-foreground">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-4xl lg:text-6xl font-black mb-6 uppercase">
             Disclaimer<span className="text-apeRed"> .</span>
@@ -72,12 +72,12 @@ export default function AboutPage() {
       </section>
 
       {/* Babz and KickTools Section */}
-      <section className="p-16 text-center bg-background-400 text-foreground">
+      <section className="py-16 md:py-32 px-8 text-center bg-background-400/40 text-foreground">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
             {/* Profile Image with Skew Effect */}
-            <div className="col-span-1 flex justify-center">
-              <div className="w-44 h-52 p-2 border-4 border-apeBlue rounded hover:border-apeRed cursor-pointer hover:scale-105 transition-all overflow-hidden">
+            <div className="col-span-1 flex md:justify-center">
+              <div className="w-48 h-48 md:w-44 md:h-52 p-2 border-4 border-apeBlue rounded hover:border-apeRed cursor-pointer hover:scale-105 transition-all overflow-hidden">
                 <div className="w-full h-full">
                   <Image
                     src={babzPfp}
@@ -139,7 +139,7 @@ export default function AboutPage() {
       </section>
 
       {/* Trainwreck Outreach Section */}
-      <section className="py-16 md:py-32 px-8 text-center bg-background text-foreground">
+      <section className="py-16 md:py-32 px-8 text-center bg-background/80 text-foreground">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-4xl lg:text-6xl font-black mb-6 uppercase">
             Endorsement<span className="text-apeRed">.</span>

@@ -1,7 +1,7 @@
 // src/app/legal/tos.mjs
 export default function TermsOfService() {
     return (
-        <section className="flex flex-col items-center justify-center py-12 px-6 max-w-4xl mx-auto">
+        <section className="flex flex-col items-center justify-center px-4 max-w-4xl mx-auto">
             <h1 className="page-title">Terms of Service</h1>
             <p className="page-timestamp">
                 Last Updated: 2025-02-18 21:51:10 UTC

@@ -159,7 +159,7 @@
 
   /* Main Header - Single Pill-Shaped Element */
   .apeHeader {
-    @apply sticky top-6 z-10 bg-background-400/20 border-2 border-transparent hover:border-background-300/50 backdrop-blur-md shadow-sm hover:shadow-lg hover:shadow-foreground-500/5 rounded-full w-3/4 xl:max-w-5xl mx-auto py-1 px-2 cursor-pointer transition-transform;
+    @apply sticky top-6 z-10 bg-background-300/5 border-2 border-transparent hover:border-background-300/50 backdrop-blur-md shadow-sm hover:shadow-lg hover:shadow-foreground-500/5 rounded-full w-3/4 xl:max-w-5xl mx-auto py-1 px-2 cursor-pointer transition-transform;
   }
 
   /* Container - Flex layout for logo, search, and auth */

@@ -1,0 +1,57 @@
+/* Legal page styles */
+
+@import "../globals.css";
+
+body {
+  @apply bg-background;
+  background-image: 
+  radial-gradient(circle at 84% 82%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 21%, transparent 21%, transparent 100%), 
+  radial-gradient(circle at 75% 56%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 30%, transparent 30%, transparent 100%), 
+  radial-gradient(circle at 74% 53%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 95%, transparent 95%, transparent 100%), 
+  radial-gradient(circle at 86% 43%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 83%, transparent 83%, transparent 100%), 
+  radial-gradient(circle at 64% 88%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 2%, transparent 2%, transparent 100%), 
+  radial-gradient(circle at 73% 77%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 18%, transparent 18%, transparent 100%), 
+  radial-gradient(circle at 57% 51%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 64%, transparent 64%, transparent 100%), 
+  radial-gradient(circle at 40% 84%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 14%, transparent 14%, transparent 100%), 
+  linear-gradient(90deg, rgb(7, 7, 7), rgb(12, 12, 12));
+}
+
+@layer components {
+
+  /* Common page styles */
+  .page-title {
+    @apply text-4xl font-black mb-2 mr-auto text-white uppercase;
+  }
+
+  .page-timestamp {
+    @apply text-base text-zinc-500 mb-12 mr-auto;
+  }
+
+  .warning-box {
+    @apply bg-background/20 p-6 rounded-lg;
+  }
+
+  .section-privacy,
+  .section-tos {
+    @apply space-y-6 pb-6;
+  }
+
+  .section-privacy h2,
+  .section-tos h2 {
+    @apply text-3xl font-black text-zinc-500;
+  }
+
+  .section-privacy p,
+  .section-tos p {
+    @apply text-zinc-100 text-xl font-medium leading-normal;
+  }
+
+  .section-privacy ul,
+  .section-tos ul {
+    @apply list-none pl-6 space-y-2;
+  }
+
+  .accent {
+    @apply font-semibold;
+  }
+}

@@ -14,6 +14,9 @@ export default function SettingsPage() {
   const { user, kickProfile, twitchProfile, signedIn } = useAuth();
   const [activeSetting, setActiveSetting] = useState("Account");
 
+  const mainUserId = twitchProfile?.user_id;
+  const userWithMainId = { ...user, mainUserId }; // Merge mainUserId into user object
+
   const userPFP = user?.profileImage || "/images/default-avatar.png";
 
   const settingsOptions = [
@@ -28,17 +31,17 @@ export default function SettingsPage() {
   const renderSettingsContent = () => {
     switch (activeSetting) {
       case "Account":
-        return <AccountSettings user={user} kickProfile={kickProfile} twitchProfile={twitchProfile} />;
+        return <AccountSettings user={userWithMainId} kickProfile={kickProfile} twitchProfile={twitchProfile} />;
       case "Connections":
-        return <ConnectionsSettings user={user} />;
+        return <ConnectionsSettings user={userWithMainId} />;
       case "Preferences":
-        return <PreferencesSettings user={user} />;
+        return <PreferencesSettings user={userWithMainId} />;
       case "Giveaway":
-        return <GiveawaySettings user={user} />;
+        return <GiveawaySettings user={userWithMainId} />;
       case "Notifications":
-        return <NotificationsSettings user={user} />;
+        return <NotificationsSettings user={userWithMainId} />;
       default:
-        return <AccountSettings user={user} />;
+        return <AccountSettings user={userWithMainId} />;
     }
   };
 
