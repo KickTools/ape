@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme ape {
+  --color-background-50: #e3e6e8;
+  --color-background-100: #c9cfd4;
+  --color-background-200: #919ca7;
+  --color-background-300: #5f6b77;
+  --color-background-400: #0b0b0c;
+  --color-background-500: #08090a;
+  --color-background-600: #070808;
+  --color-background-700: #050506;
+  --color-background-800: #020303;
+  --color-background-900: #020303;
+  --color-background-950: #000000;
+  --color-background: var(--color-background-500);
+
+  --color-foreground-50: #fcfcfc;
+  --color-foreground-100: #fcfcfc;
+  --color-foreground-200: #fafafa;
+  --color-foreground-300: #f7f7f7;
+  --color-foreground-400: #f5f5f5;
+  --color-foreground-500: #f2f2f2;
+  --color-foreground-600: #c2c2c2;
+  --color-foreground-700: #919191;
+  --color-foreground-800: #616161;
+  --color-foreground-900: #303030;
+  --color-foreground-950: #171717;
+  --color-foreground: var(--color-foreground-500);
+
+  --color-apeOrange-50: #fff5f0;
+  --color-apeOrange-100: #ffece0;
+  --color-apeOrange-200: #ffd5bd;
+  --color-apeOrange-300: #ffbb94;
+  --color-apeOrange-400: #ff9b61;
+  --color-apeOrange-500: #ff6c14;
+  --color-apeOrange-600: #f05800;
+  --color-apeOrange-700: #d14d00;
+  --color-apeOrange-800: #b34100;
+  --color-apeOrange-900: #7a2d00;
+  --color-apeOrange-950: #572000;
+  --color-apeOrange: var(--color-apeOrange-500);
+
+  --color-apeBlue-50: #e5f4ff;
+  --color-apeBlue-100: #c7e6ff;
+  --color-apeBlue-200: #94cfff;
+  --color-apeBlue-300: #5cb6ff;
+  --color-apeBlue-400: #249cff;
+  --color-apeBlue-500: #0082ed;
+  --color-apeBlue-600: #0068bd;
+  --color-apeBlue-700: #004f8f;
+  --color-apeBlue-800: #003561;
+  --color-apeBlue-900: #00192e;
+  --color-apeBlue-950: #000e19;
+  --color-apeBlue: var(--color-apeBlue-500);
+
+  --color-apeRed-50: #ffe5e7;
+  --color-apeRed-100: #ffc7ca;
+  --color-apeRed-200: #ff9499;
+  --color-apeRed-300: #ff5c64;
+  --color-apeRed-400: #ff242f;
+  --color-apeRed-500: #ed000c;
+  --color-apeRed-600: #bd0009;
+  --color-apeRed-700: #8f0007;
+  --color-apeRed-800: #610005;
+  --color-apeRed-900: #2e0002;
+  --color-apeRed-950: #190001;
+  --color-apeRed: var(--color-apeRed-500);
+
+  --color-apeGreen-50: #e5fff1;
+  --color-apeGreen-100: #c7ffe0;
+  --color-apeGreen-200: #94ffc4;
+  --color-apeGreen-300: #5cffa5;
+  --color-apeGreen-400: #24ff86;
+  --color-apeGreen-500: #00ed6b;
+  --color-apeGreen-600: #00bd55;
+  --color-apeGreen-700: #008f40;
+  --color-apeGreen-800: #00612c;
+  --color-apeGreen-900: #002e15;
+  --color-apeGreen-950: #00190b;
+  --color-apeGreen: var(--color-apeGreen-500);
+
+  --color-kick-50: #ecffe6;
+  --color-kick-100: #defed2;
+  --color-kick-200: #bcfea4;
+  --color-kick-300: #97fd72;
+  --color-kick-400: #76fd45;
+  --color-kick-500: #53fc18;
+  --color-kick-600: #3cd803;
+  --color-kick-700: #2da102;
+  --color-kick-800: #1f6f01;
+  --color-kick-900: #0f3701;
+  --color-kick-950: #071900;
+  --color-kick: var(--color-kick-500);
+
+  --color-twitch-50: #f5f0ff;
+  --color-twitch-100: #e7dcfe;
+  --color-twitch-200: #cfb9fd;
+  --color-twitch-300: #ba9bfd;
+  --color-twitch-400: #a278fc;
+  --color-twitch-500: #8956fb;
+  --color-twitch-600: #5d15f9;
+  --color-twitch-700: #4205c7;
+  --color-twitch-800: #2b0382;
+  --color-twitch-900: #160241;
+  --color-twitch-950: #0c0123;
+  --color-twitch: var(--color-twitch-500);
+
+  --color-discord: #5865f2;
+  --color-youtube: #ff0033;
+}
