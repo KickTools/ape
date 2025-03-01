@@ -76,7 +76,7 @@ export default function PreferencesSettings({ user }) {
       setIsSaving(true);
 
       const payload = {
-        viewer: user.twitch?.user_id || user.id,
+        viewer: user.twitch?.user_id || userID,
         language: formData.language,
       };
 

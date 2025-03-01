@@ -25,7 +25,6 @@ export async function fetchViewerFormData(platform, userId) {
 
   // Return cached data if it exists and hasn’t expired
   if (cachedData && isCacheValid(cachedData)) {
-    console.log(`[dataAPI] Using cached data for user ${userId}`);
     return cachedData.data;
   }
 

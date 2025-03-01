@@ -23,11 +23,8 @@ export async function verifyAuthToken(platform) {
 
 export async function fetchLoginUserData(userId, platform) {
   try {
-    console.log(`Fetching user data for platform: ${platform}, userId: ${userId}`);
 
     const data = await fetchData(`/data/retrieve/viewers/${platform}/${userId}`);
-
-    console.log("Fetched API Response:", data);
 
     return data;
   } catch (error) {
@@ -50,8 +47,6 @@ async function fetchData(endpoint, options) {
 }
 
 export async function saveUserData(twitchData, kickData) {
-  console.log('Saving user data:', twitchData );
-  console.log('Saving user data:', kickData );
   const username = kickData.name;
   kickData.username = username;
   try {
@@ -73,11 +68,8 @@ export async function saveUserData(twitchData, kickData) {
 
 export async function fetchKickUserData(kickUsername) {
   try {
-    console.log(`Fetching user data for Kick username: ${kickUsername}`);
 
     const data = await fetchData(`/kick/channel/${kickUsername}`);
-
-    console.log("Fetched Kick Data API Response:", data);
 
     return data;
   } catch (error) {

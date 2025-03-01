@@ -29,7 +29,6 @@ const LoginCallback = () => {
       try {
         // First, verify the auth token for the current platform
         const verificationResult = await verifyAuthToken(platform);
-        console.log('Verification Result:', verificationResult);
 
         if (!verificationResult.isValid || !verificationResult.user) {
           throw new Error(`Invalid ${platform} verification response`);
@@ -45,7 +44,6 @@ const LoginCallback = () => {
         }
 
         const connectedData = await fetchLoginUserData(userId, platform);
-        console.log('Fetched:', connectedData);
 
         // Validate that we have both platform's data
         if (!connectedData?.twitch || !connectedData?.kick) {

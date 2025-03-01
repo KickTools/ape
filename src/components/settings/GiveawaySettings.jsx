@@ -98,7 +98,7 @@ export default function GiveawaySettings({ user }) {
       );
       
       const payload = {
-        viewer: user.twitch?.user_id || user.id,
+        viewer: user.twitch?.user_id || userID,
         bitcoinAddress: formData.bitcoinAddress,
         ethAddress: formData.ethAddress, // Added ethAddress
         contactAddress: contactAddressFormatted

@@ -79,7 +79,7 @@ export default function NotificationsSettings({ user }) {
       const notifications = formData.emailNotifications || formData.pushNotifications;
 
       const payload = {
-        viewer: user.twitch?.user_id || user.id,
+        viewer: user.twitch?.user_id || userID,
         notifications,
       };
 
