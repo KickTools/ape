@@ -63,8 +63,8 @@ export default function WelcomePage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <section className="py-16">
+    <div className="flex flex-col">
+      <section className="py-32">
         <div className="max-w-5xl mx-auto px-6 mb-8">
           {signedIn && user ? (
             <div className="flex flex-col items-center">
@@ -90,18 +90,6 @@ export default function WelcomePage() {
           <p className="text-lg text-foreground-700">
             Discover exclusive content, participate in community events, and connect with other members. We're excited to have you here!
           </p>
-        </div>
-      </section>
-
-      <section className="py-8">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {bottomLinks.map((link, index) => (
-              <Link key={index} href={link.href} className="block p-4 rounded-xl bg-background-400/80 border-2 border-transparent hover:border-apeGreen/50 transition-colors text-center">
-                <h3 className="text-lg font-semibold">{link.title}</h3>
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
     </div>

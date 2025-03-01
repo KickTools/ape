@@ -5,11 +5,14 @@ import Icons from "@/assets/icons/index.jsx";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   const { user, logout, signedIn } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+
+  const userRole = user?.role || "user"; // Default to "user" if no role
 
   const handleAuthToggle = () => {
     if (signedIn) {
@@ -25,13 +28,19 @@ const Header = () => {
         <div className="apeHeader-logo">
           <div className="apeHeader-avatar">
             {signedIn && user?.profileImage ? (
-              <Image
-                src={user.profileImage}
-                alt={user.username}
-                width={48}
-                height={48}
-                className="apeHeader-avatarPFP"
-              />
+              <Link href="/">
+                <Image
+                  src={user.profileImage}
+                  alt={user.username}
+                  width={48}
+                  height={48}
+                  className="apeHeader-avatarPFP"
+                />
+              </Link>
+            ) : signedIn ? (
+              <Link href="/">
+                <Icons.User size="xl" className="apeHeader-avatarIcon" />
+              </Link>
             ) : (
               <Icons.User size="xl" className="apeHeader-avatarIcon" />
             )}
@@ -39,17 +48,26 @@ const Header = () => {
         </div>
 
         <div className="apeHeader-center">
-          {signedIn ? (
+          {signedIn && userRole === "admin" ? (
+            // Admin-only: Find Viewer search input
             <input
               type="text"
               placeholder="Find Viewer ..."
               className="apeHeader-searchInput"
             />
           ) : (
+            // Links adjusted: no Home or Get Started when signed in
             <div className="apeHeader-links">
-              {pathname !== "/" && <a href="/">Home</a>}
-              <a href="/auth?flow=register">Get Started</a>
-              {pathname !== "/about" && <a href="/about">About Project</a>}
+              {!signedIn && pathname !== "/" && <a href="/">Home</a>}
+              {!signedIn && <a href="/auth?flow=register">Get Started</a>}
+              {!signedIn && pathname !== "/about" && (
+                <a href="/about">About Project</a>
+              )}
+              {signedIn && (
+                <Link href="/user/welcome" className="apeHeader-link">
+                  Welcome
+                </Link>
+              )}
             </div>
           )}
         </div>

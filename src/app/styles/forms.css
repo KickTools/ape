@@ -18,8 +18,16 @@
     @apply space-y-4;
   }
 
+  .section-details {
+    @apply text-sm mb-6;
+  }
+
   .section-title {
-    @apply text-sm text-apeRed font-black mb-6 uppercase;
+    @apply text-sm text-apeRed font-black uppercase;
+  }
+
+  .section-description {
+    @apply text-sm italic text-foreground-700;
   }
 
   .form-row {
@@ -95,5 +103,9 @@
 
   .save-button {
     @apply w-full py-2 px-4 rounded-md bg-apeRed text-white hover:bg-apeRed-400 transition-colors cursor-pointer;
+  }
+
+  .save-button.disabled {
+    @apply bg-background text-background-300/20 cursor-not-allowed;
   }
 }
