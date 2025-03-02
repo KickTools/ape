@@ -86,7 +86,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/typography" className="apeFooter-link">
+                <a href="/faq" className="apeFooter-link">
                   FAQ
                 </a>
               </li>
