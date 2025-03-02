@@ -46,7 +46,6 @@ const kickLogo = ({ color = "currentColor", ...props }) => (
 );
 
 const brandLogos = {
-    stakeLogo,
     radLogo,
     kickLogo,
 }
