@@ -49,7 +49,7 @@ function VerificationTimelineFiller() {
   const verificationSteps = [
     {
       step: "Authenticate Twitch",
-      stars: isTwitchVerified ? 2 : 0,
+      stars: isTwitchVerified ? 1 : 0,
       description: isTwitchVerified 
         ? "Twitch account connected ✅" 
         : "Connect your Twitch account.",
@@ -60,7 +60,7 @@ function VerificationTimelineFiller() {
     },
     {
       step: "Authenticate Kick",
-      stars: isKickVerified ? 2 : 0,
+      stars: isKickVerified ? 1 : 0,
       description: isKickVerified 
         ? "Kick account connected ✅" 
         : "Connect your Kick account.",
@@ -137,7 +137,7 @@ function VerificationTimelineFiller() {
 
       <div className="relative w-full max-w-4xl">
         {/* Vertical Line */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-background-700"></div>
+        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-background-300/10"></div>
 
         {verificationSteps.map((step, index) => (
           <div
@@ -168,7 +168,7 @@ function VerificationTimelineFiller() {
 
             {/* Star Connector instead of Dot */}
             <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center w-16 h-16">
-              <span className={`text-4xl ${step.verified ? "text-apeRed" : "text-foreground"}`}>★</span>
+              <span className={`text-5xl ${step.verified ? "text-apeRed" : "text-zinc-500/80"}`}>★</span>
             </div>
 
             {/* Connection Line to Next Step (except for the last one) */}
@@ -176,7 +176,7 @@ function VerificationTimelineFiller() {
               <div className={`absolute left-1/2 transform -translate-x-1/2 h-10 w-1 top-full ${
                 step.verified && verificationSteps[index + 1].verified 
                   ? "bg-apeRed" 
-                  : "bg-background-700"
+                  : "bg-background"
               }`} style={{ top: "calc(100% - 5px)" }}></div>
             )}
           </div>

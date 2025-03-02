@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchLoginUserData, verifyAuthToken } from "@/lib/auth";
+import ApeLoader from "../elements/ApeLoader";
 
 const LoginCallback = () => {
   const router = useRouter();
@@ -81,13 +82,17 @@ const LoginCallback = () => {
 
   return (
     <div className="flex-grow my-auto space-y-6 text-center">
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-1">
         <h1 className="text-4xl font-bold mb-4">
           Signing you in...
         </h1>
+        <div className="flex justify-center">
+          <ApeLoader />
+        </div>
         <p className="text-muted-foreground">
           Please wait while we verify your connected accounts
         </p>
+
       </div>
     </div>
   );

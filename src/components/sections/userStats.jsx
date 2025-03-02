@@ -37,7 +37,6 @@ export default function UserStats() {
 
             } catch (error) {
                 console.error("Error fetching stats:", error);
-                // Show error toast when something goes wrong
                 toast.error('Failed to load user statistics!');
             } finally {
                 setIsLoading(false);
@@ -46,26 +45,29 @@ export default function UserStats() {
 
         fetchStats();
 
-        const interval = setInterval(fetchStats, 50);
+        const interval = setInterval(fetchStats, 50); // Note: 50ms seems very frequent—consider increasing
         return () => clearInterval(interval);
     }, [fetchGlobalStats, fetchDailyStats, toast]);
 
     const displayGlobalStats = () => {
         if (isLoading) {
             return {
-                verifiedViewers: <div className="flex justify-center items-center"><PulseLoader color="#00ed6b" /></div>,
-                botAccounts: <div className="flex justify-center items-center"><PulseLoader color="#ed000c" /></div>
+                totalViewers: <div className="flex justify-center items-center"><PulseLoader color="#00ed6b" /></div>,
+                botAccounts: <div className="flex justify-center items-center"><PulseLoader color="#ed000c" /></div>,
+                level3Users: <div className="flex justify-center items-center"><PulseLoader color="#ffd700" /></div>
             };
         }
         if (!globalStats) {
             return {
-                verifiedViewers: "...",
-                botAccounts: "..."
+                totalViewers: "...",
+                botAccounts: "...",
+                level3Users: "..."
             };
         }
         return {
-            verifiedViewers: globalStats.verifiedViewers,
-            botAccounts: globalStats.botAccounts
+            totalViewers: globalStats.totalViewers,
+            botAccounts: globalStats.botAccounts,
+            level3Users: globalStats.levelDistribution?.["3"] || 0 // Safely access Level 3 count
         };
     };
 
@@ -79,7 +81,7 @@ export default function UserStats() {
         return { dailyActiveUsers: dailyStats.dailyActiveUsers };
     };
 
-    const { verifiedViewers, botAccounts } = displayGlobalStats();
+    const { totalViewers, botAccounts, level3Users } = displayGlobalStats();
     const { dailyActiveUsers } = displayDailyStats();
 
     return (
@@ -87,26 +89,28 @@ export default function UserStats() {
             <div className="max-w-5xl mx-auto px-6">
                 <h2 className="text-3xl font-black text-center mb-2 uppercase tracking-wide">Verification Stats</h2>
                 <p className="text-xl md:text-2xl text-foreground-800 text-center mb-12 px-8">
-                    {verifiedViewers !== "..." ? `${verifiedViewers} verified members and counting! Join now and get verified.` : "Loading..."}
+                    {totalViewers !== "..." ? `${totalViewers} verified members and counting! Join now and get verified.` : "Loading..."}
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                     <div className="text-center">
-                        <div className="text-6xl font-bold text-apeBlue-500 mb-4">{dailyActiveUsers}</div>
+                        <div className="text-6xl font-bold text-apeBlue-500 mb-4">{dailyActiveUsers}+</div>
                         <h3 className="text-xl font-semibold mb-2">Daily New Users</h3>
                         <p className="text-gray-600">
                             {""}
                         </p>
                     </div>
                     <div className="text-center">
-                        <div className="text-6xl font-bold text-apeGreen mb-4">{verifiedViewers}</div>
+                        <div className="text-6xl font-bold text-apeGreen mb-4">{totalViewers}</div>
                         <h3 className="text-xl font-semibold mb-2">Verified Users</h3>
                         <p className="text-gray-600">
                             {""}
                         </p>
                     </div>
                     <div className="text-center">
-                        <div className="flex justify-center text-6xl font-bold text-yellow-300 mb-4">19 <span className="text-2xl my-auto">⭐</span></div>
-                        <h3 className="text-xl font-semibold mb-2">Level 5 Users</h3>
+                        <div className="flex justify-center text-6xl font-bold text-yellow-400 mb-4">
+                            {level3Users} <span className="text-2xl my-auto">⭐</span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2">Level 3 Users</h3>
                         <p className="text-gray-600">
                             {""}
                         </p>

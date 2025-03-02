@@ -6,6 +6,7 @@ import Friends from "@/components/sections/friendsSection";
 import ContactProject from "@/components/sections/contactProject";
 import Icons from "@/assets/icons";
 import { useAuth } from "@/contexts/AuthContext";
+import ApeLoader from "@/components/elements/ApeLoader";
 
 export default function Home() {
   const { user } = useAuth();
@@ -27,6 +28,8 @@ export default function Home() {
           <h1 className="text-4xl lg:text-6xl font-black mb-6 uppercase">
             Welcome <span className="text-apeRed">Ape Gang</span> Community
           </h1>
+
+
           <p className="flex justify-center gap-4 font-medium text-2xl md:text-2xl text-foreground-500 text-center">
             <Icons.ShieldCheck
               size="2xl"

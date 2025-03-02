@@ -132,7 +132,8 @@ const BrandYoutube = ({ size = "base", color = "current", className = "" }) => {
 const ButtonClose = ({ size = "base", color = "current", className = "" }) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
-  const combinedClassName =`${colorClass} icon icon-tabler icons-tabler-filled icon-tabler-square-rounded-x ${className}`.trim();
+  const combinedClassName =
+    `${colorClass} icon icon-tabler icons-tabler-filled icon-tabler-square-rounded-x ${className}`.trim();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -142,10 +143,14 @@ const ButtonClose = ({ size = "base", color = "current", className = "" }) => {
       fill={color}
       className={combinedClassName}
     >
-      <path d="M12 2l.324 .001l.318 .004l.616 .017l.299 .013l.579 .034l.553 .046c4.785 .464 6.732 2.411 7.196 7.196l.046 .553l.034 .579c.005 .098 .01 .198 .013 .299l.017 .616l.005 .642l-.005 .642l-.017 .616l-.013 .299l-.034 .579l-.046 .553c-.464 4.785 -2.411 6.732 -7.196 7.196l-.553 .046l-.579 .034c-.098 .005 -.198 .01 -.299 .013l-.616 .017l-.642 .005l-.642 -.005l-.616 -.017l-.299 -.013l-.579 -.034l-.553 -.046c-4.785 -.464 -6.732 -2.411 -7.196 -7.196l-.046 -.553l-.034 -.579a28.058 28.058 0 0 1 -.013 -.299l-.017 -.616c-.003 -.21 -.005 -.424 -.005 -.642l.001 -.324l.004 -.318l.017 -.616l.013 -.299l.034 -.579l.046 -.553c.464 -4.785 2.411 -6.732 7.196 -7.196l.553 -.046l.579 -.034c.098 -.005 .198 -.01 .299 -.013l.616 -.017c.21 -.003 .424 -.005 .642 -.005zm-1.489 7.14a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" fill="currentColor" strokeWidth={0} />
+      <path
+        d="M12 2l.324 .001l.318 .004l.616 .017l.299 .013l.579 .034l.553 .046c4.785 .464 6.732 2.411 7.196 7.196l.046 .553l.034 .579c.005 .098 .01 .198 .013 .299l.017 .616l.005 .642l-.005 .642l-.017 .616l-.013 .299l-.034 .579l-.046 .553c-.464 4.785 -2.411 6.732 -7.196 7.196l-.553 .046l-.579 .034c-.098 .005 -.198 .01 -.299 .013l-.616 .017l-.642 .005l-.642 -.005l-.616 -.017l-.299 -.013l-.579 -.034l-.553 -.046c-4.785 -.464 -6.732 -2.411 -7.196 -7.196l-.046 -.553l-.034 -.579a28.058 28.058 0 0 1 -.013 -.299l-.017 -.616c-.003 -.21 -.005 -.424 -.005 -.642l.001 -.324l.004 -.318l.017 -.616l.013 -.299l.034 -.579l.046 -.553c.464 -4.785 2.411 -6.732 7.196 -7.196l.553 -.046l.579 -.034c.098 -.005 .198 -.01 .299 -.013l.616 -.017c.21 -.003 .424 -.005 .642 -.005zm-1.489 7.14a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z"
+        fill="currentColor"
+        strokeWidth={0}
+      />
     </svg>
   );
-}
+};
 
 const Lock = ({ size = "base", color = "current", className = "" }) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
@@ -227,7 +232,9 @@ const Checked = ({ size = "base", color = "current", className = "" }) => {
       height={sizeValue}
       className={combinedClassName}
     >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M9 11l3 3l8 -8" />
+      <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
     </svg>
   );
 };
@@ -281,8 +288,7 @@ const Send = ({ size = "base", color = "current", className = "" }) => {
 const Ape = ({ size = "base", color = "current", className = "" }) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
-  const combinedClassName =
-    `${colorClass} ${className}`.trim();
+  const combinedClassName = `${colorClass} ${className}`.trim();
 
   return (
     <svg
@@ -299,8 +305,27 @@ const Ape = ({ size = "base", color = "current", className = "" }) => {
   );
 };
 
-const ProgressHelp = ({ size = "base", color = "current", className = "" }) => {
+const Banana = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
 
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlSpace="preserve"
+      viewBox="0 0 483.36 476.2"
+      fill="currentColor"
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+      <path d="M442.18 74.151c-2.07-27.965 3.895-48.574 11.176-71.578 0 0-40.668-12.594-59.113 17.945 12.949 126.98-51.586 242.543-157.477 298.977-100.25 53.43-201.535 46.93-228.301 56.004C1.688 387.049 0 402.92 0 402.92c35.141 40.609 165.992 114.395 328.875 44.18C478.059 382.795 526.332 223.893 442.18 74.151M224.969 440.155a342.2 342.2 0 0 1-80.234 8.219 7.376 7.376 0 0 1-7.25-7.492c.063-4.074 3.254-7.43 7.492-7.254a326 326 0 0 0 76.766-7.863c3.984-.859 7.922 1.609 8.813 5.582a7.38 7.38 0 0 1-5.587 8.808m68.726-23.395c-1 .465-2.063.684-3.102.684a7.372 7.372 0 0 1-3.117-14.055c68.094-31.703 123.539-86.363 156.121-153.91a7.37 7.37 0 0 1 9.844-3.434c3.668 1.766 5.203 6.172 3.434 9.844-34.055 70.598-92.008 127.731-163.18 160.871" />
+    </svg>
+  );
+};
+
+const ProgressHelp = ({ size = "base", color = "current", className = "" }) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
   const combinedClassName = `${colorClass} ${className}`.trim();
@@ -331,8 +356,11 @@ const ProgressHelp = ({ size = "base", color = "current", className = "" }) => {
   );
 };
 
-const DeviceGamepad3 = ({ size = "base", color = "current", className = "" }) => {
-
+const DeviceGamepad3 = ({
+  size = "base",
+  color = "current",
+  className = ""
+}) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
   const combinedClassName = `${colorClass} ${className}`.trim();
@@ -354,7 +382,6 @@ const DeviceGamepad3 = ({ size = "base", color = "current", className = "" }) =>
 };
 
 const Trophy = ({ size = "base", color = "current", className = "" }) => {
-
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
   const combinedClassName = `${colorClass} ${className}`.trim();
@@ -369,13 +396,12 @@ const Trophy = ({ size = "base", color = "current", className = "" }) => {
       className={`${combinedClassName} icon icon-tabler icons-tabler-filled icon-tabler-trophy`}
       style={{ width: sizeValue, height: sizeValue }}
     >
-    <path d="M17 3a1 1 0 0 1 .993 .883l.007 .117v2.17a3 3 0 1 1 0 5.659v.171a6.002 6.002 0 0 1 -5 5.917v2.083h3a1 1 0 0 1 .117 1.993l-.117 .007h-8a1 1 0 0 1 -.117 -1.993l.117 -.007h3v-2.083a6.002 6.002 0 0 1 -4.996 -5.692l-.004 -.225v-.171a3 3 0 0 1 -3.996 -2.653l-.003 -.176l.005 -.176a3 3 0 0 1 3.995 -2.654l-.001 -2.17a1 1 0 0 1 1 -1h10zm-12 5a1 1 0 1 0 0 2a1 1 0 0 0 0 -2zm14 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2z" /> 
+      <path d="M17 3a1 1 0 0 1 .993 .883l.007 .117v2.17a3 3 0 1 1 0 5.659v.171a6.002 6.002 0 0 1 -5 5.917v2.083h3a1 1 0 0 1 .117 1.993l-.117 .007h-8a1 1 0 0 1 -.117 -1.993l.117 -.007h3v-2.083a6.002 6.002 0 0 1 -4.996 -5.692l-.004 -.225v-.171a3 3 0 0 1 -3.996 -2.653l-.003 -.176l.005 -.176a3 3 0 0 1 3.995 -2.654l-.001 -2.17a1 1 0 0 1 1 -1h10zm-12 5a1 1 0 1 0 0 2a1 1 0 0 0 0 -2zm14 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2z" />
     </svg>
   );
 };
 
 const Photo = ({ size = "base", color = "current", className = "" }) => {
-
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
   const combinedClassName = `${colorClass} ${className}`.trim();
@@ -391,7 +417,7 @@ const Photo = ({ size = "base", color = "current", className = "" }) => {
       className={`${combinedClassName} icon icon-tabler icons-tabler-filled icon-tabler-photo`}
       style={{ width: sizeValue, height: sizeValue }}
     >
-    <path d="M8.813 11.612c.457 -.38 .918 -.38 1.386 .011l.108 .098l4.986 4.986l.094 .083a1 1 0 0 0 1.403 -1.403l-.083 -.094l-1.292 -1.293l.292 -.293l.106 -.095c.457 -.38 .918 -.38 1.386 .011l.108 .098l4.674 4.675a4 4 0 0 1 -3.775 3.599l-.206 .005h-12a4 4 0 0 1 -3.98 -3.603l6.687 -6.69l.106 -.095zm9.187 -9.612a4 4 0 0 1 3.995 3.8l.005 .2v9.585l-3.293 -3.292l-.15 -.137c-1.256 -1.095 -2.85 -1.097 -4.096 -.017l-.154 .14l-.307 .306l-2.293 -2.292l-.15 -.137c-1.256 -1.095 -2.85 -1.097 -4.096 -.017l-.154 .14l-5.307 5.306v-9.585a4 4 0 0 1 3.8 -3.995l.2 -.005h12zm-2.99 5l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z" />
+      <path d="M8.813 11.612c.457 -.38 .918 -.38 1.386 .011l.108 .098l4.986 4.986l.094 .083a1 1 0 0 0 1.403 -1.403l-.083 -.094l-1.292 -1.293l.292 -.293l.106 -.095c.457 -.38 .918 -.38 1.386 .011l.108 .098l4.674 4.675a4 4 0 0 1 -3.775 3.599l-.206 .005h-12a4 4 0 0 1 -3.98 -3.603l6.687 -6.69l.106 -.095zm9.187 -9.612a4 4 0 0 1 3.995 3.8l.005 .2v9.585l-3.293 -3.292l-.15 -.137c-1.256 -1.095 -2.85 -1.097 -4.096 -.017l-.154 .14l-.307 .306l-2.293 -2.292l-.15 -.137c-1.256 -1.095 -2.85 -1.097 -4.096 -.017l-.154 .14l-5.307 5.306v-9.585a4 4 0 0 1 3.8 -3.995l.2 -.005h12zm-2.99 5l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z" />
     </svg>
   );
 };
@@ -410,6 +436,7 @@ const Icons = {
   Checked,
   CaretUp,
   Send,
+  Banana,
   Ape,
   ProgressHelp,
   DeviceGamepad3,

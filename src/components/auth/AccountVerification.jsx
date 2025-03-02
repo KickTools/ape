@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import Icons from "@/assets/icons/index.jsx";
-import { PacmanLoader } from "react-spinners";
+import ApeLoader from "../elements/ApeLoader";
 import { useRouter } from "next/navigation";
 import { verifyAuthToken, saveUserData, fetchKickUserData } from "@/lib/auth";
 
@@ -123,7 +123,7 @@ export default function AccountVerification({ setAuthState }) {
           </p>
         </div>
         <div className="flex justify-start items-center">
-          <PacmanLoader color="red" size={25} />
+          <ApeLoader />
         </div>
       </div>
     );
