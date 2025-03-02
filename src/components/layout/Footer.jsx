@@ -81,8 +81,8 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="apeFooter-link">
-                  Connect
+                <a href="/contact" className="apeFooter-link">
+                  Contact
                 </a>
               </li>
               <li>
@@ -102,12 +102,12 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="apeFooter-link">
+                <a href="/user/moments" className="apeFooter-link">
                   Moments
                 </a>
               </li>
               <li>
-                <a href="#" className="apeFooter-link">
+                <a href="/user/moments" className="apeFooter-link">
                   Events
                 </a>
               </li>

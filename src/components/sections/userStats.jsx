@@ -93,7 +93,7 @@ export default function UserStats() {
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                     <div className="text-center">
-                        <div className="text-6xl font-bold text-apeBlue-500 mb-4">{dailyActiveUsers}+</div>
+                        <div className="text-6xl font-bold text-apeBlue-500 mb-4">{dailyActiveUsers}</div>
                         <h3 className="text-xl font-semibold mb-2">Daily New Users</h3>
                         <p className="text-gray-600">
                             {""}
