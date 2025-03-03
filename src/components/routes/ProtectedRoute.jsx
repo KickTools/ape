@@ -1,3 +1,4 @@
+// src/components/routes/ProtectedRoute.jsx
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
@@ -17,8 +18,8 @@ export default function ProtectedRoute({ children, requiredRole = "user" }) {
         // Store the attempted URL to redirect back after login
         sessionStorage.setItem("redirectAfterLogin", pathname);
         router.push("/auth?redirect=" + encodeURIComponent(pathname));
-      } else if (requiredRole === "admin" && user?.role !== "admin") {
-        // For admin-only routes, check if user has admin role
+      } else if (requiredRole === "admin" && user?.role !== "admin" && user?.role !== "webmaster") {
+        // For admin-only routes, check if user has admin or webmaster role
         router.push("/user/dashboard");
       }
     }

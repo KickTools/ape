@@ -58,7 +58,7 @@ const Toast = forwardRef(({ message, type = 'default', onClose, duration = 5000 
     return (
         <div ref={ref} className={getToastClasses()} role="alert">
             <div className="flex p-2 pr-4">
-                <div className="my-auto mr-auto pr-2">
+                <div className="my-auto pr-2">
                     <button
                         type="button"
                         className="inline-flex flex-shrink-0 justify-center items-center h-6 w-6 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-300 focus:ring-background-600 transition-all cursor-pointer"
@@ -67,7 +67,7 @@ const Toast = forwardRef(({ message, type = 'default', onClose, duration = 5000 
                         <Icons.Ape size="2xl" className='translate-y-0.5' />
                     </button>
                 </div>
-                <span className="my-auto">
+                <span className="my-auto text-left">
                 {message}
                 </span>
             </div>

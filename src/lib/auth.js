@@ -2,6 +2,19 @@
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+async function fetchData(endpoint, options) {
+  const response = await fetch(`${apiBaseUrl}${endpoint}`, {
+    ...options,
+    credentials: "include"
+  });
+
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.status}`);
+  }
+
+  return response.json();
+}
+
 export async function verifyAuthToken(platform) {
   try {
     const endpoint = `/auth/verify-${platform}-token`;
@@ -33,17 +46,17 @@ export async function fetchLoginUserData(userId, platform) {
   }
 }
 
-async function fetchData(endpoint, options) {
-  const response = await fetch(`${apiBaseUrl}${endpoint}`, {
-    ...options,
-    credentials: "include"
-  });
-
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`);
+export async function fetchUserRole() {
+  try {
+    const response = await fetchData('/auth/me');
+    if (!response.success || !response.user) {
+      throw new Error('Failed to fetch user role');
+    }
+    return response.user.role;
+  } catch (error) {
+    console.error("Error fetching user role:", error);
+    throw error;
   }
-
-  return response.json();
 }
 
 export async function saveUserData(twitchData, kickData) {
@@ -74,6 +87,19 @@ export async function fetchKickUserData(kickUsername) {
     return data;
   } catch (error) {
     console.error("Error fetching Kick user data:", error);
+    throw error;
+  }
+}
+
+export async function checkSession() {
+  try {
+    const response = await fetchData('/auth/check-session');
+    if (!response.success || !response.user) {
+      throw new Error('Session check failed');
+    }
+    return response.user; // { user_id, platform, role }
+  } catch (error) {
+    console.error("Error checking session:", error);
     throw error;
   }
 }

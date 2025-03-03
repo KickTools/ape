@@ -4,7 +4,7 @@
 import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchLoginUserData, verifyAuthToken } from "@/lib/auth";
+import { fetchLoginUserData, verifyAuthToken, fetchUserRole  } from "@/lib/auth";
 import ApeLoader from "../elements/ApeLoader";
 
 const LoginCallback = () => {
@@ -45,6 +45,7 @@ const LoginCallback = () => {
         }
 
         const connectedData = await fetchLoginUserData(userId, platform);
+        console.log("Connected data:", connectedData);
 
         // Validate that we have both platform's data
         if (!connectedData?.twitch || !connectedData?.kick) {
@@ -58,11 +59,16 @@ const LoginCallback = () => {
           throw new Error("Invalid platform profiles");
         }
 
+        // Fetch role from backend
+        const role = await fetchUserRole();
+        console.log(role);        
+
         // Login with both platform's data
         await login({
           twitch: twitchProfile,
           kick: kickProfile,
-          primaryPlatform: platform
+          primaryPlatform: platform,
+          role: role
         });
 
         // Redirect to dashboard after successful login

@@ -1,3 +1,4 @@
+// src/app/loading.jsx
 "use client";
 
 import React from "react";

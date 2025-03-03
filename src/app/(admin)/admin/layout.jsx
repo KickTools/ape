@@ -1,9 +1,11 @@
+// src/app/(admin)/admin/layout.jsx
 "use client";
 
 import ProtectedRoute from '@/components/routes/ProtectedRoute';
 import { AuthProvider } from '@/contexts/AuthContext';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import '@/app/styles/admin.css';
 
 
 export default function AdminLayout({ children }) {

@@ -1,15 +1,13 @@
 // src/app/(user)/user/welcome/page.jsx
 "use client";
 
-import Icons from "@/assets/icons";
-import Link from 'next/link';
 import { useAuth } from "@/contexts/AuthContext";
 import WelcomeCardSection from "@/components/sections/welcomeCardSection";
 import ExploreSection from "@/components/sections/exploreSection";
 
 export default function WelcomePage() {
   const { user, signedIn, primaryPlatform } = useAuth();
-
+  console.log("User", user);
   const cardData = [
     {
       title: "View Your Profile",
@@ -76,7 +74,7 @@ export default function WelcomePage() {
           {signedIn && user ? (
             <div className="flex flex-col items-center">
               <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-wide uppercase">
-                Welcome<span className="text-apeRed">,</span> {user.username}
+                Welcome <span className="text-apeRed">{user.username}</span> 
               </h2>
               <p className="text-lg text-foreground-600">
                 Currently using your {primaryPlatform.charAt(0).toUpperCase() + primaryPlatform.slice(1)} account

@@ -1,7 +1,7 @@
 // contexts/AuthContext.js
 "use client";
 import { createContext, useContext, useState, useEffect } from 'react';
-import { logoutUser } from '@/lib/auth';
+import { logoutUser, checkSession } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
 
 const AuthContext = createContext({});
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       
       // Extract profiles from userData
-      const { twitch, kick, primaryPlatform: platform } = userData;
+      const { twitch, kick, primaryPlatform: platform, role } = userData;
       
       if (!twitch || !kick || !platform) {
         throw new Error('Incomplete user data provided');
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         username: platform === 'twitch' ? selectedProfile.display_name : selectedProfile.username,
         profileImage: platform === 'twitch' ? selectedProfile.profile_image_url : selectedProfile.profile_pic,
         platform,
-        role: userData.role || "user"
+        role: role || 'regular'
       };
       
       setUser(newUser);
@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('kickProfile', JSON.stringify(kick));
       localStorage.setItem('primaryPlatform', platform);
       localStorage.setItem('signedIn', 'true');
+      localStorage.setItem('role', newUser.role);
       
       return true;
     } catch (error) {
@@ -88,6 +89,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('kickProfile');
       localStorage.removeItem('primaryPlatform');
       localStorage.removeItem('signedIn');
+      localStorage.removeItem('role');
       
       // Navigate to home page
       router.push('/');
@@ -121,14 +123,19 @@ export const AuthProvider = ({ children }) => {
 
   // Load user data from localStorage only once on component mount
   useEffect(() => {
-    const loadUserFromStorage = () => {
+    const loadUserFromStorage = async () => {
       try {
         const storedTwitchProfile = localStorage.getItem('twitchProfile');
         const storedKickProfile = localStorage.getItem('kickProfile');
         const storedPlatform = localStorage.getItem('primaryPlatform');
         const storedSignedIn = localStorage.getItem('signedIn');
-        
+        const storedRole = localStorage.getItem('role');
+
         if (storedTwitchProfile && storedKickProfile && storedPlatform && storedSignedIn === 'true') {
+          // Verify session with server
+          const sessionData = await checkSession();
+          
+          // If session is valid, restore data with server-verified role
           const twitch = JSON.parse(storedTwitchProfile);
           const kick = JSON.parse(storedKickProfile);
           const platform = storedPlatform;
@@ -139,29 +146,33 @@ export const AuthProvider = ({ children }) => {
           setSignedIn(true);
           
           const selectedProfile = platform === 'twitch' ? twitch : kick;
-          
           setUser({
             id: selectedProfile.user_id || selectedProfile.id,
             username: platform === 'twitch' ? selectedProfile.display_name : selectedProfile.username,
             profileImage: platform === 'twitch' ? selectedProfile.profile_image_url : selectedProfile.profile_pic,
-            platform
+            platform,
+            role: sessionData.role // Use server-verified role
           });
+          
+          // Update localStorage with fresh role
+          localStorage.setItem('role', sessionData.role);
         }
       } catch (error) {
-        console.error('Error loading user data from storage:', error);
-        // Just clear data instead of calling logout() which could cause loops
+        console.error('Session validation failed or data invalid:', error);
+        // Clear localStorage and force re-login
         localStorage.removeItem('twitchProfile');
         localStorage.removeItem('kickProfile');
         localStorage.removeItem('primaryPlatform');
         localStorage.removeItem('signedIn');
+        localStorage.removeItem('role');
+        router.push('/login?error=session_expired');
       } finally {
         setLoading(false);
       }
     };
-    
+
     loadUserFromStorage();
-    // Empty dependency array ensures this only runs once on mount
-  }, []);
+  }, [router]);
 
   return (
     <AuthContext.Provider 

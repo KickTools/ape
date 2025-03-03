@@ -1,0 +1,98 @@
+/* admin.css */
+@import "../globals.css";
+
+body {
+  @apply bg-background;
+  background-image: 
+  radial-gradient(circle at 84% 82%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 21%, transparent 21%, transparent 100%), 
+  radial-gradient(circle at 75% 56%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 30%, transparent 30%, transparent 100%), 
+  radial-gradient(circle at 74% 53%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 95%, transparent 95%, transparent 100%), 
+  radial-gradient(circle at 86% 43%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 83%, transparent 83%, transparent 100%), 
+  radial-gradient(circle at 64% 88%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 2%, transparent 2%, transparent 100%), 
+  radial-gradient(circle at 73% 77%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 18%, transparent 18%, transparent 100%), 
+  radial-gradient(circle at 57% 51%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 64%, transparent 64%, transparent 100%), 
+  radial-gradient(circle at 40% 84%, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.15) 14%, transparent 14%, transparent 100%), 
+  linear-gradient(90deg, rgb(7, 7, 7), rgb(12, 12, 12));
+}
+
+@layer components {
+  .searchFilter-input {
+    @apply block w-full rounded-md border-transparent hover:border-foreground/70 bg-background-300/10 border-2 px-3 py-2;
+  }
+
+  .searchFilter-button {
+    @apply py-0.5 px-1 bg-background-300/10 text-foreground hover:bg-foreground hover:text-background rounded cursor-pointer;
+  }
+
+  .userList {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+
+  .userList-row {
+    @apply flex items-center gap-4 w-full rounded-md border-transparent bg-background-300/10 hover:bg-background-300/20 hover:scale-101 transition-all border-2 px-3 py-2 cursor-pointer;
+  }
+
+  .userList-row-selected {
+    @apply bg-apeGreen/20 text-apeGreen border-transparent hover:bg-apeGreen/20 hover:border-apeGreen;
+  }
+
+  .userList-pfp {
+    @apply w-12 h-12 rounded-full bg-background-300/10;
+  }
+
+  .pagination {
+    @apply mt-4 flex justify-start gap-2;
+  }
+
+  .pagination-button {
+    @apply h-8 w-8 text-sm text-foreground font-black rounded-xl cursor-pointer bg-background-300/10 hover:bg-apeRed transition-all;
+  }
+
+  .pagination-button.active {
+    @apply bg-apeRed;
+  }
+
+  .userProfile-card {
+    @apply p-4 rounded-md bg-background-300/5 border-2 border-transparent hover:border-foreground/50 transition-colors;
+  }
+
+  .userProfileModal-card {
+    @apply w-full; /* Add padding back for better spacing */
+  }
+
+  .userProfileModal-pfp-container {
+    @apply relative w-36 h-36 mb-4;
+  }
+
+  .userProfileModal-label a {
+    @apply no-underline;
+  }
+
+  .userProfileModal-pfp {
+    @apply rounded-sm absolute top-0 left-0 w-full h-full object-cover border-3 border-foreground;
+  }
+
+  .userProfileModal-info {
+    @apply flex flex-col gap-0.5 px-4 py-1 border-l-3 border-apeRed;
+  }
+
+  .userProfileModal-info p {
+    @apply text-foreground-700;
+  }
+
+  .userProfileModal-button {
+    @apply hover:text-apeRed cursor-pointer;
+  }
+
+  .userProfileModel-sectionHeader {
+    @apply text-foreground font-bold uppercase;
+  } 
+
+  .userProfileModal-label {
+    @apply pr-2 text-foreground font-semibold; /* Make labels bold */
+  }
+
+  .userProfileModal-data {
+    @apply text-sm; /* Make data values smaller */
+  }
+}

@@ -195,6 +195,26 @@ const User = ({ size = "base", color = "current", className = "" }) => {
   );
 };
 
+const Eye = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName =
+    `${colorClass} icon icon-tabler icons-tabler-outline icon-tabler-eye ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+<path d="M12 4c4.29 0 7.863 2.429 10.665 7.154l.22 .379l.045 .1l.03 .083l.014 .055l.014 .082l.011 .1v.11l-.014 .111a.992 .992 0 0 1 -.026 .11l-.039 .108l-.036 .075l-.016 .03c-2.764 4.836 -6.3 7.38 -10.555 7.499l-.313 .004c-4.396 0 -8.037 -2.549 -10.868 -7.504a1 1 0 0 1 0 -.992c2.831 -4.955 6.472 -7.504 10.868 -7.504zm0 5a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z" />
+    </svg>
+  );
+};
+
 const ShieldCheck = ({ size = "base", color = "current", className = "" }) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
@@ -235,6 +255,28 @@ const Checked = ({ size = "base", color = "current", className = "" }) => {
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M9 11l3 3l8 -8" />
       <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+    </svg>
+  );
+};
+
+const CopyCheck = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName =
+    `${colorClass} icon icon-tabler icons-tabler-filled icon-tabler-copy-check ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M18.333 6a3.667 3.667 0 0 1 3.667 3.667v8.666a3.667 3.667 0 0 1 -3.667 3.667h-8.666a3.667 3.667 0 0 1 -3.667 -3.667v-8.666a3.667 3.667 0 0 1 3.667 -3.667zm-3.333 -4c1.094 0 1.828 .533 2.374 1.514a1 1 0 1 1 -1.748 .972c-.221 -.398 -.342 -.486 -.626 -.486h-10c-.548 0 -1 .452 -1 1v9.998c0 .32 .154 .618 .407 .805l.1 .065a1 1 0 1 1 -.99 1.738a3 3 0 0 1 -1.517 -2.606v-10c0 -1.652 1.348 -3 3 -3zm1.293 9.293l-3.293 3.292l-1.293 -1.292a1 1 0 0 0 -1.414 1.414l2 2a1 1 0 0 0 1.414 0l4 -4a1 1 0 0 0 -1.414 -1.414" />
     </svg>
   );
 };
@@ -444,6 +486,96 @@ const Photo = ({ size = "base", color = "current", className = "" }) => {
   );
 };
 
+const Gift = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={sizeValue}
+      height={sizeValue}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={`${combinedClassName} icon icon-tabler icons-tabler-filled icon-tabler-gift`}
+      style={{ width: sizeValue, height: sizeValue }}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 14v8h-4a3 3 0 0 1 -3 -3v-4a1 1 0 0 1 1 -1h6zm8 0a1 1 0 0 1 1 1v4a3 3 0 0 1 -3 3h-4v-8h6zm-2.5 -12a3.5 3.5 0 0 1 3.163 5h.337a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-7v-5h-2v5h-7a2 2 0 0 1 -2 -2v-1a2 2 0 0 1 2 -2h.337a3.486 3.486 0 0 1 -.337 -1.5c0 -1.933 1.567 -3.5 3.483 -3.5c1.755 -.03 3.312 1.092 4.381 2.934l.136 .243c1.033 -1.914 2.56 -3.114 4.291 -3.175l.209 -.002zm-9 2a1.5 1.5 0 0 0 0 3h3.143c-.741 -1.905 -1.949 -3.02 -3.143 -3zm8.983 0c-1.18 -.02 -2.385 1.096 -3.126 3h3.143a1.5 1.5 0 1 0 -.017 -3z" />
+    </svg>
+  );
+};
+
+const Search = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={sizeValue}
+      height={sizeValue}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinejoin="round"
+      className={`${combinedClassName} iicon icon-tabler icons-tabler-outline icon-tabler-search`}
+      style={{ width: sizeValue, height: sizeValue }}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+      <path d="M21 21l-6 -6" />
+    </svg>
+  );
+};
+
+const Clipboard = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={sizeValue}
+      height={sizeValue}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={`${combinedClassName} icon icon-tabler icons-tabler-filled icon-tabler-clipboard-data`}
+      style={{ width: sizeValue, height: sizeValue }}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M17.997 4.17a3 3 0 0 1 2.003 2.83v12a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 2.003 -2.83a4 4 0 0 0 3.997 3.83h4a4 4 0 0 0 3.98 -3.597zm-8.997 7.83a1 1 0 0 0 -1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0 -1 -1m3 3a1 1 0 0 0 -1 1v1a1 1 0 0 0 1 1l.117 -.007a1 1 0 0 0 .883 -.993v-1a1 1 0 0 0 -1 -1m3 -1a1 1 0 0 0 -1 1v2a1 1 0 0 0 2 0v-2a1 1 0 0 0 -1 -1m-1 -12a2 2 0 1 1 0 4h-4a2 2 0 1 1 0 -4z" />
+    </svg>
+  );
+};
+
+const Settings = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={sizeValue}
+      height={sizeValue}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="none"
+      className={`${combinedClassName} icon icon-tabler icons-tabler-filled icon-tabler-adjustments`}
+      style={{ width: sizeValue, height: sizeValue }}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M6 3a1 1 0 0 1 .993 .883l.007 .117v3.171a3.001 3.001 0 0 1 0 5.658v7.171a1 1 0 0 1 -1.993 .117l-.007 -.117v-7.17a3.002 3.002 0 0 1 -1.995 -2.654l-.005 -.176l.005 -.176a3.002 3.002 0 0 1 1.995 -2.654v-3.17a1 1 0 0 1 1 -1z" />
+      <path d="M12 3a1 1 0 0 1 .993 .883l.007 .117v9.171a3.001 3.001 0 0 1 0 5.658v1.171a1 1 0 0 1 -1.993 .117l-.007 -.117v-1.17a3.002 3.002 0 0 1 -1.995 -2.654l-.005 -.176l.005 -.176a3.002 3.002 0 0 1 1.995 -2.654v-9.17a1 1 0 0 1 1 -1z" />
+      <path d="M18 3a1 1 0 0 1 .993 .883l.007 .117v.171a3.001 3.001 0 0 1 0 5.658v10.171a1 1 0 0 1 -1.993 .117l-.007 -.117v-10.17a3.002 3.002 0 0 1 -1.995 -2.654l-.005 -.176l.005 -.176a3.002 3.002 0 0 1 1.995 -2.654v-.17a1 1 0 0 1 1 -1z" />      
+    </svg>
+  );
+};
+
 // Bundle all icons into a single object
 const Icons = {
   BrandKick,
@@ -454,9 +586,11 @@ const Icons = {
   ButtonClose,
   Lock,
   User,
+  Eye,
   ShieldCheck,
   Calendar,
   Checked,
+  CopyCheck,
   CaretUp,
   Send,
   Banana,
@@ -464,7 +598,11 @@ const Icons = {
   ProgressHelp,
   DeviceGamepad3,
   Trophy,
-  Photo
+  Photo,
+  Gift,
+  Search,
+  Clipboard,
+  Settings
 };
 
 export default Icons;

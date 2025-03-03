@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import JumpToTop from '@/components/elements/jumpToTop.jsx';
 import '../styles/index.css';
+import '../styles/forms.css';
 
 // assets
 import Image from 'next/image';

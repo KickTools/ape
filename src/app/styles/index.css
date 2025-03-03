@@ -190,7 +190,7 @@
   }
 
   .apeHeader-searchInput {
-    @apply bg-transparent outline-none text-center text-apeRed-500 font-semibold placeholder-foreground-800/90 w-full;
+    @apply  hidden md:block bg-transparent outline-none text-center text-apeRed-500 font-semibold placeholder-foreground-800/90 w-full;
   }
 
   /* Auth Section */
@@ -226,7 +226,7 @@
   }
 
   .apeHeader-links {
-    @apply flex justify-evenly space-x-8;
+    @apply flex justify-evenly space-x-4 md:space-x-8 uppercase;
   }
 
   .apeHeader-links a {

@@ -12,7 +12,7 @@ const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const userRole = user?.role || "user"; // Default to "user" if no role
+  const userRole = user?.role || "user";
 
   const handleAuthToggle = () => {
     if (signedIn) {
@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <header className="apeHeader">
       <div className="apeHeader-container">
-        <div className="apeHeader-logo">
+        <div className="apeHeader-logo hidden md:flex">
           <div className="apeHeader-avatar">
             {signedIn && user?.profileImage ? (
               <Link href="/">
@@ -48,13 +48,23 @@ const Header = () => {
         </div>
 
         <div className="apeHeader-center">
-          {signedIn && userRole === "admin" ? (
+          {signedIn && (userRole === "admin" || userRole === "webmaster") ? (
             // Admin-only: Find Viewer search input
-            <input
-              type="text"
-              placeholder="Find Viewer ..."
-              className="apeHeader-searchInput"
-            />
+            <div className="apeHeader-links">
+              <Link href="/user/welcome" className="apeHeader-link">
+                Account
+              </Link>
+              {pathname !== "/admin/users" && (
+                <input
+                  type="text"
+                  placeholder="Find Viewer ..."
+                  className="apeHeader-searchInput"
+                />
+              )}
+              <Link href="/admin" className="apeHeader-link">
+                Admin
+              </Link>
+            </div>
           ) : (
             // Links adjusted: no Home or Get Started when signed in
             <div className="apeHeader-links">
@@ -65,7 +75,7 @@ const Header = () => {
               )}
               {signedIn && (
                 <Link href="/user/welcome" className="apeHeader-link">
-                  Welcome
+                  Account
                 </Link>
               )}
             </div>
