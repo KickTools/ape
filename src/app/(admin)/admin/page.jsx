@@ -12,7 +12,7 @@ export default function AdminPage() {
 
   const adminCardData = [
     {
-      title: "Start a Giveaway",
+      title: "Manage Giveaways",
       description: "Create and manage giveaways for the community.",
       href: "/admin/giveaways",
       icon: "Gift",
@@ -100,7 +100,7 @@ export default function AdminPage() {
       </section>
 
       {/* Analytics Section */}
-      <AnalyticsSection analyticsData={analyticsData} />
+      <AnalyticsSection userId={"715"} />
     </div>
   );
 }

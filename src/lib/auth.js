@@ -40,6 +40,7 @@ export async function fetchLoginUserData(userId, platform) {
     const data = await fetchData(`/data/retrieve/viewers/${platform}/${userId}`);
 
     return data;
+    
   } catch (error) {
     console.error("Error fetching login user data:", error);
     throw error;

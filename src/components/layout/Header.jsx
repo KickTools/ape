@@ -52,7 +52,7 @@ const Header = () => {
             // Admin-only: Find Viewer search input
             <div className="apeHeader-links">
               <Link href="/user/welcome" className="apeHeader-link">
-                Account
+                Explore
               </Link>
               {pathname !== "/admin/users" && (
                 <input
@@ -75,7 +75,7 @@ const Header = () => {
               )}
               {signedIn && (
                 <Link href="/user/welcome" className="apeHeader-link">
-                  Account
+                  Explore
                 </Link>
               )}
             </div>

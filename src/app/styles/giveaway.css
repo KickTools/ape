@@ -1,0 +1,122 @@
+/* giveaway.css */
+@import "../globals.css";
+
+@layer components {
+  .giveaway-container {
+    @apply flex flex-col;
+  }
+
+  .section-spacing {
+    @apply  py-16 md:py-32 px-8;
+  }
+  
+  .section-bg {
+    @apply bg-background-400/80;
+  }
+
+  .content-width {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .giveaway-header {
+    @apply flex justify-between items-center pt-32 pb-4 mb-2;
+  }
+
+  .giveaway-title {
+    @apply text-3xl font-black uppercase text-foreground;
+  }
+
+  .giveaway-description {
+    @apply text-foreground-800 text-lg;
+  }
+
+  .giveaway-hub-content {
+    @apply flex flex-col items-center max-w-6xl mx-auto space-y-8;
+  }
+
+  .giveaway-analytics {
+    @apply mb-16;
+  }
+
+  .giveaway-list {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+  }
+
+  .giveaway-card {
+    @apply p-4 bg-foreground-700/5 rounded-xl shadow hover:shadow-lg transition;
+  }
+
+  .giveaway-card-title {
+    @apply text-xl font-bold text-foreground;
+  }
+
+  .giveaway-card-text {
+    @apply text-foreground-600 text-sm;
+  }
+
+  .giveaway-card-date {
+    @apply text-foreground-800 text-sm;
+  }
+
+  .giveaway-card-buttons {
+    @apply mt-4 space-x-2;
+  }
+
+  .giveaway-action-button {
+    @apply px-3 py-1 rounded-md font-medium text-white transition-colors;
+  }
+
+  .giveaway-edit-button {
+    @apply bg-foreground-800 hover:bg-foreground-700;
+  }
+
+  .giveaway-close-button {
+    @apply bg-yellow-500 hover:bg-yellow-600;
+  }
+
+  .giveaway-complete-button {
+    @apply bg-green-500 hover:bg-green-600;
+  }
+
+  .giveaway-form {
+    @apply space-y-6;
+  }
+
+  .giveaway-form-section {
+    @apply space-y-2;
+  }
+
+  .giveaway-form-label {
+    @apply block text-sm font-medium text-foreground-700;
+  }
+
+  .giveaway-form-input,
+  .giveaway-form-select {
+    @apply block w-full rounded-md border-transparent hover:border-foreground/70 bg-background-300/5 border-2 px-3 py-2;
+  }
+
+  .giveaway-form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1rem 1rem;
+  }
+
+  .giveaway-form-select::-ms-expand {
+    display: none;
+  }
+
+  .giveaway-form-input:focus,
+  .giveaway-form-select:focus {
+    @apply outline-none ring-2 ring-foreground/70;
+  }
+
+  .giveaway-form-checkbox {
+    @apply flex items-center space-x-2;
+  }
+
+  .giveaway-submit-button {
+    @apply w-full py-2 px-4 rounded-md bg-apeRed text-white hover:bg-apeRed-400 transition-colors cursor-pointer;
+  }
+}

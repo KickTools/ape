@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       
       // Extract profiles from userData
-      const { twitch, kick, primaryPlatform: platform, role } = userData;
+      const { viewer_id, twitch, kick, primaryPlatform: platform, role } = userData;
       
       if (!twitch || !kick || !platform) {
         throw new Error('Incomplete user data provided');
@@ -37,11 +37,14 @@ export const AuthProvider = ({ children }) => {
       
       const newUser = {
         id: selectedProfile.user_id || selectedProfile.id,
+        viewer_id: viewer_id,
         username: platform === 'twitch' ? selectedProfile.display_name : selectedProfile.username,
         profileImage: platform === 'twitch' ? selectedProfile.profile_image_url : selectedProfile.profile_pic,
         platform,
         role: role || 'regular'
       };
+
+      console.log("New User", newUser);
       
       setUser(newUser);
       setSignedIn(true);

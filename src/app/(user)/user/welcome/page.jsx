@@ -7,7 +7,6 @@ import ExploreSection from "@/components/sections/exploreSection";
 
 export default function WelcomePage() {
   const { user, signedIn, primaryPlatform } = useAuth();
-  console.log("User", user);
   const cardData = [
     {
       title: "View Your Profile",

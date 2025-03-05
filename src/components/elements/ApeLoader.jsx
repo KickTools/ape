@@ -1,16 +1,18 @@
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Icons from "@/assets/icons";
 
 const BananaProjectile = ({ delay, startPosition }) => {
   const controls = useAnimation();
   const [isAnimating, setIsAnimating] = useState(false);
-  const [mounted, setMounted] = useState(false); // Track mount status
+  const mountedRef = useRef(false); // Track mount status with a ref
 
-  // Set mounted flag after component mounts
+  // Set mountedRef on mount/unmount
   useEffect(() => {
-    setMounted(true); // Runs after first render
-    return () => setMounted(false); // Cleanup on unmount
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
 
   // Physics-based projectile motion with short arc
@@ -49,8 +51,8 @@ const BananaProjectile = ({ delay, startPosition }) => {
         const rotation = 120 * progress;
         const opacity = progress > 0.7 ? 1 - ((progress - 0.7) / 0.3) : 1;
 
-        // Only set controls if mounted
-        if (mounted) {
+        // Only set controls if component is mounted
+        if (mountedRef.current) {
           controls.set({
             x,
             y,
@@ -70,7 +72,7 @@ const BananaProjectile = ({ delay, startPosition }) => {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [controls, delay, startPosition, mounted]); // Add mounted to dependencies
+  }, [controls, delay, startPosition]); // Removed mountedRef from dependencies
 
   return (
     <motion.div
@@ -88,7 +90,6 @@ const ApeLoader = () => {
 
   return (
     <div className="relative flex items-center justify-center w-40 h-40">
-      {/* Ape Icon */}
       <motion.div
         initial={{ rotate: 0 }}
         animate={{ rotate: [0, -5, 0] }}
@@ -97,7 +98,6 @@ const ApeLoader = () => {
         <Icons.Ape size="7xl" className="text-apeRed scale-x-[-1]" />
       </motion.div>
 
-      {/* Physics-based Banana Animation */}
       {[0, 700, 1400].map((delay, i) => (
         <BananaProjectile
           key={i}

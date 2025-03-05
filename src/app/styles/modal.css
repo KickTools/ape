@@ -1,0 +1,5 @@
+.myModal {
+    background: rgba(8, 9, 10, 0.95);
+    border: 2px solid rgba(25, 25, 25, 0.75);
+    box-shadow: rgba(60, 60, 60, 0.05) 0px 4px 18px, rgba(60, 60, 60, 0.15) 0px 3px 12px;
+}

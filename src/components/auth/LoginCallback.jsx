@@ -45,7 +45,6 @@ const LoginCallback = () => {
         }
 
         const connectedData = await fetchLoginUserData(userId, platform);
-        console.log("Connected data:", connectedData);
 
         // Validate that we have both platform's data
         if (!connectedData?.twitch || !connectedData?.kick) {
@@ -54,21 +53,22 @@ const LoginCallback = () => {
 
         const twitchProfile = connectedData.twitch;
         const kickProfile = connectedData.kick;
+        const viewer_id = connectedData.viewer_id;
 
         if (!twitchProfile || !kickProfile) {
           throw new Error("Invalid platform profiles");
         }
 
         // Fetch role from backend
-        const role = await fetchUserRole();
-        console.log(role);        
+        const role = await fetchUserRole();   
 
         // Login with both platform's data
         await login({
           twitch: twitchProfile,
           kick: kickProfile,
           primaryPlatform: platform,
-          role: role
+          role: role,
+          viewer_id: viewer_id
         });
 
         // Redirect to dashboard after successful login

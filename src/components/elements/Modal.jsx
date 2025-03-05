@@ -3,6 +3,7 @@
 
 import { useEffect, useRef } from "react";
 import Icons from "@/assets/icons";
+import "@/app/styles/modal.css";
 
 export default function Modal({ isOpen, onClose, children }) {
   const modalRef = useRef(null);
@@ -36,7 +37,7 @@ export default function Modal({ isOpen, onClose, children }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md">
-      <div ref={modalRef} className="bg-background/90 rounded-lg max-w-xl w-full px-12 py-6 relative"> {/* Add relative positioning to the modal container */}
+      <div ref={modalRef} className="myModal rounded-lg max-w-xl w-full p-6 relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-foreground hover:text-apeRed cursor-pointer"> {/* Change to absolute positioning */}
           <Icons.ButtonClose size="2xl" />
         </button>
