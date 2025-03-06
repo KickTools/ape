@@ -68,7 +68,7 @@ export default function GiveawayAnalyticsSection() {
 
   if (error) {
     return (
-      <section className="py-8 md:py-16 bg-background-400/80 text-center">
+      <section className="py-8 md:py-16 px-8 bg-background-400/80 text-center">
         <h2 className="text-5xl font-black mb-8 uppercase">
           Giveaway <span className="text-apeRed apePeriod">Analytics</span>
         </h2>
@@ -78,7 +78,7 @@ export default function GiveawayAnalyticsSection() {
   }
 
   return (
-    <section className="pb-16">
+    <section className="pb-8 md:pb-16 px-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
         <AnalyticCard
           title="Total Giveaways"

@@ -4,6 +4,12 @@ import { BannerProvider } from '@/contexts/BannerContext';
 import FloatingHome from '@/components/elements/floatingHome';
 import { BannerImage } from '@/components/auth/BannerImage';
 
+export const metadata = {
+  title: "Authentication | Ape Gang Community - SquadW Online",
+  description: "Login or register to access SquadW Online. Your portal for all things Ape Gang",
+};
+
+
 export default function AuthLayout({ children }) {
   return (
     <AuthProvider>

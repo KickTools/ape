@@ -1,14 +1,15 @@
 // src/components/admin/giveaways/RainGiveawayForm.jsx
 "use client";
 
-import { useState } from "react";
-import { createGiveaway, drawGiveawayWinners, getAllGiveaways } from "@/lib/giveawayAPI";
+import { useState, useEffect } from "react";
+import { createGiveaway, drawGiveawayWinners, getAllGiveaways, getEligibleViewerCount } from "@/lib/giveawayAPI";
 import { useGiveaway } from "@/contexts/GiveawayContext";
 import { useToast } from "@/contexts/ToastContext";
 import Button from "@/components/elements/Button";
 
 export default function RainGiveawayForm({ onSubmit, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [eligibleViewerCount, setEligibleViewerCount] = useState(0);
   const { setActiveGiveaways } = useGiveaway();
   const toast = useToast();
   const [formData, setFormData] = useState({
@@ -19,11 +20,34 @@ export default function RainGiveawayForm({ onSubmit, onCancel }) {
     allowPreviousWinners: true,
   });
 
+  // Fetch eligible viewer count when verification level changes
+  useEffect(() => {
+    const fetchEligibleViewerCount = async () => {
+      try {
+        const { data } = await getEligibleViewerCount(formData.verificationLevel);
+        setEligibleViewerCount(data.count);
+      } catch (error) {
+        console.error("Error fetching eligible viewer count:", error);
+        toast.error("Failed to fetch eligible viewer count");
+      }
+    };
+
+    fetchEligibleViewerCount();
+  }, [formData.verificationLevel]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    const newValue = type === "checkbox" ? checked : type === "number" ? parseInt(value, 10) : value;
+
+    // Validate winners count against eligible viewers
+    if (name === "winnersCount" && newValue > eligibleViewerCount) {
+      toast.error(`Cannot select more winners than eligible viewers (${eligibleViewerCount})`);
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : type === "number" ? parseInt(value, 10) : value,
+      [name]: newValue,
     }));
   };
 
@@ -37,7 +61,7 @@ export default function RainGiveawayForm({ onSubmit, onCancel }) {
       
       // Immediately draw winners for rain giveaways
       const { data: drawResult } = await drawGiveawayWinners(createdGiveaway.id, {
-        winnersCount: formData.winnersCount,
+        winnersCount: Math.min(formData.winnersCount, eligibleViewerCount),
         verificationLevel: formData.verificationLevel,
         allowPreviousWinners: formData.allowPreviousWinners,
       });
@@ -56,8 +80,7 @@ export default function RainGiveawayForm({ onSubmit, onCancel }) {
       toast.success("Banana Blitz completed successfully!");
     } catch (error) {
       toast.error(error.message || "Failed to create Banana Blitz");
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Make sure to reset loading state on error
     }
   };
 
@@ -72,17 +95,22 @@ export default function RainGiveawayForm({ onSubmit, onCancel }) {
           className="giveaway-form-input"
           placeholder="Banana Blitz #1"
           required
+          disabled={isLoading}
         />
       </div>
       <div className="giveaway-form-section">
-        <label className="giveaway-form-label">Number of Winners</label>
+        <label className="giveaway-form-label">
+          Number of Winners (Max: {eligibleViewerCount})
+        </label>
         <input
           name="winnersCount"
           type="number"
           min="1"
+          max={eligibleViewerCount}
           value={formData.winnersCount}
           onChange={handleChange}
           className="giveaway-form-input"
+          disabled={isLoading}
         />
       </div>
       <div className="giveaway-form-section">
@@ -95,6 +123,7 @@ export default function RainGiveawayForm({ onSubmit, onCancel }) {
           value={formData.verificationLevel}
           onChange={handleChange}
           className="giveaway-form-input"
+          disabled={isLoading}
         />
       </div>
       <div className="giveaway-form-section">
@@ -104,6 +133,7 @@ export default function RainGiveawayForm({ onSubmit, onCancel }) {
             type="checkbox"
             checked={formData.allowPreviousWinners}
             onChange={handleChange}
+            disabled={isLoading}
           />
           <span className="giveaway-form-label">Allow Previous Winners (1 vs. 2 entries)</span>
         </label>
@@ -115,6 +145,7 @@ export default function RainGiveawayForm({ onSubmit, onCancel }) {
           color="background-400"
           radius="md"
           size="small"
+          disabled={isLoading}
         >
           Cancel
         </Button>

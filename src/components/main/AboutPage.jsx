@@ -1,4 +1,4 @@
-// app/about/page.jsx
+// src/components/main/AboutPage.jsx
 "use client";
 
 import Link from "next/link";
@@ -23,15 +23,9 @@ export default function AboutPage() {
           </h1>
 
           {/* Short description */}
-          <p className="text-xl md:text-2xl text-foreground-700 px-4 md:px-16 ">
-            Welcome to{" "}
-            <span className="text-foreground">Ape Gang Verification</span>, a
-            streamlined way to verify your{" "}
-            <span className="text-twitch">Twitch</span> and{" "}
-            <span className="text-kick">Kick</span> accounts. This verification
-            process helps ensure authenticity and allows users to participate in
-            giveaways and community events.
-          </p>
+          <p className="text-xl md:text-2xl text-foreground-700 px-4 md:px-16">
+  Welcome to the <span className="text-foreground">Ape Gang</span>, a community built around Trainwreck and SquadW. We provide a simple way to verify your <span className="text-twitch">Twitch</span> and <span className="text-kick">Kick</span> accounts. This ensures authenticity and lets you join in on giveaways and community events and more.
+</p>
         </div>
       </section>
 

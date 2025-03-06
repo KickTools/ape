@@ -3,9 +3,9 @@ import { ToastProvider } from '@/contexts/ToastContext';
 import './styles/index.css';
 
 export const metadata = {
-  title: 'SquadW.online',
-  description: 'Ape Gang Community',
-}
+  title: "Ape Gang Community - SquadW Online",
+  description: "Welcome to the Ape Gang Community at SquadW Online. Join the TrainwrecksTV community and meet other like-minded individuals.",
+};
 
 export default function RootLayout({ children }) {
   return (

@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 
 // Import all your banner images here
 import defaultBanner from '@/assets/images/banner-ape.png';
-import loginBanner from '@/assets/images/bg-ape_quads.jpg';
+import loginBanner from '@/assets/images/bg-ape_train.jpg';
 import registerBanner from '@/assets/images/bg-ape_trainvsgorilla.jpg';
 import twitchBanner from '@/assets/images/bg-ape_chef.jpg';
 import kickBanner from '@/assets/images/bg-ape_riddler.jpg';

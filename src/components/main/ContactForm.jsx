@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import Button from "@/components/elements/Button";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -74,13 +75,12 @@ export default function ContactForm() {
           </div>
 
           {/* Submit Button */}
-          <button
+          <Button
             type="submit"
-            className="bg-apeRed text-foreground font-bold py-3 px-6 rounded-full transition hover:shadow-apeRed/20 hover:shadow-lg hover:scale-105 cursor-pointer"
           >
              Send Your Message
-          </button>
-        </form>
+          </Button>
+       </form>
       </section>
     </div>
   );

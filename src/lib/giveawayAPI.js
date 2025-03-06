@@ -199,3 +199,21 @@ export const getGiveawayAnalytics = async () => {
     throw error;
   }
 };
+
+// Check viewer count eligibility
+export const getEligibleViewerCount = async (verificationLevel) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}${GIVEAWAY_ROUTE}/eligible-viewers?verificationLevel=${verificationLevel}`, {
+      method: "GET",
+      credentials: "include",
+      headers: { 
+        "Content-Type": "application/json" 
+      }
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Error fetching eligible viewer count:`, error.message);
+    throw error;
+  }
+};

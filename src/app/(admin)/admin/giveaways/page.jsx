@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { getAllGiveaways } from "@/lib/giveawayAPI";
 import { useGiveaway } from "@/contexts/GiveawayContext";
 import { useToast } from "@/contexts/ToastContext";
+import ApeLoader from "@/components/elements/ApeLoader";
 import Modal from "@/components/elements/Modal";
 import Button from "@/components/elements/Button";
 import RainGiveawayForm from "@/components/admin/giveaways/RainGiveawayForm";
@@ -13,10 +14,12 @@ import ChatGiveawayForm from "@/components/admin/giveaways/ChatGiveawayForm";
 import TicketGiveawayForm from "@/components/admin/giveaways/TicketGiveawayForm";
 import GiveawayTypeCard from "@/components/admin/giveaways/GiveawayTypeCard";
 import GiveawayAnalyticsSection from "@/components/admin/giveaways/GiveawayAnalyticsSection";
+import StartGiveawaySection from "@/components/admin/giveaways/StartGiveawaySection";
 
 export default function GiveawaysHub() {
   const router = useRouter();
   const [activeModal, setActiveModal] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [winners, setWinners] = useState([]);
   const [lastAddedGiveaway, setLastAddedGiveaway] = useState(null);
@@ -66,44 +69,30 @@ export default function GiveawaysHub() {
 
     // Handle rain or ticket giveaway creation directly
     try {
-      // API calls and state updates will go here
-      // This will be implemented in the form components
+      setIsLoading(true);
       setLastAddedGiveaway(giveawayData);
       setActiveModal(null);
       setIsConfirmOpen(true);
+
+      if (giveawayData.type === "rain") {
+        setWinners(giveawayData.winners || []);
+      }
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const giveawayTypes = [
-    {
-      id: "rain",
-      title: "Banana Blitz",
-      description: "Quick random giveaways with instant winner selection",
-      icon: "🍌", // Just using an emoji as placeholder, replace with your custom icon
-      color: "apeYellow"
-    },
-    {
-      id: "chat",
-      title: "SquadW Chat",
-      description:
-        "Keyword-based chat giveaways with customizable qualifications",
-      icon: "💬",
-      color: "apeBlue"
-    },
-    {
-      id: "ticket",
-      title: "Primal Pass Pick",
-      description: "Scheduled raffles with entry period and drawing",
-      icon: "🎟️",
-      color: "apeRed"
+  // Add closeConfirmModal function to handle modal closing
+  const closeConfirmModal = () => {
+    if (!isLoading) {
+      setIsConfirmOpen(false);
     }
-  ];
+  };
 
   return (
     <div className="giveaway-container">
-
       <section>
         <div className="giveaway-header content-width">
           <div className="flex flex-col">
@@ -129,33 +118,9 @@ export default function GiveawaysHub() {
       {/* Giveaway Analytics Section */}
       <GiveawayAnalyticsSection />
 
-      <section className="section-spacing section-bg">
-        <div className="giveaway-hub-content">
-          <h2 className="text-4xl md:text-6xl font-black text-foreground uppercase apePeriod">
-            Start <span className="text-apeRed">A</span> Giveaway
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {giveawayTypes.map((type) => (
-              <GiveawayTypeCard
-                key={type.id}
-                title={type.title}
-                description={type.description}
-                icon={type.icon}
-                color={type.color}
-                onClick={() => setActiveModal(type.id)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <StartGiveawaySection setActiveModal={setActiveModal} />
 
-
-
-      <section className="section-spacing">
-
-      </section>
-
-
+      <section className="section-spacing"></section>
 
       {/* Rain Giveaway Modal */}
       <Modal
@@ -202,45 +167,61 @@ export default function GiveawaysHub() {
       {/* Confirmation Modal - This will show different content based on the giveaway type */}
       <Modal isOpen={isConfirmOpen} onClose={() => setIsConfirmOpen(false)}>
         <div className="text-center">
-          <h3 className="text-xl font-bold text-foreground mb-4">
+          <h3 className="text-4xl font-black text-foreground mt-8 uppercase apePeriod">
             {lastAddedGiveaway?.type === "rain"
-              ? "Banana Blitz Winners!"
-              : "Giveaway Launched!"}
+              ? "Banana Blitz Winners"
+              : "Giveaway Launched"}
           </h3>
-          {lastAddedGiveaway?.type === "rain" ? (
-            <>
-              <p className="text-foreground-600 mb-4">
-                {winners.length > 0
-                  ? "The Ape Gang's lucky winners are:"
-                  : "No winners drawn yet—check your settings!"}
-              </p>
-              {winners.length > 0 && (
-                <ul className="list-disc list-inside text-foreground-600 mb-6">
-                  {winners.map((winnerId) => (
-                    <li key={winnerId}>Viewer ID: {winnerId}</li>
-                  ))}
-                </ul>
-              )}
-            </>
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-8">
+              <ApeLoader />
+              <p className="mt-4 text-foreground-600">Drawing winners...</p>
+            </div>
           ) : (
-            <p className="text-foreground-600 mb-6">
-              {lastAddedGiveaway?.type === "ticket"
-                ? `${lastAddedGiveaway.title} runs from ${new Date(
-                    lastAddedGiveaway.startDate
-                  ).toLocaleString()} to ${new Date(
-                    lastAddedGiveaway.endDate
-                  ).toLocaleString()}. Ready to hype the Ape Gang?`
-                : `${lastAddedGiveaway?.title} has been added successfully. Ready to hype the Ape Gang?`}
-            </p>
+            <>
+              {lastAddedGiveaway?.type === "rain" ? (
+                <>
+                  <p className="text-xl text-foreground-700 mb-4">
+                    {winners.length > 0
+                      ? "The Ape Gang's lucky winners are:"
+                      : "No winners drawn yet—check your settings!"}
+                  </p>
+                  {winners.length > 0 && (
+                    <div className="flex flex-wrap gap-4 justify-center mb-6">
+                      {winners.map((winner) => (
+                        <div
+                          key={winner._id}
+                          className="flex items-center justify-center py-1 px-3 bg-apeRed-800/20 border-2 border-apeRed rounded-md w-[calc(50%-0.5rem)] text-center"
+                        >
+                          <span className="text-2xl font-medium text-apeRed">
+                            {winner.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="text-foreground-600 mb-6">
+                  {lastAddedGiveaway?.type === "ticket"
+                    ? `${lastAddedGiveaway.title} runs from ${new Date(
+                        lastAddedGiveaway.startDate
+                      ).toLocaleString()} to ${new Date(
+                        lastAddedGiveaway.endDate
+                      ).toLocaleString()}. Ready to hype the Ape Gang?`
+                    : `${lastAddedGiveaway?.title} has been added successfully. Ready to hype the Ape Gang?`}
+                </p>
+              )}
+              <Button
+                onClick={() => setIsConfirmOpen(false)}
+                radius="md"
+                size="small"
+                color="apeRed"
+              >
+                Got It!
+              </Button>
+            </>
           )}
-          <Button
-            onClick={() => setIsConfirmOpen(false)}
-            radius="md"
-            size="small"
-            color="apeRed"
-          >
-            Got It!
-          </Button>
         </div>
       </Modal>
     </div>

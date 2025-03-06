@@ -21,6 +21,7 @@ export default function AnalyticsSection({ userId }) {
       const response = await getAdminAnalytics(userId);
       if (response && response.success && response.data) {
         setAnalyticsData(response.data);
+        console.log('Analytics data:', response.data);
       } else {
         setError('Invalid response from server.');
         console.error('Invalid response:', response);
@@ -77,10 +78,6 @@ export default function AnalyticsSection({ userId }) {
   {/* Overall Stream Activity (Last 30 Days) */}
   <AnalyticCard title="Times Live" value={analyticsData.totalStreams || 0} icon="Ape" subText="Last 30 days" />
   <AnalyticCard title="Total Live Time" value={formatLiveTime(analyticsData.totalLiveTime || 0)} icon="Ape" isTimeFormat={true} subText="Last 30 days" />
-
-  {/* Today's Stream Activity */}
-  <AnalyticCard title="Today's Streams" value={analyticsData.todayStreams || 0} icon="Ape" subText="Current day" />
-  <AnalyticCard title="Today Live Time" value={formatLiveTime(analyticsData.todayLiveTime || 0)} icon="Ape" isTimeFormat={true} subText="Current day" />
 
   {/* Follower/Subscriber Growth (Last 30 Days) */}
   <AnalyticCard title="Followers Gained" value={analyticsData.totalFollowersGained || 0} icon="Ape" subText="Last 30 days" />
