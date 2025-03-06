@@ -6,6 +6,7 @@ import aden from "@/assets/images/friends/aden.jpg";
 import cabrzy from "@/assets/images/friends/cabrzy.jpg";
 import joe from "@/assets/images/friends/joe.jpg";
 import yassuo from "@/assets/images/friends/yassuo.jpg";
+import dona from "@/assets/images/friends/dona.jpg";
 
 const friendsConfig = [
     {
@@ -42,8 +43,12 @@ const friendsConfig = [
       name: 'Cabrzy',
       imageUrl: cabrzy.src,
       kickUrl: 'https://kick.com/cabrzy',
+    },
+    {
+      name: 'Dona',
+      imageUrl: dona.src,
+      kickUrl: 'https://www.twitch.tv/donacs',
     }
-    // Add more friends here...
   ];
   
   export default friendsConfig;

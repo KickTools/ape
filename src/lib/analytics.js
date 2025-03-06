@@ -55,7 +55,6 @@ export async function getAdminAnalytics(userId) {
         credentials: 'include'
       });
       const data = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error fetching analytics:', error);

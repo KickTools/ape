@@ -89,7 +89,7 @@ export default function FAQPage() {
       {/* Footer Note */}
       <section className="py-16 md:py-32 bg-background-400/50 text-center mt-auto">
         <div className="max-w-5xl mx-auto px-6 text-xl">
-          <p className="text-foreground-600">
+          <p className="text-foreground-700 tracking-wider">
             Still need help? Reach out on{" "}
             <a
               href="https://discord.gg/trainwreckstv"

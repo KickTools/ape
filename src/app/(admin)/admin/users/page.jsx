@@ -25,9 +25,7 @@ export default function UserLookupPage() {
     if (!user || !["admin", "webmaster"].includes(user.role)) return;
     try {
       setLoading(true);
-      console.log("Calling fetchViewersList with filters:", searchFilters); // Debug log
       const result = await fetchViewersList(searchFilters);
-      console.log("Fetch result:", result);
       
       if (result.viewers && Array.isArray(result.viewers)) {
         const mappedUsers = result.viewers.map(viewer => ({
@@ -46,7 +44,7 @@ export default function UserLookupPage() {
                         viewer.kick?.profile?.kick?.profile_pic || 
                         apeDefaultPfp
         }));
-        console.log("Mapped users:", mappedUsers);
+        
         setUsers(mappedUsers);
         setPagination({
           currentPage: result.pagination.currentPage,

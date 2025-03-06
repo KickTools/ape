@@ -55,6 +55,13 @@ const Footer = () => {
                 <Icons.BrandYoutube size="3xl" />
               </a>
               <a
+                href="https://www.reddit.com/r/Trainwreckstv/"
+                target="_blank"
+                className="apeFooter-socialLink hover:text-apeOrange"
+              >
+                <Icons.BrandReddit size="3xl" />
+              </a>
+              <a
                 href="https://discord.gg/trainwreckstv"
                 target="_blank"
                 className="apeFooter-socialLink hover:text-discord"

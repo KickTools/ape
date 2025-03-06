@@ -24,8 +24,13 @@ export default function AboutPage() {
 
           {/* Short description */}
           <p className="text-xl md:text-2xl text-foreground-700 px-4 md:px-16">
-  Welcome to the <span className="text-foreground">Ape Gang</span>, a community built around Trainwreck and SquadW. We provide a simple way to verify your <span className="text-twitch">Twitch</span> and <span className="text-kick">Kick</span> accounts. This ensures authenticity and lets you join in on giveaways and community events and more.
-</p>
+            Welcome to the <span className="text-foreground">Ape Gang</span>, a
+            community built around Trainwreck and SquadW. We provide a simple
+            way to verify your <span className="text-twitch">Twitch</span> and{" "}
+            <span className="text-kick">Kick</span> accounts. This ensures
+            authenticity and lets you join in on giveaways and community events
+            and more.
+          </p>
         </div>
       </section>
 
@@ -126,6 +131,66 @@ export default function AboutPage() {
                   Kick
                 </Link>{" "}
                 creators and viewers alike.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Credits Section */}
+      <section className="py-16 md:py-32 px-8 text-center text-foreground">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-4xl lg:text-6xl font-black mb-16 uppercase apePeriod">
+            Credits
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Credit 1 */}
+            <div className="text-center space-y-2">
+              <h3 className="text-3xl font-black text-foreground">DrCrack</h3>
+              <p className="text-medium text-foreground/80">
+                <Link
+                  href="https://x.com/DrCrackOfficial"
+                  className="text-foreground font-semibold"
+                >
+                  <span className="flex gap-2 justify-center"><Icons.BrandX size="xl" color="foreground" />@DrCrackOfficial on X</span>
+                </Link>
+              </p>
+              <p className="text-medium text-foreground/80">
+                <Link
+                  href="https://www.behance.net/alecdr/projects"
+                  className="text-apeBlue font-semibold"
+                >
+                  <span className="flex gap-2 justify-center"><Icons.BrandBehance size="xl" />Alecdr on Behance</span>
+                </Link>
+              </p>
+              <p className="text-xl text-foreground-800">
+                TrainwrecksTV Brand Logo
+              </p>
+            </div>
+
+            {/* Credit 2 */}
+            <div className="text-center space-y-2">
+              <h3 className="text-3xl font-black text-foreground">Denny</h3>
+              <p className="text-medium text-foreground/80">
+                <Link
+                  href="https://x.com/DennakoDesigns"
+                  target="_blank"
+                  className="text-foreground font-semibold"
+                >
+                  <span className="flex gap-2 justify-center"><Icons.BrandX size="xl" color="foreground" />@DennakoDesigns on X</span>
+                </Link>
+              </p>
+              <p className="text-medium text-foreground/80">
+                <Link
+                  href="https://kick.com/denny"
+                  target="_blank"
+                  className="text-kick font-semibold"
+                >
+                  <span className="flex gap-2 justify-center"><Icons.BrandKick size="xl" color="kick" />Denny on Kick</span>
+                </Link>
+              </p>
+              <p className="text-xl text-foreground-800">
+                Poster Work | Log in and verification graphics
               </p>
             </div>
           </div>

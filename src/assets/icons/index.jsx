@@ -108,6 +108,54 @@ const BrandX = ({ size = "base", color = "current", className = "" }) => {
   );
 };
 
+const BrandBehance = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName =
+    `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"  stroke="currentColor"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"   
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M3 18v-12h4.5a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-4.5" />
+    <path d="M3 12l4.5 0" /><path d="M14 13h7a3.5 3.5 0 0 0 -7 0v2a3.5 3.5 0 0 0 6.64 1" />
+    <path d="M16 6l3 0" />
+    </svg>
+  );
+};
+
+const BrandReddit = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName =
+    `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"  stroke="currentColor"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 8c2.648 0 5.028 .826 6.675 2.14a2.5 2.5 0 0 1 2.326 4.36c0 3.59 -4.03 6.5 -9 6.5c-4.875 0 -8.845 -2.8 -9 -6.294l-1 -.206a2.5 2.5 0 0 1 2.326 -4.36c1.646 -1.313 4.026 -2.14 6.674 -2.14z" />
+      <path d="M12 8l1 -5l6 1" /><path d="M19 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+      <circle cx={9} cy={13} r={.5} fill="currentColor" />
+      <circle cx={15} cy={13} r={.5} fill="currentColor" />
+      <path d="M10 17c.667 .333 1.333 .5 2 .5s1.333 -.167 2 -.5" />
+    </svg>
+  );
+};
+
 const BrandYoutube = ({ size = "base", color = "current", className = "" }) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
   const colorClass = color === "current" ? "" : `text-${color}`;
@@ -258,7 +306,6 @@ const Checked = ({ size = "base", color = "current", className = "" }) => {
     </svg>
   );
 };
-
 
 const CircleCheck = ({ size = "base", color = "current", className = "" }) => {
   const sizeValue = sizeMap[size] || sizeMap["base"];
@@ -667,12 +714,81 @@ const Ticket = ({ size = "base", color = "current", className = "" }) => {
   );
 };
 
+const Trash = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16zm-9.489 5.14a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
+    <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" />
+    </svg>
+  );
+};
+
+const Archive = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M2 3m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />
+    <path d="M19 9c.513 0 .936 .463 .993 1.06l.007 .14v7.2c0 1.917 -1.249 3.484 -2.824 3.594l-.176 .006h-10c-1.598 0 -2.904 -1.499 -2.995 -3.388l-.005 -.212v-7.2c0 -.663 .448 -1.2 1 -1.2h14zm-5 2h-4l-.117 .007a1 1 0 0 0 0 1.986l.117 .007h4l.117 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z" />
+    </svg>
+  );
+};
+
+const Pencil = ({ size = "base", color = "current", className = "" }) => {
+  const sizeValue = sizeMap[size] || sizeMap["base"];
+  const colorClass = color === "current" ? "" : `text-${color}`;
+  const combinedClassName = `${colorClass} ${className}`.trim();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round" 
+      width={sizeValue}
+      height={sizeValue}
+      className={combinedClassName}
+    >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+    <path d="M13.5 6.5l4 4" />
+    </svg>
+  );
+};
+
 // Bundle all icons into a single object
 const Icons = {
+  Archive,
   BrandKick,
   BrandTwitch,
   BrandDiscord,
   BrandX,
+  BrandBehance,
+  BrandReddit,
   BrandYoutube,
   ButtonClose,
   Lock,
@@ -688,8 +804,10 @@ const Icons = {
   Banana,
   BananaBunch,
   Ape,
+  Pencil,
   ProgressHelp,
   DeviceGamepad3,
+  Trash,
   Trophy,
   Photo,
   Gift,

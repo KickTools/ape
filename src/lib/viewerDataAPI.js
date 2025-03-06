@@ -25,7 +25,6 @@ export async function fetchAllViewers() {
 // Admin-only: Fetch paginated viewers with filters
 export async function fetchViewersList({ page = 1, limit = 10, platform, verified, search = "", sortBy = 'createdAt', sortOrder = 'desc' } = {}) {
     try {
-      console.log("fetchViewersList received:", { page, limit, platform, verified, search, sortBy, sortOrder }); // Debug log
       const queryParams = {
         page,
         limit,
@@ -40,9 +39,7 @@ export async function fetchViewersList({ page = 1, limit = 10, platform, verifie
       }
   
       const query = new URLSearchParams(queryParams).toString();
-      console.log("Fetching viewers with query:", query);
       const result = await fetchData(`/data/retrieve/viewers?${query}`);
-      console.log("API response:", result);
       return result;
     } catch (error) {
       console.error("Error fetching viewers list:", error);
@@ -63,7 +60,6 @@ export async function fetchViewerProfile(platform, userId) {
 export async function fetchDetailedUserProfile(platform, userId) {
   try {
     const result = await fetchData(`/data/retrieve/user-profile/${platform}/${userId}`);
-    console.log("Fetched detailed profile:", result); // Debug log
     return result.data;
   } catch (error) {
     console.error("Error fetching detailed profile:", error);

@@ -1,5 +1,4 @@
 // src/components/elements/Button.js
-
 import React from 'react';
 
 const Button = ({
@@ -7,9 +6,10 @@ const Button = ({
   color = 'apeRed',
   textColor = 'text-foreground',
   size = 'medium',
+  isLoading, // Destructure isLoading but don't use it
   radius,
-  variant = 'default', // Added variant prop
-  ...rest
+  variant = 'default',
+  ...rest // Remaining props (filter out non-HTML ones if needed)
 }) => {
   let fontSize;
   let padding;
@@ -60,11 +60,13 @@ const Button = ({
     `;
   }
 
-  return (
-    <button className={buttonClasses} {...rest}>
-      {children}
-    </button>
-  );
+  // Filter out props that shouldn't go to the DOM
+  const buttonProps = {
+    ...rest, // Spread rest, but isLoading is already destructured out
+    className: buttonClasses.trim(),
+  };
+
+  return <button {...buttonProps}>{children}</button>;
 };
 
 export default Button;

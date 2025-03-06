@@ -54,13 +54,6 @@ const Header = () => {
               <Link href="/user/welcome" className="apeHeader-link">
                 Explore
               </Link>
-              {pathname !== "/admin/users" && (
-                <input
-                  type="text"
-                  placeholder="Find Viewer ..."
-                  className="apeHeader-searchInput"
-                />
-              )}
               <Link href="/admin" className="apeHeader-link">
                 Admin
               </Link>

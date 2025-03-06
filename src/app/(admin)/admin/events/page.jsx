@@ -8,10 +8,11 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
-  archiveEvent
+  archiveEvent,
 } from "@/lib/eventAPI";
 import Icons from "@/assets/icons";
 import Button from "@/components/elements/Button";
+import EventModal from "@/components/admin/events/EventModal";
 
 export default function AdminEventsPage() {
   const [events, setEvents] = useState([]);
@@ -21,14 +22,13 @@ export default function AdminEventsPage() {
   const [filterStatus, setFilterStatus] = useState("");
   const toast = useToast();
 
-  // Form state
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     date: "",
     endDate: "",
     href: "#",
-    status: "upcoming"
+    status: "upcoming",
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function AdminEventsPage() {
           ? new Date(event.endDate).toISOString().split("T")[0]
           : "",
         href: event.href,
-        status: event.status
+        status: event.status,
       });
     } else {
       setSelectedEvent(null);
@@ -70,7 +70,7 @@ export default function AdminEventsPage() {
         date: "",
         endDate: "",
         href: "#",
-        status: "upcoming"
+        status: "upcoming",
       });
     }
     setIsModalOpen(true);
@@ -85,7 +85,7 @@ export default function AdminEventsPage() {
       date: "",
       endDate: "",
       href: "#",
-      status: "upcoming"
+      status: "upcoming",
     });
   };
 
@@ -162,7 +162,6 @@ export default function AdminEventsPage() {
         <p className="events-subtitle">Create and manage community events</p>
       </div>
 
-      {/* Filters */}
       <div className="events-filters-container">
         <div className="events-filters-wrapper">
           <select
@@ -184,7 +183,6 @@ export default function AdminEventsPage() {
         </div>
       </div>
 
-      {/* Events Table */}
       <div className="events-table-container">
         <table className="events-table">
           <thead>
@@ -222,7 +220,11 @@ export default function AdminEventsPage() {
                     {new Date(event.date).toLocaleDateString()}
                   </td>
                   <td className="events-table-td">
-                    <span className={`status-badge status-${event.status}`}>
+                    <span
+                      className={`status-badge ${getStatusBadgeClass(
+                        event.status
+                      )}`}
+                    >
                       {event.status}
                     </span>
                   </td>
@@ -231,24 +233,24 @@ export default function AdminEventsPage() {
                     <div className="events-actions">
                       <button
                         onClick={() => handleOpenModal(event)}
-                        className="action-button edit-button"
+                        className="action-button edit-button cursor-pointer"
                         title="Edit"
                       >
-                        <Icons.Ape size="sm" />
+                        <Icons.Pencil size="2xl" />
                       </button>
                       <button
                         onClick={() => handleArchive(event._id)}
-                        className="action-button archive-button"
+                        className="action-button archive-button cursor-pointer"
                         title="Archive"
                       >
-                        <Icons.Ape size="sm" />
+                        <Icons.Archive size="2xl" />
                       </button>
                       <button
                         onClick={() => handleDelete(event._id)}
-                        className="action-button delete-button"
+                        className="action-button delete-button cursor-pointer"
                         title="Delete"
                       >
-                        <Icons.Ape size="sm" />
+                        <Icons.Trash size="2xl" />
                       </button>
                     </div>
                   </td>
@@ -259,140 +261,14 @@ export default function AdminEventsPage() {
         </table>
       </div>
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-container">
-            <h2 className="modal-title">
-              {selectedEvent ? "Edit Event" : "Create New Event"}
-            </h2>
-            <form onSubmit={handleSubmit} className="modal-form">
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Event Name
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        name: e.target.value
-                      }))
-                    }
-                    className="w-full px-3 py-2 bg-background-900 rounded-lg"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Description
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        description: e.target.value
-                      }))
-                    }
-                    className="w-full px-3 py-2 bg-background-900 rounded-lg"
-                    rows="3"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      Start Date
-                    </label>
-                    <input
-                      type="datetime-local"
-                      value={formData.date}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          date: e.target.value
-                        }))
-                      }
-                      className="w-full px-3 py-2 bg-background-900 rounded-lg"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      End Date (Optional)
-                    </label>
-                    <input
-                      type="datetime-local"
-                      value={formData.endDate}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          endDate: e.target.value
-                        }))
-                      }
-                      className="w-full px-3 py-2 bg-background-900 rounded-lg"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Status
-                  </label>
-                  <select
-                    value={formData.status}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        status: e.target.value
-                      }))
-                    }
-                    className="w-full px-3 py-2 bg-background-900 rounded-lg"
-                    required
-                  >
-                    <option value="upcoming">Upcoming</option>
-                    <option value="ongoing">Ongoing</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
-                    <option value="archived">Archived</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Link (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.href}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        href: e.target.value
-                      }))
-                    }
-                    className="w-full px-3 py-2 bg-background-900 rounded-lg"
-                    placeholder="e.g., /events/your-event"
-                  />
-                </div>
-              </div>
-              <div className="modal-actions">
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  className="modal-button cancel-button"
-                >
-                  Cancel
-                </button>
-                <button type="submit" className="modal-button submit-button">
-                  {selectedEvent ? "Update Event" : "Create Event"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <EventModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        selectedEvent={selectedEvent}
+        formData={formData}
+        setFormData={setFormData}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 }

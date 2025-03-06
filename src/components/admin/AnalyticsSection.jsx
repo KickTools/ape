@@ -21,7 +21,6 @@ export default function AnalyticsSection({ userId }) {
       const response = await getAdminAnalytics(userId);
       if (response && response.success && response.data) {
         setAnalyticsData(response.data);
-        console.log('Analytics data:', response.data);
       } else {
         setError('Invalid response from server.');
         console.error('Invalid response:', response);
