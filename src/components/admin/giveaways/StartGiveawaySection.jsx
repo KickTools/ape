@@ -6,8 +6,15 @@ const giveawayTypes = [
     id: "rain",
     title: "Banana Blitz",
     description: "Quick random giveaways with instant winner selection. Make it rain, but bananas! 🍌",
-    icon: "Banana", // Just using an emoji as placeholder, replace with your custom icon
+    icon: "BananaBunch", // Just using an emoji as placeholder, replace with your custom icon
     color: "apeYellow"
+  },
+  {
+    id: "ticket",
+    title: "Primal Raffle",
+    description: "Scheduled raffles with entry period and drawing",
+    icon: "Ticket",
+    color: "apeRed"
   },
   {
     id: "chat",
@@ -16,13 +23,6 @@ const giveawayTypes = [
       "Keyword-based chat giveaways with customizable qualifications",
     icon: "Ape",
     color: "apeBlue"
-  },
-  {
-    id: "ticket",
-    title: "Primal Raffle",
-    description: "Scheduled raffles with entry period and drawing",
-    icon: "Ticket",
-    color: "apeRed"
   }
 ];
 

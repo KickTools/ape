@@ -8,11 +8,13 @@ const Button = ({
   textColor = 'text-foreground',
   size = 'medium',
   radius,
+  variant = 'default', // Added variant prop
   ...rest
 }) => {
   let fontSize;
   let padding;
-  const borderRadius = radius === 'md' ? 'rounded-md' : 'rounded-full';
+  let borderRadius;
+  let buttonClasses;
 
   // Size Mapping (Tailwind-compatible)
   switch (size) {
@@ -26,23 +28,37 @@ const Button = ({
       break;
     default: // medium
       fontSize = 'text-base';
-      padding = 'px-6 py-3'; //Using the same padding as the default className
+      padding = 'px-6 py-3';
       break;
   }
 
-  const buttonClasses = `
-    bg-${color}
-    text-${textColor}
-    font-bold
-    ${padding}
-    ${borderRadius}
-    transition
-    hover:shadow-${color}/20
-    hover:shadow-lg
-    hover:scale-105
-    cursor-pointer
-    ${fontSize}
-  `;
+  borderRadius = radius === 'md' ? 'rounded-md' : 'rounded-full';
+
+  if (variant === 'text') {
+    buttonClasses = `
+      text-${textColor}
+      font-medium
+      underline
+      ${padding}
+      hover:scale-105
+      cursor-pointer
+      ${fontSize}
+    `;
+  } else {
+    buttonClasses = `
+      bg-${color}
+      text-${textColor}
+      font-bold
+      ${padding}
+      ${borderRadius}
+      transition
+      hover:shadow-${color}/20
+      hover:shadow-lg
+      hover:scale-105
+      cursor-pointer
+      ${fontSize}
+    `;
+  }
 
   return (
     <button className={buttonClasses} {...rest}>

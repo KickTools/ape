@@ -23,6 +23,7 @@ export default function AdminLayout({ children }) {
         <span></span>
         <span></span>
       </div>
+      <div className="gradientOverlay"></div>
       <AuthProvider>
         <div className="min-h-screen flex flex-col">
           <Header />

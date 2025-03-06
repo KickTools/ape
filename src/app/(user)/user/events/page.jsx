@@ -5,10 +5,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Icons from "@/assets/icons";
 import { getAllGiveaways, enterGiveaway, getGiveawayEntryStatus } from '@/lib/giveawayAPI';
+import { getPublicEvents } from '@/lib/eventAPI';
+import EventCard from '@/components/sections/eventCard';
 import { useToast } from '@/contexts/ToastContext';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function EventsPage() {
+  const [events, setEvents] = useState([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(true);
   const [activeGiveaway, setActiveGiveaway] = useState(null);
   const [hasEntered, setHasEntered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,186 +20,146 @@ export default function EventsPage() {
   const toast = useToast();
   const { user } = useAuth();
 
-  // Sample template data - replace with actual data/logic later
-  const eventData = [
-    {
-      day: "15",
-      name: "Ape Gang Monthly Bash",
-      description: "Join us for our monthly community celebration with special guests! *actual events coming soon",
-      date: "March 15, 2025",
-      href: "#",
-    },
-    {
-      day: "22",
-      name: "Gaming Tournament",
-      description: "Compete in our quarterly gaming tournament for exclusive prizes. *actual events coming soon",
-      date: "March 22, 2025",
-      href: "#",
-    },
-    {
-      day: "29",
-      name: "Content Creator Meetup",
-      description: "Meet your favorite Ape Gang creators and collaborate. *actual events coming soon",
-      date: "March 29, 2025",
-      href: "#",
-    },
-    {
-      day: "05",
-      name: "Ape Trivia Night",
-      description: "Test your knowledge in our community trivia event with fun rewards. *actual events coming soon",
-      date: "April 5, 2025",
-      href: "#",
-    },
-    {
-      day: "12",
-      name: "Charity Stream Marathon",
-      description: "Watch and donate during our 24-hour charity streaming event. *actual events coming soon",
-      date: "April 12, 2025",
-      href: "#",
-    },
-    {
-      day: "19",
-      name: "Ape Art Showcase",
-      description: "Submit and view community artwork in our digital gallery. *actual events coming soon",
-      date: "April 19, 2025",
-      href: "#",
-    },
-    {
-      day: "26",
-      name: "Speedrun Challenge",
-      description: "Race against other Apes in our speedrunning competition. *actual events coming soon",
-      date: "April 26, 2025",
-      href: "#",
-    },
-    {
-      day: "03",
-      name: "Ape Gang Q&A",
-      description: "Ask questions and chat with the Ape Gang team live. *actual events coming soon",
-      date: "May 3, 2025",
-      href: "#",
-    },
-  ];
-
   useEffect(() => {
-    const fetchActiveGiveaway = async () => {
+      fetchEvents();
+      if (user) {
+          fetchActiveGiveaway();
+      } else {
+          setIsLoading(false);
+      }
+  }, [user]);
+
+  const fetchEvents = async () => {
       try {
-        setIsLoading(true);
-        const response = await getAllGiveaways({ status: 'active', type: 'ticket' });
-        console.log("Giveaways", response);
-        
-        if (response.success && response.data.length > 0) {
-          // Get the most recent active ticket giveaway
-          const ticketGiveaways = response.data.filter(g => g.type === 'ticket' && g.status === 'active');
-          
-          if (ticketGiveaways.length > 0) {
-            // Sort by start date, newest first
-            ticketGiveaways.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-            const current = ticketGiveaways[0];
-            setActiveGiveaway(current);
-            
-            // If user is logged in, check their entry status separately
-            if (user) {
-              await checkEntryStatus(current.id);
-            }
+          setIsLoadingEvents(true);
+          const response = await getPublicEvents();
+          console.log(response);
+          if (response.success) {
+              setEvents(response.events);
           }
-        }
       } catch (error) {
-        console.error("Error fetching active giveaway:", error);
-        toast.error("Could not load giveaway information");
+          toast.error("Failed to load events");
+          console.error("Error fetching events:", error);
       } finally {
-        setIsLoading(false);
+          setIsLoadingEvents(false);
       }
-    };
+  };
 
-    // Separate function to check entry status
-    const checkEntryStatus = async (giveawayId) => {
+  const fetchActiveGiveaway = async () => {
       try {
-        const response = await getGiveawayEntryStatus(giveawayId);
-        if (response.success) {
-          setHasEntered(response.data.hasEntered);
-        }
+          setIsLoading(true);
+          const response = await getAllGiveaways({ status: 'active', type: 'ticket' });
+          
+          if (response.success && response.data.length > 0) {
+              const ticketGiveaways = response.data.filter(g => g.type === 'ticket' && g.status === 'active');
+              
+              if (ticketGiveaways.length > 0) {
+                  ticketGiveaways.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+                  const current = ticketGiveaways[0];
+                  setActiveGiveaway(current);
+                  
+                  if (user) {
+                      await checkEntryStatus(current.id);
+                  }
+              }
+          }
       } catch (error) {
-        console.error("Error checking entry status:", error);
-        // Don't show toast for this error, not critical
+          console.error("Error fetching active giveaway:", error);
+          toast.error("Could not load giveaway information");
+      } finally {
+          setIsLoading(false);
       }
-    };
+  };
 
-    if (user) {
-      fetchActiveGiveaway();
-    } else {
-      setIsLoading(false);
-    }
-  }, [user, toast]);
+  const checkEntryStatus = async (giveawayId) => {
+      try {
+          const response = await getGiveawayEntryStatus(giveawayId);
+          if (response.success) {
+              setHasEntered(response.data.hasEntered);
+          }
+      } catch (error) {
+          console.error("Error checking entry status:", error);
+      }
+  };
 
   const handleEnterGiveaway = async () => {
-    if (!user) {
-      toast.error("Please log in to enter the giveaway");
-      return;
-    }
-
-    if (!activeGiveaway) return;
-
-    setIsEntering(true);
-    try {
-      const response = await enterGiveaway(activeGiveaway.id);
-      
-      if (response.success) {
-        setHasEntered(true);
-        toast.success("You've successfully entered the giveaway!");
-      } else {
-        if (response.message === "You have already entered this giveaway") {
-          setHasEntered(true);
-          toast.info("You already entered this giveaway");
-        } else {
-          toast.error(response.message || "Failed to enter giveaway");
-        }
+      if (!user) {
+          toast.error("Please log in to enter the giveaway");
+          return;
       }
-    } catch (error) {
-      console.error("Error entering giveaway:", error);
-      // Check if the error is because the user already entered
-      if (error.message && error.message.includes("already entered")) {
-        setHasEntered(true);
-        toast.info("You already entered this giveaway");
-      } else {
-        toast.error(error.message || "Something went wrong while entering the giveaway");
+
+      if (!activeGiveaway) return;
+
+      setIsEntering(true);
+      try {
+          const response = await enterGiveaway(activeGiveaway.id);
+          
+          if (response.success) {
+              setHasEntered(true);
+              toast.success("You've successfully entered the giveaway!");
+          } else {
+              if (response.message === "You have already entered this giveaway") {
+                  setHasEntered(true);
+                  toast.info("You already entered this giveaway");
+              } else {
+                  toast.error(response.message || "Failed to enter giveaway");
+              }
+          }
+      } catch (error) {
+          console.error("Error entering giveaway:", error);
+          if (error.message && error.message.includes("already entered")) {
+              setHasEntered(true);
+              toast.info("You already entered this giveaway");
+          } else {
+              toast.error(error.message || "Something went wrong while entering the giveaway");
+          }
+      } finally {
+          setIsEntering(false);
       }
-    } finally {
-      setIsEntering(false);
-    }
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+      return new Date(dateString).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+      });
   };
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Header Section */}
-      <section className="py-16 md:py-32">
-        <div className="max-w-5xl mx-auto px-6 mb-8">
-          <h2 className="text-4xl md:text-6xl font-black text-foreground uppercase text-center apePeriod">
-            Community <span className="text-apeRed">Events</span>
-          </h2>
-          <p className="text-lg text-foreground-700 text-center mt-4">
-            Participate in Ape Gang events and connect with the community <br /> Sample Events - Actual events coming soon!
-          </p>
-        </div>
+        {/* Header Section */}
+        <section className="py-16 md:py-32">
+            <div className="max-w-5xl mx-auto px-6 mb-8">
+                <h2 className="text-4xl md:text-6xl font-black text-foreground uppercase text-center apePeriod">
+                    Community <span className="text-apeRed">Events</span>
+                </h2>
+                <p className="text-lg text-foreground-700 text-center mt-4">
+                    Participate in Ape Gang events and connect with the community
+                </p>
+            </div>
 
-        {/* Events Grid */}
-        <div className="max-w-5xl mx-auto px-6 mt-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {eventData.map((event, index) => (
-              <EventCard key={index} {...event} />
-            ))}
-          </div>
-        </div>
-      </section>
+            {/* Events Grid */}
+            <div className="max-w-5xl mx-auto px-6 mt-16">
+                {isLoadingEvents ? (
+                    <div className="flex justify-center items-center py-8">
+                        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-apeRed"></div>
+                    </div>
+                ) : events.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {events.map((event, index) => (
+                            <EventCard key={index} {...event} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-8 text-foreground-600">
+                        No upcoming events at the moment. Check back soon!
+                    </div>
+                )}
+            </div>
+        </section>
 
       {/* Giveaway Section */}
       <section className="py-16 md:py-32 bg-background-400/50 text-center mt-auto">
@@ -291,25 +255,6 @@ export default function EventsPage() {
           )}
         </div>
       </section>
-    </div>
-  );
-}
-
-// Event Card Component
-function EventCard({ day, name, description, date, href }) {
-  return (
-    <div className="relative flex px-4 py-4 rounded-xl bg-foreground-700/5 border-2 border-transparent hover:border-foreground/50 transition-colors">
-      <div className="flex flex-col flex-grow items-start">
-        <div className="flex w-full justify-between items-center mb-4">
-          <span className="text-5xl font-black text-foreground apePeriod">{day}</span>
-          <Icons.Calendar size="2xl" color="foreground" className="relative -top-2 right-0" />
-        </div>
-        <Link href={href} className="block">
-          <h3 className="text-xl font-semibold mb-2 hover:underline">{name}</h3>
-        </Link>
-        <p className="text-foreground-700 mb-2">{description}</p>
-        <p className="text-foreground-600 text-sm">{date}</p>
-      </div>
     </div>
   );
 }
