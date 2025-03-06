@@ -124,6 +124,7 @@ export const updateGiveawayStatus = async (giveawayId, status) => {
 
 // Draw winners for a giveaway (admin-only)
 export const drawGiveawayWinners = async (giveawayId, { winnersCount, verificationLevel, allowPreviousWinners }) => {
+  console.log("winnersCount", winnersCount);
   try {
     const response = await fetch(`${API_BASE_URL}${GIVEAWAY_ROUTE}/${giveawayId}/draw`, {
       method: "POST",
@@ -214,6 +215,23 @@ export const getEligibleViewerCount = async (verificationLevel) => {
     return handleResponse(response);
   } catch (error) {
     console.error(`Error fetching eligible viewer count:`, error.message);
+    throw error;
+  }
+};
+
+export const drawSingleGiveawayWinner = async (giveawayId, { verificationLevel, allowPreviousWinners }) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}${GIVEAWAY_ROUTE}/${giveawayId}/draw-single`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ verificationLevel, allowPreviousWinners }),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Error drawing single winner for giveaway ${giveawayId}:`, error.message);
     throw error;
   }
 };

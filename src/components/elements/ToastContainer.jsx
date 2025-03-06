@@ -26,7 +26,7 @@ const ToastContainer = ({ toasts, removeToast, position = 'b' }) => {
   };
   
   return createPortal(
-    <div className={`fixed z-50 flex flex-col ${getPositionClasses()}`}>
+    <div className={`fixed z-99 flex flex-col ${getPositionClasses()}`}>
       {toasts.map((toast) => (
         <Toast
           key={toast.id}

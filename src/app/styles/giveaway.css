@@ -1,6 +1,25 @@
 /* giveaway.css */
 @import "../globals.css";
 
+@keyframes spin-pulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 0.8;
+  }
+}
+
+.animate-spin-pulse {
+  animation: spin-pulse 1.5s infinite;
+}
+
 @layer components {
   .giveaway-container {
     @apply flex flex-col;
