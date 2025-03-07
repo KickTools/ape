@@ -60,7 +60,7 @@ export default function SettingsPage() {
           <h2 className="text-2xl md:text-2xl font-black text-foreground tracking-wide uppercase mb-8 apePeriod">
             Settings
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
             {/* Left Column: Settings Options */}
             <div>
             <div className="bg-background-400/80 shadow rounded-xl p-2 transition-colors">
@@ -100,7 +100,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Right Column: Settings Form (Dynamic) */}
-            <div className="col-span-3 bg-background-400/80 rounded-xl p-6 border-2 border-transparent hover:border-foreground/50 transition-colors">
+            <div className="sm:col-span-3 bg-background-400/80 rounded-xl p-6 border-2 border-transparent hover:border-foreground/50 transition-colors">
               {renderSettingsContent()}
             </div>
           </div>

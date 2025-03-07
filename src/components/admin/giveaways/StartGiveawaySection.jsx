@@ -23,6 +23,14 @@ const giveawayTypes = [
       "Keyword-based chat giveaways with customizable qualifications",
     icon: "Ape",
     color: "apeBlue"
+  },
+  {
+    id: "coinflip",
+    title: "Ape Flip",
+    description:
+      "A simple heads or tails coin flip game for quick decisions",
+    icon: "Coin",
+    color: "apeGreen"
   }
 ];
 

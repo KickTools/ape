@@ -37,11 +37,11 @@ export default function Modal({ isOpen, onClose, children }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md">
-      <div ref={modalRef} className="myModal rounded-lg max-w-xl w-full p-6 relative">
+      <div ref={modalRef} className="myModal flex justify-between items-center rounded-lg w-full h-full sm:min-w-96 sm:max-w-lg sm:h-auto p-6 relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-foreground hover:text-apeRed cursor-pointer"> {/* Change to absolute positioning */}
           <Icons.ButtonClose size="2xl" />
         </button>
-        <div>{children}</div>
+        <div className="grow">{children}</div>
       </div>
     </div>
   );

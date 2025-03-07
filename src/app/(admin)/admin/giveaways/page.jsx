@@ -12,9 +12,13 @@ import Button from "@/components/elements/Button";
 import RainGiveawayForm from "@/components/admin/giveaways/RainGiveawayForm";
 import ChatGiveawayForm from "@/components/admin/giveaways/ChatGiveawayForm";
 import TicketGiveawayForm from "@/components/admin/giveaways/TicketGiveawayForm";
+import CoinFlipModal from "@/components/admin/giveaways/CoinFlipModal";
 import GiveawayTypeCard from "@/components/admin/giveaways/GiveawayTypeCard";
 import GiveawayAnalyticsSection from "@/components/admin/giveaways/GiveawayAnalyticsSection";
 import StartGiveawaySection from "@/components/admin/giveaways/StartGiveawaySection";
+
+// Import the coin flip CSS
+import "@/app/styles/coinflip.css";
 
 export default function GiveawaysHub() {
   const router = useRouter();
@@ -162,6 +166,14 @@ export default function GiveawaysHub() {
             onCancel={() => setActiveModal(null)}
           />
         </div>
+      </Modal>
+
+      {/* Coin Flip Modal */}
+      <Modal
+        isOpen={activeModal === "coinflip"}
+        onClose={() => setActiveModal(null)}
+      >
+        <CoinFlipModal onClose={() => setActiveModal(null)} />
       </Modal>
 
       {/* Confirmation Modal - This will show different content based on the giveaway type */}

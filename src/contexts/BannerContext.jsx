@@ -9,6 +9,7 @@ import loginBanner from '@/assets/images/bg-ape_train.jpg';
 import registerBanner from '@/assets/images/bg-ape_trainvsgorilla.jpg';
 import twitchBanner from '@/assets/images/bg-ape_chef.jpg';
 import kickBanner from '@/assets/images/bg-ape_riddler.jpg';
+import verifyBanner from '@/assets/images/bg-ape_quads.jpg';
 
 const BannerContext = createContext();
 
@@ -21,6 +22,7 @@ export function BannerProvider({ children }) {
     register: registerBanner,
     twitchOAuthStart: twitchBanner,
     kickOAuthStart: kickBanner,
+    accountVerification: verifyBanner,
     default: defaultBanner,
   };
 
