@@ -94,6 +94,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('primaryPlatform');
       localStorage.removeItem('signedIn');
       localStorage.removeItem('role');
+      localStorage.clear();
 
       // Navigate to home page
       router.push('/');
@@ -161,10 +162,11 @@ export const AuthProvider = ({ children }) => {
         const storedSignedIn = localStorage.getItem('signedIn');
         const storedRole = localStorage.getItem('role');
   
+        // Only attempt to restore session if we have evidence of a prior login
         if (storedTwitchProfile && storedKickProfile && storedPlatform && storedSignedIn === 'true') {
           const sessionData = await checkSession();
+          console.log('Session data:', sessionData);
   
-          // Validate sessionData based on expected fields
           if (!sessionData?.user_id) {
             throw new Error('Invalid session from server: missing user_id');
           }
@@ -217,17 +219,28 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('role', sessionData.role);
           }
         } else {
-          throw new Error('User data not found in localStorage');
+          console.log('No valid session in localStorage, staying logged out:', {
+            twitch: !!storedTwitchProfile,
+            kick: !!storedKickProfile,
+            platform: !!storedPlatform,
+            signedIn: storedSignedIn,
+          });
+          // Explicitly set signedIn to false to ensure consistency
+          setSignedIn(false);
+          setUser(null);
         }
       } catch (error) {
         console.error('Session validation failed or data invalid:', error);
-        localStorage.removeItem('twitchProfile');
-        localStorage.removeItem('kickProfile');
-        localStorage.removeItem('xProfile');
-        localStorage.removeItem('primaryPlatform');
-        localStorage.removeItem('signedIn');
-        localStorage.removeItem('role');
-        router.push('/login?error=session_expired');
+        // Only redirect if there was an attempt to restore a session
+        if (localStorage.getItem('signedIn') === 'true') {
+          localStorage.clear();
+          router.push('/login?error=session_expired');
+        } else {
+          // If no session was expected, just clear state and stay on current page
+          setSignedIn(false);
+          setUser(null);
+          localStorage.clear(); // Optional: clear stale data
+        }
       } finally {
         setLoading(false);
       }
