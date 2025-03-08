@@ -8,15 +8,22 @@ import sectionTexture from "@/assets/images/section-textures.jpg";
 import Image from "next/image";
 
 export default function Profile() {
-  const { user, kickProfile, twitchProfile } = useAuth();
+  const { user, kickProfile, twitchProfile, xProfile } = useAuth();
 
-  // Fallback username if neither profile is available
-  const username = kickProfile?.username || twitchProfile?.display_name || "Unknown User";
+  // Fallback username, prioritize X, then Kick, then Twitch
+  const username = xProfile?.username || kickProfile?.username || twitchProfile?.display_name || "Unknown User";
 
-  // Join date (earliest from Kick or Twitch)
-  const joinDate = kickProfile?.created_at || twitchProfile?.created_at 
-    ? new Date(kickProfile?.created_at || twitchProfile?.created_at).toLocaleDateString()
-    : "N/A";
+  // Join date (earliest from X, Kick, or Twitch)
+  let joinDate;
+  if (xProfile && xProfile.created_at) {
+    joinDate = new Date(xProfile.created_at).toLocaleDateString();
+  } else if (kickProfile && kickProfile.created_at) {
+    joinDate = new Date(kickProfile.created_at).toLocaleDateString();
+  } else if (twitchProfile && twitchProfile.created_at) {
+    joinDate = new Date(twitchProfile.created_at).toLocaleDateString();
+  } else {
+    joinDate = "N/A";
+  }
 
   return (
     <div className="flex flex-col">
@@ -33,6 +40,53 @@ export default function Profile() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+
+            {/* General Info Card */}
+            <div className="bg-background-400/80 p-6 rounded-md text-left">
+              <h3 className="text-xl font-semibold mb-4">General Info</h3>
+              <p className="text-sm">
+                <strong>Username:</strong> {username}
+              </p>
+              <p className="text-sm">
+                <strong>Earliest Join Date:</strong> {joinDate}
+              </p>
+              <p className="text-sm">
+                <strong>Kick Status:</strong> {kickProfile ? "Active" : "Not Linked"}
+              </p>
+              <p className="text-sm">
+                <strong>Twitch Status:</strong> {twitchProfile ? "Active" : "Not Linked"}
+              </p>
+              <p className="text-sm">
+                <strong>X Status:</strong> {xProfile ? "Active" : "Not Linked"}
+              </p>
+            </div>
+
+            {/* X Profile Card */}
+            {xProfile && (
+              <div className="bg-background-400/80 p-6 rounded-md">
+                <div className="flex items-center mb-4">
+                  {xProfile.profile_image_url && (
+                    <Image
+                      src={xProfile.profile_image_url}
+                      alt={`${xProfile.username}'s X profile`}
+                      width={48}
+                      height={48}
+                      className="rounded-full mr-4"
+                    />
+                  )}
+                  <h3 className="text-xl font-semibold">
+                    X <span className="text-x font-black mr-2"> </span>{xProfile.username}
+                  </h3>
+                </div>
+                <p className="text-sm">
+                  <strong>Joined:</strong> {new Date(xProfile.created_at).toLocaleDateString()}
+                </p>
+                <p className="text-sm">
+                  <strong>Name:</strong> {xProfile.name}
+                </p>
+              </div>
+            )}
+
             {/* Kick Profile Card */}
             {kickProfile && (
               <div className="bg-background-400/80 p-6 rounded-md">
@@ -47,7 +101,7 @@ export default function Profile() {
                     />
                   )}
                   <h3 className="text-xl font-semibold">
-                    Kick <span className="text-kick font-black mr-2">. </span>{kickProfile.username}
+                    Kick <span className="text-kick font-black mr-2"> </span>{kickProfile.username}
                   </h3>
                 </div>
                 <p className="text-foreground-700 mb-2">{kickProfile.bio || "No bio available"}</p>
@@ -119,22 +173,7 @@ export default function Profile() {
               </div>
             )}
 
-            {/* General Info Card */}
-            <div className="bg-background-400/80 p-6 rounded-md text-left">
-              <h3 className="text-xl font-semibold mb-4">General Info</h3>
-              <p className="text-sm">
-                <strong>Username:</strong> {username}
-              </p>
-              <p className="text-sm">
-                <strong>Earliest Join Date:</strong> {joinDate}
-              </p>
-              <p className="text-sm">
-                <strong>Kick Status:</strong> {kickProfile ? "Active" : "Not Linked"}
-              </p>
-              <p className="text-sm">
-                <strong>Twitch Status:</strong> {twitchProfile ? "Active" : "Not Linked"}
-              </p>
-            </div>
+
           </div>
         </div>
       </section>

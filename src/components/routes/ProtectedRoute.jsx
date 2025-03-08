@@ -12,14 +12,11 @@ export default function ProtectedRoute({ children, requiredRole = "user" }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Wait until auth is loaded before making decisions
     if (!loading) {
       if (!signedIn) {
-        // Store the attempted URL to redirect back after login
         sessionStorage.setItem("redirectAfterLogin", pathname);
         router.push("/auth?redirect=" + encodeURIComponent(pathname));
       } else if (requiredRole === "admin" && user?.role !== "admin" && user?.role !== "webmaster") {
-        // For admin-only routes, check if user has admin or webmaster role
         router.push("/user/dashboard");
       }
     }

@@ -53,6 +53,7 @@ const LoginCallback = () => {
 
         const twitchProfile = connectedData.twitch;
         const kickProfile = connectedData.kick;
+        const xProfile = connectedData.x;
         const viewer_id = connectedData.viewer_id;
 
         if (!twitchProfile || !kickProfile) {
@@ -66,6 +67,7 @@ const LoginCallback = () => {
         await login({
           twitch: twitchProfile,
           kick: kickProfile,
+          x: xProfile,
           primaryPlatform: platform,
           role: role,
           viewer_id: viewer_id

@@ -11,9 +11,8 @@ import GiveawaySettings from "@/components/settings/GiveawaySettings";
 import NotificationsSettings from "@/components/settings/NotificationsSettings";
 
 export default function SettingsPage() {
-  const { user, kickProfile, twitchProfile, signedIn } = useAuth();
+  const { user, kickProfile, twitchProfile, xProfile, signedIn } = useAuth();
   const [activeSetting, setActiveSetting] = useState("Account");
-
   const mainUserId = twitchProfile?.user_id;
   const userWithMainId = { ...user, mainUserId }; // Merge mainUserId into user object
 
@@ -31,7 +30,7 @@ export default function SettingsPage() {
   const renderSettingsContent = () => {
     switch (activeSetting) {
       case "Account":
-        return <AccountSettings user={userWithMainId} kickProfile={kickProfile} twitchProfile={twitchProfile} />;
+        return <AccountSettings user={userWithMainId} kickProfile={kickProfile} twitchProfile={twitchProfile} xProfile={xProfile} />;
       case "Connections":
         return <ConnectionsSettings user={userWithMainId} />;
       case "Preferences":

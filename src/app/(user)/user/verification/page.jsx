@@ -7,14 +7,15 @@ import trainLogoLight from "@/assets/images/train_logo_light.png";
 import Image from "next/image";
 
 function VerificationTimelineFiller() {
-  const { user, kickProfile, twitchProfile } = useAuth();
+  const { user, kickProfile, twitchProfile, xProfile } = useAuth();
   
   // Check which steps are verified
   const isTwitchVerified = !!twitchProfile;
   const isKickVerified = !!kickProfile;
+  const isXVerified = !!xProfile;
   
   // Count verified steps
-  const verifiedStepsCount = [isTwitchVerified, isKickVerified].filter(Boolean).length;
+  const verifiedStepsCount = [isTwitchVerified, isKickVerified, isXVerified].filter(Boolean).length;
   
   // Placeholder verification functions
   const verifyTwitch = () => {
@@ -89,12 +90,12 @@ function VerificationTimelineFiller() {
     },
     {
       step: "Authenticate Twitter (X)",
-      stars: 0,
+      stars: isXVerified ? 1 : 0,
       description: "Connect your Twitter (X) account.",
       color: "bg-apeBlue",
       icon: <Icons.BrandX size="3xl" color="foreground" />,
       onClick: verifyTwitter,
-      verified: false
+      verified: isXVerified
     }
   ];
 

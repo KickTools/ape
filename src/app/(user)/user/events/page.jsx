@@ -33,7 +33,6 @@ export default function EventsPage() {
       try {
           setIsLoadingEvents(true);
           const response = await getPublicEvents();
-          console.log(response);
           if (response.success) {
               setEvents(response.events);
           }

@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [twitchProfile, setTwitchProfile] = useState(null);
   const [kickProfile, setKickProfile] = useState(null);
+  const [xProfile, setXProfile] = useState(null);
   const [primaryPlatform, setPrimaryPlatform] = useState(null);
   const [loading, setLoading] = useState(true);
   const [signedIn, setSignedIn] = useState(false);
@@ -19,46 +20,44 @@ export const AuthProvider = ({ children }) => {
   const login = async (userData) => {
     try {
       setLoading(true);
-      
-      // Extract profiles from userData
-      const { viewer_id, twitch, kick, primaryPlatform: platform, role } = userData;
-      
+  
+      const { viewer_id, twitch, kick, x, primaryPlatform: platform, role } = userData;
+  
       if (!twitch || !kick || !platform) {
-        throw new Error('Incomplete user data provided');
+        console.error("Incomplete user data:", { twitch, kick, platform });
+        throw new Error("Incomplete user data provided");
       }
-      
-      // Set the profiles in state
+  
       setTwitchProfile(twitch);
       setKickProfile(kick);
+      setXProfile(x);
       setPrimaryPlatform(platform);
-      
-      // Set the user with the selected platform's data
-      const selectedProfile = platform === 'twitch' ? twitch : kick;
-      
+  
+      const selectedProfile = platform === "twitch" ? twitch : kick;
       const newUser = {
         id: selectedProfile.user_id || selectedProfile.id,
         viewer_id: viewer_id,
-        username: platform === 'twitch' ? selectedProfile.display_name : selectedProfile.username,
-        profileImage: platform === 'twitch' ? selectedProfile.profile_image_url : selectedProfile.profile_pic,
+        username: platform === "twitch" ? selectedProfile.display_name : selectedProfile.username,
+        profileImage: platform === "twitch" ? selectedProfile.profile_image_url : selectedProfile.profile_pic,
         platform,
-        role: role || 'regular'
+        role: role || "regular",
       };
-
-      console.log("New User", newUser);
-      
+  
       setUser(newUser);
       setSignedIn(true);
-      
-      // Store in localStorage for persistence
-      localStorage.setItem('twitchProfile', JSON.stringify(twitch));
-      localStorage.setItem('kickProfile', JSON.stringify(kick));
-      localStorage.setItem('primaryPlatform', platform);
-      localStorage.setItem('signedIn', 'true');
-      localStorage.setItem('role', newUser.role);
-      
+  
+      localStorage.setItem("twitchProfile", JSON.stringify(twitch));
+      localStorage.setItem("kickProfile", JSON.stringify(kick));
+      if (x) {
+        localStorage.setItem("xProfile", JSON.stringify(x));
+      }
+      localStorage.setItem("primaryPlatform", platform);
+      localStorage.setItem("signedIn", "true");
+      localStorage.setItem("role", newUser.role);
+  
       return true;
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error in AuthContext:", error.message, error.stack);
       throw error;
     } finally {
       setLoading(false);
@@ -69,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Call the existing logoutUser function from your auth.js
       const result = await logoutUser();
-      
+
       if (!result.success) {
         console.warn('Server logout reported an issue:', result.message);
         // Continue with local logout even if server logout reports an issue
@@ -79,40 +78,67 @@ export const AuthProvider = ({ children }) => {
       // Continue with local logout even if server logout fails
     } finally {
       // Always perform local logout regardless of server response
-      
+
       // Clear states
       setUser(null);
       setTwitchProfile(null);
       setKickProfile(null);
+      setXProfile(null);
       setPrimaryPlatform(null);
       setSignedIn(false);
-      
+
       // Remove from localStorage
       localStorage.removeItem('twitchProfile');
       localStorage.removeItem('kickProfile');
+      localStorage.removeItem('xProfile'); // Remove x profile
       localStorage.removeItem('primaryPlatform');
       localStorage.removeItem('signedIn');
       localStorage.removeItem('role');
-      
+
       // Navigate to home page
       router.push('/');
     }
   };
 
-  const switchPlatform = () => {
-    if (!twitchProfile || !kickProfile) return;
-    
-    const newPlatform = primaryPlatform === 'twitch' ? 'kick' : 'twitch';
-    const selectedProfile = newPlatform === 'twitch' ? twitchProfile : kickProfile;
-    
+    const switchPlatform = () => {
+    if (!twitchProfile || !kickProfile || !xProfile) return;
+
+    let newPlatform;
+    if (primaryPlatform === 'twitch') {
+      newPlatform = 'kick';
+    } else if (primaryPlatform === 'kick') {
+      newPlatform = 'x';
+    } else {
+      newPlatform = 'twitch';
+    }
+
+    let selectedProfile;
+    if (newPlatform === 'twitch') {
+      selectedProfile = twitchProfile;
+    } else if (newPlatform === 'kick') {
+      selectedProfile = kickProfile;
+    } else if (newPlatform === 'x') {
+      selectedProfile = xProfile;
+    }
+
     setPrimaryPlatform(newPlatform);
     setUser({
       id: selectedProfile.user_id || selectedProfile.id,
-      username: newPlatform === 'twitch' ? selectedProfile.display_name : selectedProfile.username,
-      profileImage: newPlatform === 'twitch' ? selectedProfile.profile_image_url : selectedProfile.profile_pic,
-      platform: newPlatform
+      username:
+        newPlatform === 'twitch'
+          ? selectedProfile.display_name
+          : newPlatform === 'kick'
+          ? selectedProfile.username
+          : selectedProfile.name, // Adjust for x platform's name field
+      profileImage:
+        newPlatform === 'twitch'
+          ? selectedProfile.profile_image_url
+          : newPlatform === 'kick'
+          ? selectedProfile.profile_pic
+          : selectedProfile.profile_image_url, // Adjust for x platform's profile image field
+      platform: newPlatform,
     });
-    
+
     localStorage.setItem('primaryPlatform', newPlatform);
   };
 
@@ -130,41 +156,74 @@ export const AuthProvider = ({ children }) => {
       try {
         const storedTwitchProfile = localStorage.getItem('twitchProfile');
         const storedKickProfile = localStorage.getItem('kickProfile');
+        const storedXProfile = localStorage.getItem('xProfile');
         const storedPlatform = localStorage.getItem('primaryPlatform');
         const storedSignedIn = localStorage.getItem('signedIn');
         const storedRole = localStorage.getItem('role');
-
+  
         if (storedTwitchProfile && storedKickProfile && storedPlatform && storedSignedIn === 'true') {
-          // Verify session with server
           const sessionData = await checkSession();
-          
-          // If session is valid, restore data with server-verified role
+  
+          // Validate sessionData based on expected fields
+          if (!sessionData?.user_id) {
+            throw new Error('Invalid session from server: missing user_id');
+          }
+  
           const twitch = JSON.parse(storedTwitchProfile);
           const kick = JSON.parse(storedKickProfile);
+          const x = storedXProfile ? JSON.parse(storedXProfile) : null;
           const platform = storedPlatform;
-          
+  
           setTwitchProfile(twitch);
           setKickProfile(kick);
+          setXProfile(x);
           setPrimaryPlatform(platform);
           setSignedIn(true);
-          
-          const selectedProfile = platform === 'twitch' ? twitch : kick;
+  
+          let selectedProfile;
+          if (platform === 'twitch') {
+            selectedProfile = twitch;
+          } else if (platform === 'kick') {
+            selectedProfile = kick;
+          } else if (platform === 'x' && x) {
+            selectedProfile = x;
+          } else {
+            throw new Error(`Invalid primary platform: ${platform}`);
+          }
+  
           setUser({
             id: selectedProfile.user_id || selectedProfile.id,
-            username: platform === 'twitch' ? selectedProfile.display_name : selectedProfile.username,
-            profileImage: platform === 'twitch' ? selectedProfile.profile_image_url : selectedProfile.profile_pic,
+            username:
+              platform === 'twitch'
+                ? selectedProfile.display_name
+                : platform === 'kick'
+                ? selectedProfile.username
+                : platform === 'x'
+                ? selectedProfile.name
+                : 'unknown',
+            profileImage:
+              platform === 'twitch'
+                ? selectedProfile.profile_image_url
+                : platform === 'kick'
+                ? selectedProfile.profile_pic
+                : platform === 'x'
+                ? selectedProfile.profile_image_url
+                : '',
             platform,
-            role: sessionData.role // Use server-verified role
+            role: sessionData.role || storedRole || 'regular',
           });
-          
-          // Update localStorage with fresh role
-          localStorage.setItem('role', sessionData.role);
+  
+          if (sessionData.role) {
+            localStorage.setItem('role', sessionData.role);
+          }
+        } else {
+          throw new Error('User data not found in localStorage');
         }
       } catch (error) {
         console.error('Session validation failed or data invalid:', error);
-        // Clear localStorage and force re-login
         localStorage.removeItem('twitchProfile');
         localStorage.removeItem('kickProfile');
+        localStorage.removeItem('xProfile');
         localStorage.removeItem('primaryPlatform');
         localStorage.removeItem('signedIn');
         localStorage.removeItem('role');
@@ -173,7 +232,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
+  
     loadUserFromStorage();
   }, [router]);
 
@@ -183,6 +242,7 @@ export const AuthProvider = ({ children }) => {
         user,
         twitchProfile,
         kickProfile,
+        xProfile,
         primaryPlatform,
         loading,
         signedIn,

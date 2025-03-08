@@ -1,7 +1,8 @@
 // src/components/settings/AccountSettings.jsx
-export default function AccountSettings({ user, kickProfile, twitchProfile }) {
+export default function AccountSettings({ user, kickProfile, twitchProfile, xProfile }) {
   const kickUsername = kickProfile?.username || null;
   const twitchUsername = twitchProfile?.display_name || null;
+  const xUsername = xProfile?.username || null;
 
   return (
     <div className="settings-container">
@@ -31,7 +32,7 @@ export default function AccountSettings({ user, kickProfile, twitchProfile }) {
             <label className="form-label">X/Twitter</label>
             <input
               type="text"
-              value={user.xUsername || "Not connected"}
+              value={xUsername || "Not connected"}
               disabled
               className="form-input-disabled"
             />
